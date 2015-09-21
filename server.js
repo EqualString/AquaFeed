@@ -13,7 +13,13 @@ admin[1] = "Luafr";
 
 // port aplikacije
 // process.env.PORT dopušta da Heroku postavlja vlastiti port
-var envport = process.env.PORT || 3000;
+//var envport = process.env.PORT || 3000;
+
+//Openshift
+
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
 
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
@@ -147,10 +153,14 @@ app.get('/login.html', nocache, function(req, res){
 });
 
 //Konfiguracija servera
-var server = app.listen(envport, function () {
+/*var server = app.listen(envport, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('app @ :http://localhost:3000/');
+});*/
+
+var server = app.listen(server_port, server_ip_address,, function () {
+	console.log("Listening on " + server_ip_address + ", server_port " + server_port)
 });
 
 app.use(express.static(__dirname + '/public'));//Koristi sve iz folder 'public'
