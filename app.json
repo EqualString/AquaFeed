@@ -1,0 +1,6 @@
+{
+  "name": "AquaFeed",
+  "description": "AquaFeed, IoT app for fish feed",
+  "repository": "https://github.com/EqualString/AquaFeed",
+  "keywords": ["node", "mqtt", "Arduino"]
+}

@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="utf-8">
+		<title>AquaFeed</title>		
+		<meta name="keywords" content="AquaFeed, IoT, Arduino" />
+		<meta name="description" content="AquaFeed - IoT rješenje za Vaš akavariji">
+		<meta name="author" content="Alen Egredžija">
+		<link rel="icon" href="home/img/favicon/favicon.ico">
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="home/vendor/bootstrap/bootstrap.css">
+		<link rel="stylesheet" href="home/vendor/owlcarousel/owl.carousel.min.css" media="screen">
+		<link rel="stylesheet" href="home/vendor/owlcarousel/owl.theme.default.min.css" media="screen">
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="home/css/style-elements.css">
+		<link rel="stylesheet" href="home/css/theme-animate.css">
+		<link rel="stylesheet" href="home/css/style.css">
+		<link rel="stylesheet" href="home/css/style-color.css">
+		<link rel="stylesheet" href="home/css/magnific-popup.css">
+		
+		<!-- Font -->
+		<link rel="stylesheet" href="home/css/glyphicon.css">
+		<link rel="stylesheet" href="home/css/font-awesome.css">
+		<link rel="stylesheet" href="home/css/myicon.css">
+
+		<!-- Current Page CSS -->
+		<link rel="stylesheet" href="home/vendor/rs-plugin/css/settings.css" media="screen">
+		<link rel="stylesheet" href="home/vendor/circle-flip-slideshow/css/component.css" media="screen">
+		<link rel="stylesheet" href="home/css/preloader.css">
+
+		<!-- Head Libs -->
+		<script src="home/vendor/modernizr/modernizr.js"></script>
+		<script src="home/vendor/jquery.flexslider/jquery.flexslider.js"></script>
+		<script type="text/javascript" src="http://l2.io/ip.js?var=myip"></script>
+		<script src="control/js/socket.io.js"></script>
+	
+		<!--[if IE]>
+			<link rel="stylesheet" href="css/ie.css">
+		<![endif]-->
+
+		<!--[if lte IE 8]>
+			<script src="vendor/respond/respond.js"></script>
+			<script src="vendor/excanvas/excanvas.js"></script>
+		<![endif]-->
+
+	</head>
+	<body class="royal_loader">
+
+		<div class="body">
+			<header id="header">
+				<div class="container">
+					<div class="logo">
+						<a href="index">
+							<img alt="AF" width="73" height="73" data-sticky-width="50" data-sticky-height="50" src="home/img/favicon/favicon.png">
+						</a>
+					</div>
+					<div class="search">
+					<!-- Placeholder -->
+					</div>
+					<ul class="social-icons">
+						<li class="facebook"><a href="http://www.facebook.com/" target="_blank" data-placement="bottom" data-tooltip title="Facebook">Facebook</a></li>
+						<li class="twitter"><a href="http://www.twitter.com/" target="_blank" data-placement="bottom" data-tooltip title="Twitter">Twitter</a></li>
+						<li class="googleplus"><a href="http://www.linkedin.com/" target="_blank" data-placement="bottom" data-tooltip title="Google+">Google+</a></li>
+					</ul>
+					<nav>
+						<ul class="nav nav-pills nav-top">
+							<li class="phone">
+								<span><i class="fa fa-phone"></i>(+385) 098 948 7820</span>
+							</li>
+						</ul>
+					</nav>
+					<button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
+						<i class="fa fa-bars"></i>
+					</button>
+				</div>
+				<div class="navbar-collapse nav-main-collapse collapse">
+					<div class="container">
+						<nav class="nav-main mega-menu">
+							<ul class="nav nav-pills nav-main" id="mainMenu">
+								<li class="menu-item active">
+									<a href="#naslovna">Naslovna</a>
+								</li>
+								<li class="menu-item">
+									<a href="#proizvod">Proizvod</a>
+								</li>
+								<li class="menu-item">
+									<a href="#platforma">IoT Platforma</a>
+								</li>
+								<li class="menu-item">
+									<a href="#narudžba">
+									<i class="glyphicon glyphicon-shopping-cart"></i> Narudžba</a>
+								</li>
+								<li class="menu-item">
+									<a href="#onama">O nama</a>
+								</li>
+								<li class="menu-item">
+									<a href="#kontakt">Kontakt</a>
+								</li>
+								<%if (auth == true) { %>
+								<li class="dropdown mega-menu-item mega-menu-signin signin logged" id="headerAccount">
+									<a class="dropdown-toggle signup-menu">
+										<i class="fa fa-user"></i> <%= username %>
+										<i class="fa fa-angle-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<div class="mega-menu-content">
+												<div class="row">
+													<div class="col-md-5">
+														<div class="user-avatar">
+															<p><strong><%= username %></strong><span>Osnovni Paket</span></p>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<ul class="list-account-options">
+															<li>
+																<a style="line-height: 10px;" href="timeline">Upravljačka ploča</a>
+															</li>
+															<li>
+																<a href="logout">Odjava</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+								<% } %>
+								<%if (auth != true) { %>
+								<li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
+									<a class="dropdown-toggle signup-menu">
+										<i style="font-size:16px;"class="fa fa-sign-in"></i> Prijava
+										<i class="fa fa-angle-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<div class="mega-menu-content">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="signin-form">
+															<span class="mega-menu-sub-title resp">Prijavi se</span>
+															<!-- Login s index-a -->
+															<form action="index-login">
+																<div class="row">
+																	<div class="form-group">
+																		<div class="col-md-12">
+																			<label>Korisničko ime</label>
+																			<input type="text" id="em" value="" class="form-control input-lg">
+																		</div>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="form-group">
+																		<div class="col-md-12">
+																			<a class="pull-right" id="headerRecover" href="#">(Zaboravljena lozinka?)</a>
+																			<label>Lozinka</label>
+																			<input type="password" id="passwd" value="" class="form-control input-lg">
+																		</div>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-6">
+																		<span class="remember-box checkbox">
+																			<label for="rememberme">
+																				<input type="checkbox" id="rememberme" name="rememberme">Zapamti me
+																			</label>
+																		</span>
+																	</div>
+																	<div class="col-md-6">
+																		<button type="submit" onclick="login_cp();" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">Prijava</button>
+																	</div>
+																</div>	
+															</form>
+															<script>
+															var socket = io.connect();
+																function login_cp()
+																{   /**Komunikacija sa serverom**/
+																	var info = [];
+																	info[0] = document.getElementById("em").value;
+																	info[1] = document.getElementById("passwd").value;
+																	socket.emit('login_info', info );
+																}
+															</script>
+															<p class="sign-up-info">Nemate korisnički račun? <a href="#narudžba">Prijavite se</a></p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+								<% } %>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+
+			
+			<section id="naslovna" class="section">
+				<div class="slider-container">
+					<div class="slider" id="revolutionSlider" data-plugin-revolution-slider data-plugin-options='{"startheight": 500}'>
+						<ul>
+							<li data-transition="fade" data-slotamount="12" data-masterspeed="300">
+							
+								<img src="home/img/slides/slide-city.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+								
+								<div class="tp-caption sft stb visible-lg"
+									 data-x="115"
+									 data-y="130"
+									 data-speed="300"
+									 data-start="1000"
+									 data-easing="easeOutExpo"><img src="home/img/slides/slide-title-border-light.png" alt=""></div>
+				
+								<div class="tp-caption top-label txt-dark lfl stl"
+									 data-x="165"
+									 data-y="130"
+									 data-speed="300"
+									 data-start="500"
+									 data-easing="easeOutExpo">Nemate vremena ?</div>
+				
+								<div class="tp-caption sft stb visible-lg"
+									 data-x="380"
+									 data-y="130"
+									 data-speed="300"
+									 data-start="1000"
+									 data-easing="easeOutExpo"><img src="home/img/slides/slide-title-border-light.png" alt=""></div>
+				
+								<div class="tp-caption main-label txt-dark sft stb"
+									 data-x="0"
+									 data-y="160"
+									 data-speed="300"
+									 data-start="1500"
+									 data-easing="easeOutExpo">Prezaposleni ste,</div>
+							   
+							   <div class="tp-caption main-label txt-dark sft stb"
+									 data-x="110"
+									 data-y="230"
+									 data-speed="300"
+									 data-start="1800"
+									 data-easing="easeOutExpo">Putujete?</div>
+				
+								<div class="tp-caption bottom-label txt-dark sft stb"
+									 data-x="160"
+									 data-y="310"
+									 data-speed="500"
+									 data-start="2100"
+									 data-easing="easeOutExpo">A Vaše ribice gladuju ?</div>
+								
+								<div class="tp-caption sfb"
+									 data-x="650"
+									 data-y="210"
+									 data-speed="400"
+									 data-start="2500"
+									 data-easing="easeOutBack"><img src="home/img/slides/train.png" alt=""></div>		
+				
+								<div class="tp-caption sfb"
+									 data-x="490"
+									 data-y="140"
+									 data-speed="500"
+									 data-start="3000"
+									 data-easing="easeOutBack"><img src="home/img/slides/plane.png" alt=""></div>
+				
+								
+								<div class="tp-caption randomrotate"
+									 data-x="695"
+									 data-y="245"
+									 data-speed="400"
+									 data-start="3300"
+									 data-easing="easeOutBack"><img src="home/img/slides/business-suitcase.png" alt=""></div>	 
+				
+								<div class="tp-caption blackboard-text txt-dark lfb "
+									 data-x="917"
+									 data-y="80"
+									 data-speed="500"
+									 data-start="3450"
+									 data-easing="easeOutExpo" style="font-size: 32px;">Mi</div>
+				
+								<div class="tp-caption blackboard-text txt-dark lfb "
+									 data-x="927"
+									 data-y="130"
+									 data-speed="500"
+									 data-start="3650"
+									 data-easing="easeOutExpo" style="font-size: 37px;">Imamo</div>
+				
+								<div class="tp-caption blackboard-text txt-dark lfb "
+									 data-x="937"
+									 data-y="180"
+									 data-speed="500"
+									 data-start="3850"
+									 data-easing="easeOutExpo" style="font-size: 47px;">Rješenje!</div>
+							</li>
+							
+							<li data-transition="fade" data-slotamount="11" data-masterspeed="300">
+								<img src="home/img/slides/slide-vacation.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+								
+								<div class="tp-caption sft stb visible-lg"
+									 data-x="177"
+									 data-y="180"
+									 data-speed="300"
+									 data-start="1000"
+									 data-easing="easeOutExpo"><img src="home/img/slides/slide-title-border.png" alt=""></div>
+				
+								<div class="tp-caption top-label txt-light lfl stl"
+									 data-x="227"
+									 data-y="180"
+									 data-speed="300"
+									 data-start="500"
+									 data-easing="easeOutExpo">Planirate na</div>
+				
+								<div class="tp-caption sft stb visible-lg"
+									 data-x="367"
+									 data-y="180"
+									 data-speed="300"
+									 data-start="1000"
+									 data-easing="easeOutExpo"><img src="home/img/slides/slide-title-border.png" alt=""></div>
+				
+								<div class="tp-caption main-label txt-light sft stb"
+									 data-x="35"
+									 data-y="210"
+									 data-speed="300"
+									 data-start="1500"
+									 data-easing="easeOutExpo">Zasluženi Odmor?</div>
+				
+								<div class="tp-caption bottom-label txt-light sft stb"
+									 data-x="160"
+									 data-y="280"
+									 data-speed="500"
+									 data-start="2000"
+									 data-easing="easeOutExpo">Nema Vam tko hraniti ribice ?</div>
+				
+								<div class="tp-caption randomrotate"
+									 data-x="680"
+									 data-y="150"
+									 data-speed="500"
+									 data-start="2500"
+									 data-easing="easeOutBack"><img src="home/img/slides/slide-parasol.png" alt=""></div>
+				
+								<div class="tp-caption sfb"
+									 data-x="645"
+									 data-y="300"
+									 data-speed="400"
+									 data-start="3000"
+									 data-easing="easeOutBack"><img src="home/img/slides/slide-chair.png" alt=""></div>
+								
+								<div class="tp-caption randomrotate"
+									 data-x="815"
+									 data-y="300"
+									 data-speed="400"
+									 data-start="3300"
+									 data-easing="easeOutBack"><img src="home/img/slides/travel-suitcase.png" alt=""></div>		 
+				
+								<div class="tp-caption blackboard-text txt-light lfb "
+									 data-x="920"
+									 data-y="150"
+									 data-speed="500"
+									 data-start="3450"
+									 data-easing="easeOutExpo" style="font-size: 32px;">Mi</div>
+				
+								<div class="tp-caption blackboard-text txt-light lfb "
+									 data-x="945"
+									 data-y="200"
+									 data-speed="500"
+									 data-start="3650"
+									 data-easing="easeOutExpo" style="font-size: 37px;">Imamo</div>
+				
+								<div class="tp-caption blackboard-text txt-light lfb "
+									 data-x="970"
+									 data-y="250"
+									 data-speed="500"
+									 data-start="3850"
+									 data-easing="easeOutExpo" style="font-size: 47px;">Rješenje!</div>
+							</li>
+							
+							<li data-transition="fade" data-slotamount="7" data-masterspeed="300">
+								
+								<img src="home/img/slides/fish-cover.jpg" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" />
+
+								<div class="tp-caption tp-fade fadeout fullscreenvideo"
+									data-x="0"
+									data-y="0"
+									data-speed="1000"
+									data-start="100"
+									data-easing="Power4.easeOut"
+									data-elementdelay="0.01"
+									data-endelementdelay="0.1"
+									data-endspeed="1500"
+									data-endeasing="Power4.easeIn"
+									data-autoplay="true"
+									data-autoplayonlyfirsttime="false"
+									data-nextslideatend="true"
+									data-volume="mute"
+									data-forceCover="1"
+									data-aspectratio="16:9"
+									data-dottedoverlay="twoxtwo"
+									data-forcerewind="on">
+
+									<video preload="none" width="100%" height="100%" poster="home/img/slides/fish-cover.jpg"> 
+										<source src="home/video/fish-tank.mp4" type="video/mp4" />
+									</video>
+
+								</div>
+
+								<div class="tp-caption sft stb visible-lg"
+									 data-x="197"
+									 data-y="150"
+									 data-speed="300"
+									 data-start="1000"
+									 data-easing="easeOutExpo"><img src="home/img/slides/slide-title-border.png" alt=""></div>
+
+								<div class="tp-caption top-label txt-light lfl stl"
+									 data-x="247"
+									 data-y="150"
+									 data-speed="300"
+									 data-start="500"
+									 data-easing="easeOutExpo">Vaše rješenje je</div>
+
+								<div class="tp-caption sft stb visible-lg"
+									 data-x="427"
+									 data-y="150"
+									 data-speed="300"
+									 data-start="1000"
+									 data-easing="easeOutExpo"><img src="home/img/slides/slide-title-border.png" alt=""></div>
+
+								<div class="tp-caption main-label txt-light sft stb"
+									 data-x="140"
+									 data-y="180"
+									 data-speed="300"
+									 data-start="1500"
+									 data-easing="easeOutExpo">AquaFeed<i class="icon icon-main-logo2"></i></div>
+
+								<div class="tp-caption bottom-label txt-light sft stb"
+									 data-x="187"
+									 data-y="260"
+									 data-speed="500"
+									 data-start="2000"
+									 data-easing="easeOutExpo">Pondudite nam Vaše povjerenje.
+								</div>
+								<a class="tp-caption customin btn btn-lg btn-primary main-button" href="#proizvod"
+										data-x="230" data-hoffset="0"
+										data-y="300"
+										data-customin="x:0;y:0;z:0;rotationX:90;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:200;transformOrigin:50% 0%;"
+										data-speed="800"
+										data-start="1700"
+										data-easing="Back.easeInOut"
+										data-endspeed="300">
+											Saznajte više <i class="fa fa-angle-double-down"></i>
+								</a>
+								<div class="tp-caption sfb"
+									 data-x="650"
+									 data-y="100"
+									 data-speed="400"
+									 data-start="2500"
+									 data-easing="easeOutBack"><img src="home/img/slides/af.png" alt=""></div>	
+							   
+							   <div class="tp-caption randomrotate"
+									 data-x="750"
+									 data-y="200"
+									 data-speed="400"
+									 data-start="2850"
+									 data-easing="easeOutBack"><img src="home/img/slides/aquarium.png" alt=""></div>	
+							<script>
+
+							</script>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="home-intro">
+					<div class="container">
+
+						<div class="row">
+							<div class="col-md-8">
+								<p>
+									The fastest way to grow your business with the leader in <em>Technology</em>
+									<span>Check out our options and features included.</span>
+								</p>
+							</div>
+							<div class="col-md-4">
+								<div class="get-started">
+									<a href="#narudžba" class="btn btn-lg btn-primary">Kupi sada<i class="glyphicon glyphicon-shopping-cart"></i></a>
+									<div class="learn-more">ili <a href="#proizvod">saznaj više.</a></div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+			
+			<section id="proizvod" class="featured" style="padding-top:35px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6">
+							<h2 class="push-top">Premium <strong>Features</strong></h2>
+							<p class="lead">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet hendrerit volutpat. Sed in nunc nec ligula consectetur mollis in vel justo. Vestibulum ante ipsum primis in faucibus orci.
+							</p>
+							<p class="tall">
+								 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet hendrerit volutpat. Sed in nunc nec ligula consectetur mollis in vel justo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent scelerisque volutpat turpis, eu hendrerit enim scel. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent scelerisque volutpat turpis, eu hendrerit enim scel.
+							</p>
+						</div>
+						<div class="col-md-6 push-top">
+							<img class="img-responsive" src="home/img/device.png" data-appear-animation="fadeInRight">
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section id="platforma" style="padding-top:35px;">
+				<div class="container">
+					<div class="row center">
+						<div class="col-md-12">
+							<h1 data-appear-animation="fadeInLeft"><strong>IoT</strong> platforma.</h1>
+							<p class="featured lead">
+								Internet of Things (IoT), ili Internet objekata, nam je omogućio implementaciju naše infrastrukutre. Infrastruktura se bazira na rješenjima koja spajaju fizički svijet s povezanošću na internetske servise.
+								
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="home-concept">
+					<div class="container">
+						<div class="row center">
+							<span class="sun"></span>
+							<span class="cloud"></span>
+							<p class="ad-info">*Za detaljnije informacije dovoljna je interakcija mišem.</p>
+							<div class="col-md-2 col-md-offset-1">
+								<div class="process-image" data-appear-animation="bounceIn">
+									<a id="s1">
+										<i id="s11" class="icon icon-users"></i>
+										<i id="s12" class="icon icon-devices"></i>	
+									</a>
+									<strong>Pristupačnost</strong>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="process-image" data-appear-animation="bounceIn" data-appear-animation-delay="400">
+									<a id="s2">
+										<i id="s21" class="glyphicon glyphicon-globe"></i>
+										<i id="s22" class="icon icon-data-safe"></i>
+									</a>
+									<strong>Računarstvo u oblaku</strong>
+								</div>
+							</div>
+							<div class="col-md-4 col-md-offset-1">
+								<div class="project-image">
+									<a id="s3">
+										<i id="s31" class="icon icon-fishes"></i>
+										<i id="s32" class="icon icon-arduino"></i>
+									</a>
+									<strong class="our-work">Mehanički dio</strong>
+								</div>
+							</div>
+						</div>
+						<div class="insertion">
+						
+							<div id="h0">
+								<h3>© AquaFeed</h3>
+								<p class="featured lead">IoT platforma Vam omogućuje pristup aplikaciji, u bilo koje vrijeme i sa velikog broja uređaja.</br>
+									Tvrtka Telit Wireless Solutions je napravila zanimljiv promotivan video "Jedan dan u životu IoT-a",<br>pogledajte video: <a class="popup-youtube" href="https://www.youtube.com/watch?v=fFqEx--b7hU"><i class="fa fa-youtube-play"></i> YouTube</a>.
+								</p>
+							</div>
+							
+							<div id="h1">
+								<h3>Pristupačnost <i class='fa fa-wifi'></i></h3>
+								<p class='featured lead'>Naša infrastruktura Vam omogućava pristup aplikaciji od strane velikog broja uređaja.
+									Sve što je potrebno je da uređaj ima mogućnost spajanja na Internet i neki od modernijih Web browser-a.
+								</p>
+							</div>
+							
+							<div id="h2">
+								<h3>Cloud <i class='fa fa-cloud'></i></h3>
+								<p class='featured lead'>Računarstvo u oblaku Vam omogućava da se vaši podaci ne nalaze unutar naše infrastrukture, nego na sigurnim serverima.
+									Cloud serveri Vam također omogućavaju danonoćni pristup Vašim podacima.
+								</p>
+							</div>
+							
+							<div id="h3">
+								<h3>Arduino™ </h3>
+								<p class='featured lead'>Arduino je srce uređaja koji izvršava Vaše naredbe hranjena.
+									Spojen je na internet te u određenom trenutku pokreće motor, tj. samu sekvencu hranjena.
+								</p>
+							</div>
+								
+						</div>
+					</div>	
+				</div>		
+			</section>	
+			<!-- / -->
+			<!-- Narudžba -->
+			<section id="narudžba" class="highlight" style="margin-top:0px;">
+				<div class="container">
+					<div class="row" id="projects">
+						<div class="row center col-md-12">
+							<h1 style="margin-bottom:35px;" class="short word-rotator-title">
+								<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
+										<span class="word-rotate-items">
+											<span>Zainteresirani <strong>Ste?</strong></span>
+											<span>Želite naručiti <strong>Aquafeed?</strong></span>
+										</span>
+								</span>
+							</h1>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="pricing-table">
+							<div class="col-md-3 col-sm-6">
+								<div class="plan">
+									<div class="plan-ribbon-wrapper"><div class="plan-ribbon">Popularno!</div></div>
+									<h3 style="color:#0077B3;">Cijena<span>35€</span></h3>
+									<ul>
+										<li>Danonoćno <b>Održavanje sustava</b></li>
+										<li><b>2 godine</b> garancije na mehanički dio</li>
+										<li>Pravo na svaki novi <b>Update sustava</b></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- Forma -->
+						<div class="form-group">
+							<div class="col-md-3">	
+								<label>Vaše ime</label>
+								<input type="text" value="" data-msg-required="Molimo unesite Vaše ime." maxlength="100" class="form-control" name="name" id="name" required>
+							</div>
+							<div class="col-md-3">	
+								<label>Vaše prezime</label>
+								<input type="text" value="" data-msg-required="Molimo unesite Vaše prezime." maxlength="100" class="form-control" name="name" id="name" required>
+							</div>
+							<div class="col-md-3">	
+								<label>Email adresa</label>
+								<input type="text" value="" data-msg-required="Molimo unesite Vašu e-mail adresu." maxlength="100" class="form-control" name="name" id="name" required>
+							</div>
+							<div style="margin-top:20px;" class="col-md-3">
+								<a style="background-color:#fff; color:#333;" class="btn btn-lg" id="narudzba">
+									Naruči <i class="glyphicon glyphicon-shopping-cart"></i>
+								</a>
+							</div>
+							<div style="margin-top: 20px;"class="col-md-3">
+								<p class="ad-info" style="color:#fff;"><br>*Unesite tražene podatke i sve ostalo prepustite nama.<br><br>*Kontaktirat ćemo Vas putem unesene e-mail adrese.</p>
+							</div>
+						</div>
+						<!-- / -->
+					</div>
+				</div>		
+			</section>		
+			<!-- / -->
+			<!-- O nama -->	
+			<section id="onama">
+				<div class="container center">
+					<div class="row" id="team">
+						<div class="col-md-12">
+							<h1 data-appear-animation="fadeInLeft"><strong>Tim</strong> iza AquaFeed-a.</h1>
+							<div class="row center col-md-12">
+								<ul class="team-list">
+									<li class="col-md-4 col-sm-6 col-xs-12">
+										<div class="team-item thumbnail">
+											<a href="#" class="thumb-info team">
+												<img alt="" height="270" src="home/img/team/team-1.jpg">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner">John Doe</span>
+													<span class="thumb-info-type">CEO</span>
+												</span>
+											</a>
+											<span class="thumb-info-caption">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac ligula mi, non suscipitaccumsan.</p>
+												<span class="thumb-info-social-icons">
+													<a data-tooltip data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+													<a data-tooltip data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
+													<a data-tooltip data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+												</span>
+											</span>
+										</div>
+									</li>
+									<li class="col-md-4 col-sm-6 col-xs-12">
+										<div class="team-item thumbnail">
+											<a href="#" class="thumb-info team">
+												<img alt="" height="270" src="home/img/team/team-2.jpg">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner">Jessica Doe</span>
+													<span class="thumb-info-type">Marketing</span>
+												</span>
+											</a>
+											<span class="thumb-info-caption">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac ligula mi, non suscipitaccumsan.</p>
+												<span class="thumb-info-social-icons">
+													<a data-tooltip data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+													<a data-tooltip data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
+													<a data-tooltip data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+												</span>
+											</span>
+										</div>
+									</li>
+									<li class="col-md-4 col-sm-6 col-xs-12">
+										<div class="team-item thumbnail">
+											<a href="#" class="thumb-info team">
+												<img alt="" height="270" src="home/img/team/team-3.jpg">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner">Rick Edward Doe</span>
+													<span class="thumb-info-type">Developer</span>
+												</span>
+											</a>
+											<span class="thumb-info-caption">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac ligula mi, non suscipitaccumsan.</p>
+												<span class="thumb-info-social-icons">
+													<a data-tooltip data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+													<a data-tooltip data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
+													<a data-tooltip data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+												</span>
+											</span>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="parallax" data-stellar-background-ratio="0.5" style="background-image: url(home/img/parallax.jpg);">
+					<div class="container">
+						<div class="row center">
+							<a href="http://www.etfos.unios.hr/"><img style="float:none; display:inline-block; margin-bottom:35px;" data-appear-animation="bounceIn" class="img-responsive" src="home/img/sponsor/etfos.png" /></a>
+							<div class="col-md-12">
+								<h2 class="short text-shadow big white bold"><strong>Naš generalni sponzor.</strong></h2>
+								<h3 class="lead white">Elektrotehnički fakultet u Osijeku.</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!--/ -->
+			<!-- Section kontakt -->
+			<section id="kontakt">
+				<div class="container">
+					<div class="row center col-md-12">
+						<h1 style="margin-bottom:35px;" class="short word-rotator-title">
+							Imate pitanja? 
+							<strong>
+								<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
+									<span class="word-rotate-items">
+										<span>Slobodno nas pitajte.</span>
+										<span>Kontaktirajte nas.</span>
+									</span>
+								</span>
+							</strong>
+						</h1>
+					</div>
+					<div class="row" id="contact">
+						<div class="col-md-6">
+
+							<div class="alert alert-success hidden" id="contactSuccess">
+								<strong>Success!</strong> Your message has been sent to us.
+							</div>
+
+							<div class="alert alert-danger hidden" id="contactError">
+								<strong>Error!</strong> There was an error sending your message.
+							</div>
+							
+							<form id="contactForm">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-6">
+											<label>Vaše ime *</label>
+											<input type="text" value="" data-msg-required="Molimo unesite Vaše ime." maxlength="100" class="form-control" name="name" id="name" required>
+										</div>
+										<div class="col-md-6">
+											<label>Vaša email adresa *</label>
+											<input type="email" value="" data-msg-required="Molimo unesite Vašu email adresu." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" id="email" required>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-12">
+											<label>Subjekt</label>
+											<input type="text" value="" maxlength="100" class="form-control" name="subject" id="subject">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-12">
+											<label>Poruka *</label>
+											<textarea maxlength="5000" data-msg-required="Molimo unesite Vašu poruku." rows="10" class="form-control" name="message" id="message" required></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<input type="submit" value="Pošalji poruku" class="btn btn-primary btn-lg" data-loading-text="Loading...">
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-6">
+
+							<h4 class="push-top"><strong>Helpdesk</strong> služba</h4>
+							<p>Naša služba za korisinike radi danonoćno. Vaše pitanje ćemo proučiti i odgovoriti u što kraćem vremenskom roku.</p>
+
+							<hr />
+
+							<h4><strong>Radno vrijeme</strong> ureda</h4>
+							<ul class="list-unstyled">
+								<li><i class="fa fa-time"></i> Ponedjeljak - Petak: 8 - 17</li>
+								<li><i class="fa fa-time"></i> Subota: 8 - 14</li>
+								<li><i class="fa fa-time"></i> Nedjelja: Ne radimo</li>
+							</ul>
+
+						</div>
+
+					</div>
+
+				</div>
+			</section>
+			<!--/ -->
+			<!-- Featured -->
+			<section class="call-to-action featured footer">
+					<div class="container">
+						<div class="row">
+							<div class="center">
+								<h3>
+									<strong>AquaFeed<i style="font-size:35px;" class="icon icon-main-logo2"></i></strong> je sve što je potrebno Vašim <strong>Ribicama</strong> ! 
+									<a href="#narudžba" class="btn btn-lg btn-primary" data-appear-animation="bounceIn">
+										Kupi sada <i style="font-size:16px;" class="glyphicon glyphicon-shopping-cart"></i> 
+									</a>
+									<span class="arrow hlb hidden-xs hidden-sm hidden-md" data-appear-animation="rotateInUpLeft" style="top: -22px;"></span>
+								</h3>
+							</div>
+						</div>
+					</div>
+			</section>
+			<!-- / -->
+			<footer id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="footer-ribbon">
+							<span>Mi smo Vaš izbor!</span>
+						</div>
+						<div class="col-md-3">
+							<div class="newsletter">
+								<h4>Newsletter</h4>
+								<p>Želite biti konstantno u toku sa našim novim proizvodima i tehnologijama? Unesite Vašu e-mail adresu i pretplatite se na naš newsletter.</p>
+			
+								<div class="alert alert-success hidden" id="newsletterSuccess">
+									<strong>Success!</strong> You've been added to our email list.
+								</div>
+			
+								<div class="alert alert-danger hidden" id="newsletterError"></div>
+			
+								<form id="newsletterForm">
+									<div class="input-group">
+										<input class="form-control" placeholder="Email Adresa" name="newsletterEmail" id="newsletterEmail" type="text">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="submit">Pretplata</button>
+										</span>
+									</div>
+								</form>
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+							<div class="contact-details">
+								<h4>Kontakt</h4>
+								<ul class="contact">
+									<li><p><i class="fa fa-map-marker"></i> <strong>Adresa:</strong> Vukovarska 72, Osijek</p></li>
+									<li><p><i class="fa fa-phone"></i> <strong>Telefon:</strong> +(385) 098 948 7820</p></li>
+									<li><p><i class="fa fa-envelope"></i> <strong>Email:</strong> <a href="mailto:AquaFeed@gmail.com">AquaFeed@gmail.com</a></p></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<h4>Pratite nas</h4>
+							<div class="social-icons">
+								<ul class="social-icons">
+									<li class="facebook"><a href="http://www.facebook.com/" target="_blank" data-placement="bottom" data-tooltip title="Facebook">Facebook</a></li>
+									<li class="twitter"><a href="http://www.twitter.com/" target="_blank" data-placement="bottom" data-tooltip title="Twitter">Twitter</a></li>
+									<li class="googleplus"><a href="http://www.linkedin.com/" target="_blank" data-placement="bottom" data-tooltip title="Google+">Google+</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer-copyright">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-7">
+								<p>© 2015 AquaFeed. Sva prava pridržana.</p>
+							</div>
+							<div class="col-md-4">
+								<p>Vaša IP adresa: <strong id="user-ip" style="color:#fff;"></strong> .</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	
+		<!-- Vendor -->
+		<script src="home/vendor/jquery/jquery.js"></script>
+		<script src="home/vendor/jquery.appear/jquery.appear.js"></script>
+		<script src="home/vendor/jquery.easing/jquery.easing.js"></script>
+		<script src="home/vendor/jquery-cookie/jquery-cookie.js"></script>
+		<script src="home/vendor/bootstrap/bootstrap.js"></script>
+		<script src="home/vendor/common/common.js"></script>
+		<script src="home/vendor/jquery.validation/jquery.validation.js"></script>
+		<script src="home/vendor/jquery.stellar/jquery.stellar.js"></script>
+		<script src="home/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.js"></script>
+		<script src="home/vendor/jquery.gmap/jquery.gmap.js"></script>
+		<script src="home/vendor/isotope/jquery.isotope.js"></script>
+		<script src="home/vendor/owlcarousel/owl.carousel.js"></script>
+		<script src="home/vendor/jflickrfeed/jflickrfeed.js"></script>
+		<script src="home/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="home/vendor/jquery.menuOnScroll/jquery.menuOnScroll.js"></script>		
+		
+		<!-- Specific Page Vendor and Views -->
+		<script src="home/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+		<script src="home/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+		<script src="home/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="home/js/theme.js"></script>
+		<script type="text/javascript" src="home/js/jquery.nicescroll.min.js"></script>
+		<script type="text/javascript" src="home/js/royal_preloader.min.js"></script>
+		<script type="text/javascript">
+            Royal_Preloader.config({
+                mode:           'text', // 'number', "text" ili "logo"
+                text:           'AQUAFEED',
+                timeout:        0,
+                showInfo:       true,
+                opacity:        1,
+                background:     ['#33B5E5']
+            });
+		</script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="home/js/theme.init.js"></script>
+
+	</body>
+</html>
