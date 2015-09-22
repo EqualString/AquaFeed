@@ -153,14 +153,10 @@ app.get('/login.html', nocache, function(req, res){
 });
 
 //Konfiguracija servera
-/*var server = app.listen(envport, function () {
+var server = app.listen(server_port, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('app @ :http://localhost:3000/');
-});*/
-
-var server = app.listen(server_port, server_ip_address,, function () {
-	console.log("Listening on " + server_ip_address + ", server_port " + server_port)
 });
 
 app.use(express.static(__dirname + '/public'));//Koristi sve iz folder 'public'
