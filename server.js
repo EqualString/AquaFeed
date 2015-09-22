@@ -17,7 +17,7 @@ admin[1] = "Luafr";
 
 //Openshift
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 
@@ -156,7 +156,7 @@ app.get('/login.html', nocache, function(req, res){
 var server = app.listen(server_port, function () {
   var host = server.address().address;
   var port = server.address().port;
-  console.log('app @ :http://localhost:3000/');
+  console.log('app @ :http://localhost:8080/');
 });
 
 app.use(express.static(__dirname + '/public'));//Koristi sve iz folder 'public'
