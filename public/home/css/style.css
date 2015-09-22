@@ -638,7 +638,7 @@ body.scrolling .nav-main-collapse.collapsing {
 		margin-left: 1px;
 		margin-right: 3px;
 		padding-bottom: 20px;
-		padding-top: 46px;
+		padding-top: 40px;
 	}
 
 	#header.flat-menu nav ul.nav-main li.dropdown:hover a.dropdown-toggle {
@@ -1048,7 +1048,7 @@ body.sticky-menu-active #header.transparent.semi-transparent.font-color-light na
 
 #header nav.mega-menu ul.nav-main .mega-menu-signin .dropdown-menu {
 	width: 40%;
-	right: 8px;
+	right: -2px;
 	border-radius: 6px 0 6px 6px;
 }
 
@@ -1136,7 +1136,7 @@ body.sticky-menu-active #header.transparent.semi-transparent.font-color-light na
 }
 
 body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu li a, body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu:hover li:hover li:hover a {
-	background-color: transparent !important;
+	/*background-color: transparent !important;*/
 	color: #333;
 	padding: 0;
 	margin: 0;
