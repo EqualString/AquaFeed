@@ -13,9 +13,8 @@ admin[1] = "Luafr";
 
 // port aplikacije
 // process.env.PORT dopušta da Heroku postavlja vlastiti port
-//var envport = process.env.PORT || 3000;
-
-//Openshift
+// var envport = process.env.PORT || 3000;
+// Openshift
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
