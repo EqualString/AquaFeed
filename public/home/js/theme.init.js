@@ -1,16 +1,17 @@
 
+//Socket.io init
+var socket = io.connect();
+function login_cp()
+{  
+	var info = [];
+	info[0] = document.getElementById("em").value;
+	info[1] = document.getElementById("passwd").value;
+	socket.emit('login_info', info );//Komunikacija sa serverom
+}
+	
 (function($) {
 	'use strict';
-	//Socket.io init
-	var socket = io.connect();
-	function login_cp()
-	{   
-		var info = [];
-		info[0] = document.getElementById("em").value;
-		info[1] = document.getElementById("passwd").value;
-		socket.emit('login_info', info );//Komunikacija sa serverom
-	}
-	
+
 	//menuOnscroll init
 	//Unutar klase isključen scroll, koristi se samo da se postavi 'active' na meniju
 	$('#mainMenu').menuOnScroll({

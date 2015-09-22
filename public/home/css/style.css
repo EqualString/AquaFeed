@@ -1133,9 +1133,14 @@ body.sticky-menu-active #header.transparent.semi-transparent.font-color-light na
 	margin-top: 6px;
 }
 
+#header nav.mega-menu ul.nav-main .mega-menu-signin.logged .list-account-options a{
+	text-transform: none;
+}
+
 #header nav.mega-menu ul.nav-main .mega-menu-signin.logged .list-account-options a:hover {
 	text-decoration: underline;
 	text-shadow: 0px 0px;
+	color: #0698CB !important;
 }
 
 body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu li a, body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu:hover li:hover li:hover a {
