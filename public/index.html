@@ -57,12 +57,12 @@
 			<div class="header-top">
 					<div class="container">
 						<p>
-							Get in touch! <span><i class="fa fa-phone"></i>(123) 456-7890</span> | <a href="#">mail@domain.com</a>
+							AquaFeed<i style="top:-4px; left:-3.5px; font-size:12.5px;" class="fa fa-copyright"></i>| <span><i class="fa fa-phone"></i>+ (385) 098 948 7820</span> | <a href="mailto:AquaFeed@gmail.com">AquaFeed@gmail.com</a>
 						</p>
 						<ul class="social-icons">
-							<li class="facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook">Facebook</a></li>
-							<li class="twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter">Twitter</a></li>
-							<li class="linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin">Linkedin</a></li>
+							<li class="facebook"><a href="http://www.facebook.com/" target="_blank" data-placement="bottom" data-tooltip title="Facebook">Facebook</a></li>
+							<li class="twitter"><a href="http://www.twitter.com/" target="_blank" data-placement="bottom" data-tooltip title="Twitter">Twitter</a></li>
+							<li class="googleplus"><a href="http://www.linkedin.com/" target="_blank" data-placement="bottom" data-tooltip title="Google+">Google+</a></li>
 						</ul>
 					</div>
 				</div>
@@ -72,19 +72,6 @@
 							<img alt="AF" width="73" height="73" data-sticky-width="50" data-sticky-height="50" src="home/img/favicon/favicon.png">
 						</a>
 					</div>
-					<!--
-					<ul class="social-icons">
-						<li class="facebook"><a href="http://www.facebook.com/" target="_blank" data-placement="bottom" data-tooltip title="Facebook">Facebook</a></li>
-						<li class="twitter"><a href="http://www.twitter.com/" target="_blank" data-placement="bottom" data-tooltip title="Twitter">Twitter</a></li>
-						<li class="googleplus"><a href="http://www.linkedin.com/" target="_blank" data-placement="bottom" data-tooltip title="Google+">Google+</a></li>
-					</ul>
-					<nav>
-						<ul class="nav nav-pills nav-top">
-							<li class="phone">
-								<span><i class="fa fa-phone"></i>(+385) 098 948 7820</span>
-							</li>
-						</ul>
-					</nav>-->
 					<button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
 						<i class="fa fa-bars"></i>
 					</button>
@@ -146,7 +133,7 @@
 								<%if (auth != true) { %>
 								<li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
 									<a class="dropdown-toggle signup-menu">
-										<i style="font-size:16px;"class="fa fa-sign-in"></i> Prijava
+										<i style="font-size:16px;" class="fa fa-sign-in"></i> Prijava
 										<i class="fa fa-angle-down"></i>
 									</a>
 									<ul class="dropdown-menu">
@@ -188,16 +175,6 @@
 																	</div>
 																</div>	
 															</form>
-															<script>
-															var socket = io.connect();
-																function login_cp()
-																{   /**Komunikacija sa serverom**/
-																	var info = [];
-																	info[0] = document.getElementById("em").value;
-																	info[1] = document.getElementById("passwd").value;
-																	socket.emit('login_info', info );
-																}
-															</script>
 															<p class="sign-up-info">Nemate korisnički račun? <a href="#narudžba">Prijavite se</a></p>
 														</div>
 													</div>
@@ -490,8 +467,8 @@
 						<div class="row">
 							<div class="col-md-8">
 								<p>
-									The fastest way to grow your business with the leader in <em>Technology</em>
-									<span>Check out our options and features included.</span>
+									Ne želite da Vaši ljubimci <em>Gladuju </em> dok niste kući?
+									<span>Pogledajte mogućnosti i opcije koje nudimo.</span>
 								</p>
 							</div>
 							<div class="col-md-4">

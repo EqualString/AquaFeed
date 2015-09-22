@@ -1529,9 +1529,10 @@ hr.invisible {
 	border: 5px solid #FFF;
 	border-radius: 100px;
 	box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
-	color: #777777;
+	color: #0698CB;
 	display: block;
-	font: bold 25px / 100px Georgia, Serif;
+	font: bold 25px / 100px "Slider-font";
+	font-size: 32px;
 	height: 100px;
 	margin: 20px auto -65px;
 	width: 100px;

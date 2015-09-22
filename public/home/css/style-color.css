@@ -397,19 +397,17 @@ section.video blockquote i.fa-quote-left {
 		background-color: #0099e6 !important;
 	}
 
-	#header.flat-menu nav ul.nav-main li > a,
-	#header.flat-menu nav ul.nav-main li.active > a {
-		color: #666;
+	#header.flat-menu nav ul.nav-main li > a{
+		font-size:12px;
+		letter-spacing: 1px; 
+		color: #293541;
 	}
 
-	#header.flat-menu nav ul.nav-main li.active > a {
-		color: #0698CB;
-		background-color: transparent !important;
-	}
-
+	#header.flat-menu nav ul.nav-main li.active > a ,
 	#header.flat-menu nav ul.nav-main li > a:hover {
 		color: #FFF;
-		background-color: #0698CB !important;
+		text-shadow: 0.5px 0.5px #242E3A;
+		background-color: #0698CB;
 	}
 
 	#header nav.mega-menu ul.nav-main li.mega-menu-item ul.dropdown-menu {
