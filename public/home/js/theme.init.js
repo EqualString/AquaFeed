@@ -1,3 +1,13 @@
+ 
+//Preloader
+ Royal_Preloader.config({
+    mode:           'text', // 'number', "text" ili "logo"
+    text:           'AQUAFEED',
+    timeout:        0,
+    showInfo:       true,
+    opacity:        1,
+    background:     ['#33B5E5']
+});
 
 //Socket.io init
 var socket = io.connect();
@@ -8,7 +18,8 @@ function login_cp()
 	info[1] = document.getElementById("passwd").value;
 	socket.emit('login_info', info );//Komunikacija sa serverom
 }
-	
+
+//Document loaded
 (function($) {
 	'use strict';
 
