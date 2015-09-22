@@ -1,6 +1,6 @@
 {
   "name": "AquaFeed",
-  "description": "AF with Heroku",
+  "description": "AF with Clever Cloud",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
