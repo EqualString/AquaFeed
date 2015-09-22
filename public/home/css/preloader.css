@@ -7,7 +7,7 @@ body.royal_loader {
     visibility: hidden;
 }
 #header{
-	z-index:10;
+	display:none;
 }
 #royal_preloader {
     font-family: "Open Sans",Arial,sans-serif;

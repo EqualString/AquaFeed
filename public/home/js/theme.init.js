@@ -8,7 +8,9 @@
     opacity:        1,
     background:     ['#33B5E5']
 });
-
+$( document ).ready(function(){
+	$('#header').css('display','block'); //Preloader header fix
+});
 //Socket.io init
 var socket = io.connect();
 function login_cp()
