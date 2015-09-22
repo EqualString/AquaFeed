@@ -2,7 +2,7 @@
 //Preloader
  Royal_Preloader.config({
     mode:           'text', // 'number', "text" ili "logo"
-    text:           'AQUAFEED',
+    text:           'AQUAFEED©',
     timeout:        0,
     showInfo:       true,
     opacity:        1,
