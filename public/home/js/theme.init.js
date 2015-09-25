@@ -11,6 +11,7 @@
 $( document ).ready(function(){
 	$('#header').css('display','block'); //Preloader header fix
 });
+
 //Socket.io init
 var socket = io.connect();
 function login_cp()
@@ -46,59 +47,49 @@ function login_cp()
 	
 	
 	$('#user-ip').text(myip); //Dohvaćanje IP adrese
+	
 	$('#s12, #s22, #s32,#h1,#h2,#h3').css("display","none");
 	var faded = 450;
 	var i,br=0;
-	$("#s3").hover(
-		function(){
+	$("#s31").click( function(){
 			//Zamjena
 			$('#s31').css("display","none");
 			$('#s32').css("display","inline-block");
 			//Opisi
 			hideit();
 			display(3);
-		},
-		function(){
+	});
+	$("#s32").mouseleave( function(){
 			$('#s32').css("display","none");
 			$('#s31').css("display","inline-block");
 			hideit();
 			display(0);
-		}
-	);
-	$("#s2").hover(
-		function(){
-			//Zamjena
+	
+	});
+	$("#s21").click( function(){
 			$('#s21').css("display","none");
 			$('#s22').css("display","inline-block");
-			//Opisi
 			hideit();
 			display(2);
-		},
-		function(){
+    });
+	$("#s22").mouseleave( function(){	
 			$('#s22').css("display","none");
 			$('#s21').css("display","inline-block");
 			hideit();
 			display(0);
-		}
-	);
-	$("#s1").hover(
-		function(){
-			//Zamjena
+	});
+	$("#s11").click( function(){
 			$('#s11').css("display","none");
 			$('#s12').css("display","inline-block");
-			//Opisi
 			hideit();
 			display(1);
-		},
-		function(){
+	});
+	$("#s12").mouseleave( function(){
 			$('#s12').css("display","none");
 			$('#s11').css("display","inline-block");
 			hideit();
 			display(0);
-		}
-	);
-		
-
+	});
 	
 	function hideit(){
 		for (i = 0; i< 4; i++){

@@ -44,12 +44,21 @@ body {
 .fa-youtube-play{
 	color: #cc181e !important;
 }
-#s12, #s22, #s32{
+#s12, #s22, #s32, #s11, #s21, #s31{
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-ms-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
+	
+}
+#s21,#s22{
+	margin-top: 4px;
+}
+.home-concept .process-image a i:hover {
+	color:#0698CB;
+}
+.home-concept .project-image a i:hover {
 	color:#0698CB;
 }
 #mainMenu li a{
@@ -78,6 +87,10 @@ body {
 	font-weight: normal;
 	margin-top:9px;
 	font-size: 1.5em;
+}
+.onama{
+	background: #0000 !important;
+
 }
 
 /* Responsive */
@@ -1231,6 +1244,17 @@ body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu:hover li:hover li:
 		display:none !important;
 	}
 }
+@media screen and (max-height: 640px) and (max-width:992px) {
+	.home-concept .our-work {
+		margin-top: 26px !important;
+		margin-bottom:8px !important;
+	}
+	.project-image i{
+		font-size:120px;
+		margin-top:3px;
+		padding-bottom:5px;
+	}
+}	
 @media (max-width: 991px) {
 	/* Header */
 	#header {
@@ -1665,7 +1689,8 @@ section.highlight {
 	border-right: 0;
 	border: 3px solid #CCC;
 	margin: 35px 0 45px;
-	padding: 40px 0;
+	margin-bottom:0px;
+	padding: 0 0;
 	color: #FFF;
 }
 
@@ -2094,11 +2119,7 @@ aside ul.nav-list > li > a {
 	.home-concept .process-image {
 		margin-top: 60px;
 	}
-	.project-image i{
-		font-size:120px;
-		margin-top:3px;
-		padding-bottom:5px;
-	}
+	
 	.resp{
 		display:none !important; 
 	}
