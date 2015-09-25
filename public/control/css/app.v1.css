@@ -113,10 +113,10 @@ Loader
   height: 100%;
 }
 
-.l1 div{ background-color:#2ecc71;}
-.l2 div{ background-color:#9b59b6;}
-.l3 div{ background-color:#3498db;}
-.l4 div{ background-color:#f1c30f;}
+.l1 div{ background-color:#222;}
+.l2 div{ background-color:#00A2D3;}
+.l3 div{ background-color:#00A2D3;}
+.l4 div{ background-color:#222;}
 
 .l1 { transform: translate(0,0); }
 .l2 { transform: translate(0,16px); }

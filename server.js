@@ -14,7 +14,8 @@ admin[1] = "Luafr";
 // port aplikacije
 // process.env.PORT dopušta da Heroku postavlja vlastiti port
 // var envport = process.env.PORT || 3000;
-// Openshift
+// Openshift ima svoj env.port
+// Clever Cloud koristi 8080 po defaultu
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';

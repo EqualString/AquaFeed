@@ -44,6 +44,9 @@ body {
 .fa-youtube-play{
 	color: #cc181e !important;
 }
+#s12, #s22, #s32,#h1,#h2,#h3 {
+	display:none;
+}
 #s12, #s22, #s32, #s11, #s21, #s31{
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
@@ -88,10 +91,7 @@ body {
 	margin-top:9px;
 	font-size: 1.5em;
 }
-.onama{
-	background: #0000 !important;
 
-}
 
 /* Responsive */
 @media (max-width: 479px) {
@@ -1941,7 +1941,7 @@ aside ul.nav-list > li > a {
 
 /* Home Intro */
 .home-intro {
-	background-color: #293541;
+	background-color: #242E3A;
 	margin-bottom: 0px;
 	overflow: hidden;
 	padding: 20px 0 10px 0;
@@ -2243,18 +2243,6 @@ aside ul.nav-list > li > a {
 	position: absolute;
 	margin: -90px 0 0 14px;
 	padding: 10px 20px 6px 20px;
-}
-
-#footer .footer-ribbon:before {
-	border-right: 10px solid #646464;
-	border-top: 16px solid transparent;
-	content: "";
-	display: block;
-	height: 0;
-	left: -10px;
-	position: absolute;
-	top: 0;
-	width: 7px;
 }
 
 #footer .footer-ribbon span {

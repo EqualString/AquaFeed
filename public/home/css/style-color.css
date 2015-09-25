@@ -94,32 +94,20 @@ body.dark .pagination > .active > span:focus {
 .pagination > .active > a,
 body.dark .pagination > .active > a,
 .owl-theme .owl-controls .owl-nav [class*="owl-"] {
-	border-color: #0698CB !important;
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color: #0698CB;
-	border-color: #0698CB;
+	border-color: #0077b3;
 }
 
 .btn-primary:hover,
 .pagination > .active > a:hover,
 body.dark .pagination > .active > a:hover,
 .owl-theme .owl-controls .owl-nav [class*="owl-"]:hover {
-	border-color: #0099e6;
-	background-color: #0099e6;
+	border-color: #0698CB;
+	background-color: #33B5E5;
 }
 
-.btn-primary:active,
-.pagination > .active > a:active,
-body.dark .pagination > .active > a:active,
-.owl-theme .owl-controls .owl-nav [class*="owl-"]:active,
-.btn-primary:focus,
-.pagination > .active > a:focus,
-body.dark .pagination > .active > a:focus,
-.owl-theme .owl-controls .owl-nav [class*="owl-"]:focus {
-	border-color: #0077b3;
-	background-color: #0077b3;
-}
 
 .progress-bar-primary {
 	background-color: #0698CB;

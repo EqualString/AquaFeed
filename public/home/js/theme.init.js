@@ -26,11 +26,6 @@ function login_cp()
 (function($) {
 	'use strict';
 
-	//menuOnscroll init
-	//Unutar klase isključen scroll, koristi se samo da se postavi 'active' na meniju
-	$('#mainMenu').menuOnScroll({
-					menuSelector: '.menu-item'
-              });
 	// Dodatak za svaki anchor link :)
 	$('a[href^="#"]').on('click',function (e) {
 	    e.preventDefault();
@@ -39,16 +34,19 @@ function login_cp()
 	    var $target = $(target);
 
 	    $('html, body').stop().animate({
-	        'scrollTop': $target.offset().top - 100
-	    }, 900, 'swing', function () {
+	        'scrollTop': $target.offset().top -108
+	    }, 950, 'swing', function () {
 	        //window.location.hash = target; //Ne stavlja se u putanju anchor
 	    });
 	});	
-	
+	//menuOnscroll init
+	//Unutar klase isključen scroll, koristi se samo da se postavi 'active' na meniju
+	$('#mainMenu').menuOnScroll({
+		menuSelector: '.menu-item'
+    });
 	
 	$('#user-ip').text(myip); //Dohvaćanje IP adrese
 	
-	$('#s12, #s22, #s32,#h1,#h2,#h3').css("display","none");
 	var faded = 450;
 	var i,br=0;
 	$("#s31").click( function(){

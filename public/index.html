@@ -51,7 +51,9 @@
 
 	</head>
 	<body class="royal_loader">
-
+		<noscript>
+			Za potpuni i ispravan rad stranice potrebno je omogućiti javascript.
+		</noscript>
 		<div class="body">
 			<header id="header" class="flat-menu clean-top">
 				<div class="header-top">
@@ -81,20 +83,20 @@
 						<nav class="nav-main mega-menu">
 							<ul class="nav nav-pills nav-main" id="mainMenu">
 								<li class="menu-item active">
-									<a href="#naslovna">Naslovna</a>
+									<a data-hash href="#naslovna">Naslovna</a>
 								</li>
 								<li class="menu-item">
-									<a href="#proizvod">Proizvod</a>
+									<a data-hash href="#proizvod">Proizvod</a>
 								</li>
 								<li class="menu-item">
-									<a href="#platforma">IoT Platforma</a>
+									<a data-hash href="#platforma">IoT Platforma</a>
 								</li>
 								<li class="menu-item">
-									<a href="#narudžba">
+									<a data-hash href="#narudzba">
 									<i class="glyphicon glyphicon-shopping-cart"></i> Narudžba</a>
 								</li>
 								<li class="menu-item">
-									<a href="#onama">O nama</a>
+									<a data-hash href="#onama">O nama</a>
 								</li>
 								<li class="menu-item">
 									<a href="#kontakt">Kontakt</a>
@@ -191,7 +193,7 @@
 			</header>
 
 			
-			<section id="naslovna" class="section">
+			<section id="naslovna">
 				<div class="slider-container">
 					<div class="slider" id="revolutionSlider" data-plugin-revolution-slider data-plugin-options='{"startheight": 500}'>
 						<ul>
@@ -473,7 +475,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="get-started">
-									<a href="#narudžba" class="btn btn-lg btn-primary">Kupi sada<i class="glyphicon glyphicon-shopping-cart"></i></a>
+									<a href="#narudzba" class="btn btn-lg btn-primary">Kupi sada<i class="glyphicon glyphicon-shopping-cart"></i></a>
 									<div class="learn-more">ili <a href="#proizvod">saznaj više.</a></div>
 								</div>
 							</div>
@@ -526,8 +528,8 @@
 						<div class="col-md-12">
 							<h1 data-appear-animation="fadeInLeft"><strong>IoT</strong> platforma.</h1>
 							<p class="featured lead">
-								Internet of Things (IoT), ili Internet objekata, nam je omogućio implementaciju naše infrastrukutre. Infrastruktura se bazira na rješenjima koja spajaju fizički svijet s povezanošću na internetske servise.
-								
+								Internet of Things (IoT), ili Internet objekata, nam je omogućio implementaciju naše infrastrukutre.
+								Infrastruktura se bazira na rješenjima koja spajaju fizički svijet s povezanošću na internetske servise.	
 							</p>
 						</div>
 					</div>
@@ -541,8 +543,8 @@
 							<div class="col-md-2 col-md-offset-1">
 								<div class="process-image" data-appear-animation="bounceIn">
 									<a id="s1">
-										<i id="s11" class="icon icon-users"></i>
-										<i id="s12" class="icon icon-devices"></i>	
+										<i data-appear-animation="fadeIn" id="s11" class="icon icon-users"></i>
+										<i data-appear-animation="fadeIn" id="s12" class="icon icon-devices"></i>	
 									</a>
 									<strong>Pristupačnost</strong>
 								</div>
@@ -550,8 +552,8 @@
 							<div class="col-md-2">
 								<div class="process-image" data-appear-animation="bounceIn" data-appear-animation-delay="400">
 									<a id="s2">
-										<i id="s21" class="glyphicon glyphicon-globe"></i>
-										<i id="s22" class="icon icon-data-safe"></i>
+										<i data-appear-animation="fadeIn" id="s21" class="glyphicon glyphicon-globe"></i>
+										<i data-appear-animation="fadeIn" id="s22" class="icon icon-data-safe"></i>
 									</a>
 									<strong>Računarstvo u oblaku</strong>
 								</div>
@@ -559,8 +561,8 @@
 							<div class="col-md-4 col-md-offset-1">
 								<div class="project-image">
 									<a id="s3">
-										<i id="s31" class="icon icon-fishes"></i>
-										<i id="s32" class="icon icon-arduino"></i>
+										<i data-appear-animation="fadeIn" id="s31" class="icon icon-fishes"></i>
+										<i data-appear-animation="fadeIn" id="s32" class="icon icon-arduino"></i>
 									</a>
 									<strong class="our-work">Mehanički dio</strong>
 								</div>
@@ -571,7 +573,8 @@
 							<div data-appear-animation="fadeInLeft" id="h0">
 								<h3><i class="fa fa-copyright"></i> AquaFeed</h3>
 								<p class="featured lead">IoT platforma Vam omogućuje pristup aplikaciji, u bilo koje vrijeme i sa velikog broja uređaja.
-									Tvrtka Telit Wireless Solutions je napravila zanimljiv promotivan video "Jedan dan u životu IoT-a", pogledajte video: <a class="popup-youtube" href="https://www.youtube.com/watch?v=fFqEx--b7hU"><i class="fa fa-youtube-play"></i> YouTube</a>.
+									Tvrtka Telit Wireless Solutions je napravila zanimljiv promotivan video "Jedan dan u životu IoT-a", pogledajte video: 
+									<a class="popup-youtube" href="https://www.youtube.com/watch?v=fFqEx--b7hU"><i class="fa fa-youtube-play"></i> YouTube</a>.
 								</p>
 							</div>
 							
@@ -602,11 +605,11 @@
 			</section>	
 			<!-- / -->
 			<!-- Narudžba -->
-			<section id="narudžba" class="highlight" style="padding-top:50px">
+			<section id="narudzba" class="highlight" style="padding-top:50px">
 				<div class="container center">
 					<div class="row" id="projects">
 						<div class="row center col-md-12">
-							<h1 data-appear-animation="fadeInLeft" style="padding-bottom:35px;" class="short word-rotator-title">
+							<h1 data-appear-animation="fadeInLeft" style="padding-bottom:30px;" class="short word-rotator-title">
 								<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
 										<span class="word-rotate-items">
 											<span>Zainteresirani <strong>Ste?</strong></span>
@@ -662,28 +665,28 @@
 			<!-- / -->
 			<!-- O nama -->	
 			<section id="onama" style="background-image: url(home/img/parallax-transparent.jpg);">
-				<div class="container center onama">
-					<div class="row" id="team">
-						<div class="col-md-12">
-							<h1 data-appear-animation="fadeInLeft" style="padding-bottom:50px; padding-top:50px;" class="short word-rotator-title">
-								<strong>Tim</strong>
-									<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
-										<span class="word-rotate-items">
-											<span>iza AquaFeed-a.</span>
-											<span>zaslužan za AquaFeed.</span>
-										</span>
-									</span>
-							</h1>
-							<div class="row center col-md-12">
-								<ul class="team-list">
-									<li class="col-md-4 col-sm-6 col-xs-12">
-										<div class="team-item thumbnail">
-											<a href="#" class="thumb-info team">
-												<img alt="" height="270" src="home/img/team/team-1.jpg">
-												<span class="thumb-info-title">
-													<span class="thumb-info-inner">Marko Budimir</span>
-													<span class="thumb-info-type">Technical Engineer</span>
-												</span>
+				<div class="container">
+					<div class="row center col-md-12">
+						<h1 data-appear-animation="fadeInLeft" style="padding-bottom:50px; padding-top:50px;" class="short word-rotator-title">
+							<strong>Tim</strong>
+							<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
+								<span class="word-rotate-items">
+									<span>iza AquaFeed-a.</span>
+									<span>zaslužan za AquaFeed.</span>
+								</span>
+							</span>
+						</h1>
+					</div>
+					<div class="row center col-md-12">
+						<ul class="team-list">
+							<li class="col-md-4 col-sm-6 col-xs-12">
+								<div class="team-item thumbnail">
+									<a href="#" class="thumb-info team">
+										<img alt="" height="270" src="home/img/team/team-1.jpg">
+											<span class="thumb-info-title">
+												<span class="thumb-info-inner">Marko Budimir</span>
+												<span class="thumb-info-type">Technical Engineer</span>
+											</span>
 											</a>
 											<span class="thumb-info-caption">
 												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac ligula mi, non suscipitaccumsan.</p>
@@ -729,15 +732,14 @@
 													<a data-tooltip data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
 													<a data-tooltip data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
 													<a data-tooltip data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
-												</span>
 											</span>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
+									</span>
+								</div>
+							</li>
+						</ul>
 					</div>
 				</div>
+				<!-- Sponzor -->
 				<div class="parallax" data-stellar-background-ratio="0.5" style="background-image: url(home/img/parallax.jpg);">
 					<div class="container">
 						<div class="row center">
@@ -839,10 +841,10 @@
 			<section class="call-to-action featured footer">
 					<div class="container">
 						<div class="row">
-							<div data-appear-animation="fadeInLeft" class="center">
+							<div class="center">
 								<h3>
 									<strong>AquaFeed<i style="font-size:35px;" class="icon icon-main-logo2"></i></strong> je sve što je potrebno Vašim <strong>Ribicama</strong> ! 
-									<a href="#narudžba" class="btn btn-lg btn-primary" data-appear-animation="bounceIn">
+									<a data-appear-animation="fadeInLeft" href="#narudzba" class="btn btn-lg btn-primary" data-appear-animation="bounceIn">
 										Kupi sada <i style="font-size:16px;" class="glyphicon glyphicon-shopping-cart"></i> 
 									</a>
 									<span class="arrow hlb hidden-xs hidden-sm hidden-md" data-appear-animation="rotateInUpLeft" style="top: -22px;"></span>
@@ -857,7 +859,7 @@
 					<div class="row">
 						<div class="footer-ribbon">
 							<span>Mi smo Vaš izbor!</span>
-						</div>
+						</div> 
 						<div class="col-md-3">
 							<div class="newsletter">
 								<h4>Newsletter</h4>
@@ -871,9 +873,9 @@
 			
 								<form id="newsletterForm">
 									<div class="input-group">
-										<input class="form-control" placeholder="Email Adresa" name="newsletterEmail" id="newsletterEmail" type="text">
+										<input class="form-control" placeholder="Email Adresa" name="newsletterEmail" id="newsletterEmail" type="text" required>
 										<span class="input-group-btn">
-											<button class="btn btn-default" type="submit">Pretplata</button>
+											<button class="btn btn-letter btn-default" type="submit">Pretplata</button>
 										</span>
 									</div>
 								</form>
@@ -934,7 +936,7 @@
 		<script src="home/vendor/magnific-popup/jquery.magnific-popup.js"></script>
 		<script src="home/vendor/jquery.menuOnScroll/jquery.menuOnScroll.js"></script>		
 		
-		<!-- Specific Page Vendor and Views -->
+		<!-- Specific Page Vendor -->
 		<script src="home/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
 		<script src="home/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 		<script src="home/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>

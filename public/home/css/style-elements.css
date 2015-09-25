@@ -293,13 +293,31 @@ ul.nav-pills > li.active > a:hover, ul.nav-pills > li.active > a:focus {
 }
 
 /* Buttons */
+.btn {
+    transition: all 0.2s ease 0s;
+    border-width: 0px 0px 3px;
+    border-style: none none solid;
+    border-color: -moz-use-text-color -moz-use-text-color #CCC;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    padding: 8px 18px;
+    outline: 0px none;
+}
+.btn-letter{
+	border-width: 0px 0px 0px;
+	padding: 6px 12px;
+	border: 1px solid transparent;
+}
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active {
-	background-color: #CCC;
-	border-color: #CCC;
+	background-color: #0698CB;
+	border-color: #0077b3;
 }
 
 .btn-primary[disabled] {
@@ -316,7 +334,10 @@ ul.nav-pills > li.active > a:hover, ul.nav-pills > li.active > a:focus {
 	margin-right: 0;
 	margin-left: 10px;
 }
-
+.btn-lg {
+    border-bottom-width: 4px;
+    padding: 12px 32px;
+}
 /* Forms */
 form label {
 	font-weight: normal;
@@ -2975,22 +2996,18 @@ p .word-rotate {
 
 /* Scroll to Top */
 html .scroll-to-top {
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	transition: all 0.3s;
-	background: #404040;
-	border-radius: 7px 7px 0 0;
-	bottom: 0px;
+	transition: all 0.3s ease 0s;
+	background: #20252C none repeat scroll 0% 0%;
+	border-radius: 6px;
+	bottom: 10px;
 	color: #FFF;
 	display: block;
-	height: 9px;
 	opacity: 0;
-	padding: 13px 10px 35px;
+	padding: 12px 18px;
 	position: fixed;
 	right: 10px;
 	text-align: center;
 	text-decoration: none;
-	min-width: 49px;
 	z-index: 1040;
 }
 
