@@ -1,15 +1,32 @@
+/* 
+|------------------------------------------|
+| AquaFeed - IoT nodejs Server             |
+|------------------------------------------|
+| @author:  Egredžija Alen                 |
+| @version: 2.2 (28.9 2015)                |
+| @website: http://aquafeed.cleverapps.io  |
+|------------------------------------------|
+*/
+
+//Dopunske skripte
 var express = require('express');
 var mqtt = require('mqtt');
 var io = require('socket.io')(server);
 var InfiniteLoop = require('infinite-loop');
+var fs = require('fs');
 var app = express();
+
+//Dodatne varijable
 var user =[],db_user =[], sem = true, semi = true, auth, log =[];
 var izvedeni=[],d,e,datus,ln,i,now;
-var fs = require('fs');
+var client, client_listener;
 
-var admin =[];//Admin user
+//Admin user
+var admin =[];
 admin[0] = "EqualString";
 admin[1] = "Luafr";
+
+/** Konfiguracija servera **/
 
 // port aplikacije
 // process.env.PORT dopušta da Heroku postavlja vlastiti port
@@ -20,12 +37,11 @@ admin[1] = "Luafr";
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
-
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/public');
 
-//Server Router
+/** Server rute **/
 
 app.get('/', nocache, function(req, res){
   res.render('index.html', {
@@ -123,7 +139,7 @@ app.get('/404', nocache, function(req, res){
   res.render('404.html');
 });
 	
-//Redirektanje
+//Redirektanje zbog sigurnosti
 app.get('/index', nocache, function(req, res){
   res.redirect('/');
 });
@@ -151,6 +167,9 @@ app.get('/user.html', nocache, function(req, res){
 app.get('/login.html', nocache, function(req, res){
   res.redirect('/login');
 });
+app.get('/404.html', nocache, function(req, res){
+  res.redirect('/404');
+});
 
 //Konfiguracija servera
 var server = app.listen(server_port, function () {
@@ -166,7 +185,9 @@ app.use(function(req, res) {
     res.redirect('/404');
 });
 
+/** Server akcije **/
 //Socket.io 
+//Korištenje socketa za real-time komunikaciju client-server dijela
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
 	//Slanje
@@ -174,11 +195,11 @@ io.on('connection', function(socket){
 	socket.emit( 'izvoz', izvedeni); //Emitiranje flagova
 	socket.emit( 'log', log); //Emitiranje zapisnika
 	socket.emit( 'us', e = get_user()); //Emitiranje zapisnika
-	//Primanje
+	//Primanje login informacija
 	socket.on('login_info', function(infos){
 		user[0] = infos[0];
 		user[1] = infos[1];
-		test_auth(user);
+		test_auth(user);//Testiranje autentikacije
 	});
 	
 	//Izmjena računa/lozinke
@@ -197,12 +218,13 @@ io.on('connection', function(socket){
 		
 	});
 	
+	//Izmjena vrijednosti iz tablice
 	socket.on('table_data', function(data){
 		ln = data.length;
 		for (i = 0; i< ln; i++){
 			izvedeni[i] = false; //Resetiranje flag-ova radi novih vrijednosti (eventualnih)
 		}
-		sem = false; //Dok se nove vrijednosti zapisuju, ne moze se pristupiti u beskonačnoj loop-petlji [binarni semafor ! :-)]
+		sem = false; //Dok se nove vrijednosti zapisuju, ne može se pristupiti u beskonačnoj loop-petlji [binarni semafor ! :-)]
 		var fs = require('fs');
 		var stream = fs.createWriteStream("./data/dates.dat");
 		stream.once('open', function(fd) {
@@ -219,19 +241,20 @@ io.on('connection', function(socket){
 	socket.on('nowfeed', function(){
 		client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
 		client.subscribe('aquafeed');
-		client.publish('aquafeed', 'date');
+		client.publish('aquafeed', 'feedem');
 		console.log("Poslah sada");
 		var sada = getLogDate();
-		log.push(sada);
+		log.push(sada+' - Poslan zahtjev'); //Dodavanje u log da je poslan zahtjev
 		io.emit('real_log',log);
 		client.end();
 	});
 	
 });
 
+//Beskonačna petlja servera za slanje
 var il = new InfiniteLoop;
 function loop() {
-	if (sem == true){ //Ako se neupisuju nove vrijednosti
+	if (sem == true){ //Ako se ne upisuju nove vrijednosti
 		var dates = get_dates();
 		now = getNow();
 		var test_sun = new Date();
@@ -241,42 +264,55 @@ function loop() {
 			if (dates[i] == now){
 				client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
 				client.subscribe('aquafeed');
-				client.publish('aquafeed', 'date');
+				client.publish('aquafeed', 'date');//Slanje Arduinu
 				console.log("Poslah u "+dates[i]);
 				izvedeni[i] = true; //Flag da je izvedeno hranjenje
 				var sada = getLogDate();
-				log.push(sada);
+				log.push(sada+' - Poslan zahtjev'); //Dodavanje u log da je poslan zahtjev
 				io.emit('jesam',izvedeni);
 				io.emit('real_log',log);
 				client.end();
 			}
 		}
 		
-		//Resetiranje flag-ova izvedenih svakih 24-sata
+		//Resetiranje flagova izvedenih svakih 24-sata
 		if (now == "00:00"){
 			for (i = 0; i< ln; i++){
 				izvedeni[i] = false;
 			}
 		}
-		//Resetiranje log-a svake nedjelje u 1:00 
+		//Resetiranje loga svake nedjelje u 1:00 
 		if ((now == "01:00")&&(sun == "0")){
 			log = [];
 		}
 		
 	}
 }
-il.add(loop,[]).setInterval(60000).run();
+il.add(loop,[]).setInterval(60000).run(); //Iteracija petlje je svake minute
 il.onError(function(error){
-    console.log(error);
+    console.log(error); //Primanje grešaka
 });
 
+//Primanje povratne informacije od Arduina
+client_listener = mqtt.connect('mqtt://test.mosquitto.org');
+client_listener.subscribe('aquafeed');
+client_listener.on('message', function (topic, message) {
+	if (message == 'odradio'){
+		var sada = getLogDate();
+		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
+		io.emit('real_log',log);//Real-time 
+	}
+});
+
+/** Dopunske Funkcije **/
+//Dohvaćanje vremena iz datoteke
 function get_dates(){
 	datus = [];
 	var datus = fs.readFileSync('./data/dates.dat').toString().split(" | ");
 	datus.pop(); //makni zadnji element, ''
 	return datus;
 } 
-
+//Dohvaćanje korisničkih podataka iz datoteke
 function get_user(){
 	db_user = fs.readFileSync('./data/user.dat').toString().split("|");
 	//dbuser.pop(); //makni zadnji element, ''
@@ -284,6 +320,7 @@ function get_user(){
 } 
 
 //Dohvaćanje trenutnog vremena
+//Server je na UTC vremenskoh zoni
 function getNow(){
 	var time;
 	//var d = new Date();
