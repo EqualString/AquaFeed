@@ -3,13 +3,15 @@
 | AquaFeed - IoT nodejs Server             |
 |------------------------------------------|
 | @author:  Egredžija Alen                 |
-| @version: 2.2 (28.9 2015)                |
+| @version: 2.3 (1.10.2015)                |
 | @website: http://aquafeed.cleverapps.io  |
 |------------------------------------------|
 */
 
-//Dopunske skripte
+//Dopunske 'require' skripte
 var express = require('express');
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
 var mqtt = require('mqtt');
 var io = require('socket.io')(server);
 var InfiniteLoop = require('infinite-loop');
@@ -18,8 +20,9 @@ var app = express();
 
 //Dodatne varijable
 var user =[],db_user =[], sem = true, semi = true, auth, log =[];
-var izvedeni=[],d,e,datus,ln,i,now;
+var izvedeni=[],d,e,dates=[],datus,ln,i,index,now,usdata,usdata2,database;
 var client, client_listener;
+var uri = 'mongodb://EqualString:UEBSAW11391@ds027479.mongolab.com:27479/aquafeed'; //Mongolab DB
 
 //Admin user
 var admin =[];
@@ -50,12 +53,12 @@ app.get('/', nocache, function(req, res){
   });
 });
 
-app.get('/index-login', nocache, function(req, res){
-  if (auth === true){
-	  res.redirect('/');
-  } else{
-	  res.redirect('/login-failed');
-  }
+app.get('/index-login', nocache, auth_test, function(req, res){
+	if (auth === true){
+		res.redirect('/');
+	} else{
+		res.redirect('/login-failed');
+	}
 });
 
 app.get('/login-failed', nocache, function(req, res){
@@ -72,7 +75,7 @@ app.get('/login', nocache, function(req, res){
   });
 });
 
-app.get('/events', nocache, function(req, res){
+app.get('/events', nocache, auth_test, function(req, res){
   if (auth === true){
   res.render('events.html', {
 	username: user[0]
@@ -82,7 +85,7 @@ app.get('/events', nocache, function(req, res){
 	}
 });
 
-app.get('/timeline', nocache, function(req, res){
+app.get('/timeline', nocache, auth_test, function(req, res){
   if (auth === true){
   res.render('timeline.html', {
 	username: user[0]
@@ -92,7 +95,7 @@ app.get('/timeline', nocache, function(req, res){
 	}
 });
 
-app.get('/email', nocache, function(req, res){
+app.get('/email', nocache, auth_test, function(req, res){
   if (auth === true){
   res.render('email.html', {
 	username: user[0]
@@ -102,7 +105,7 @@ app.get('/email', nocache, function(req, res){
 	}
 });
 
-app.get('/errors', nocache, function(req, res){
+app.get('/errors', nocache, auth_test, function(req, res){
   if (auth === true){
   res.render('errors.html', {
 	username: user[0]
@@ -112,7 +115,7 @@ app.get('/errors', nocache, function(req, res){
 	}
 });
 
-app.get('/log', nocache, function(req, res){
+app.get('/log', nocache, auth_test, function(req, res){
   if (auth === true){
   res.render('log.html', {
 	username: user[0]
@@ -122,7 +125,7 @@ app.get('/log', nocache, function(req, res){
 	}
 });
 
-app.get('/user', nocache, function(req, res){
+app.get('/user', nocache, auth_test, function(req, res){
   if (auth === true){
 	res.render('user.html');
   } else{
@@ -132,6 +135,7 @@ app.get('/user', nocache, function(req, res){
 
 app.get('/logout', nocache, function(req, res){	
   auth = false;	
+  user =[];
   res.redirect('/login');
 });
 
@@ -173,9 +177,17 @@ app.get('/404.html', nocache, function(req, res){
 
 //Konfiguracija servera
 var server = app.listen(server_port, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('app @ :http://localhost:8080/');
+  //Spajanje na bazu
+  MongoClient.connect(uri, function(err,db) {
+	database = db;
+	assert.equal(null, err);
+	console.log('Spojen na bazu -> [Mongolab]');
+	var host = server.address().address;
+	var port = server.address().port;
+	console.log('app @ :http://localhost:8080/');
+  });	
+  
+  	
 });
 
 app.use(express.static(__dirname + '/public'));//Koristi sve iz folder 'public'
@@ -191,50 +203,53 @@ app.use(function(req, res) {
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
 	//Slanje
-	socket.emit( 'datumi', d = get_dates()); //Emitiranje vrijednosti iz tablice
+	socket.emit( 'datumi', dates); //Emitiranje vrijednosti iz tablice
 	socket.emit( 'izvoz', izvedeni); //Emitiranje flagova
 	socket.emit( 'log', log); //Emitiranje zapisnika
-	socket.emit( 'us', e = get_user()); //Emitiranje zapisnika
+	socket.emit( 'us', user); //Emitiranje korisnika
+	
 	//Primanje login informacija
 	socket.on('login_info', function(infos){
 		user[0] = infos[0];
 		user[1] = infos[1];
-		test_auth(user);//Testiranje autentikacije
 	});
 	
 	//Izmjena računa/lozinke
 	socket.on('change_user', function(infodata){
-		var fm = require('fs');
-		var str = fm.createWriteStream("./data/user.dat");
-		str.once('open', function(fd) {
-			for (i = 0; i< 2; i++){
-				str.write(infodata[i]);
-				str.write("|");
-			}
-		str.end();
+		//Chainano zbog redoslijeda operacija 1.brisanje, 2.ubacivanje
+		database.collection('user').deleteMany( {}, function() {
+			database.collection('user').insertOne( {
+				"name" : infodata[0],
+				"pass" : infodata[1],
+			}, function(err, result) {
+				assert.equal(err, null);
+				user = infodata; //Novi user[] 
+				var sada = getLogDate();
+				log.push(sada+' - Promjena korisničkog imena/lozinke'); //Dodavanje u log 
+			});
 		});
-		
-		user = infodata;
-		
 	});
 	
-	//Izmjena vrijednosti iz tablice
+	//Izmjena vrijednosti u bazi vrijednostima iz tablice
 	socket.on('table_data', function(data){
 		ln = data.length;
+		dates = [];//Resetiranje dates polja
+		//Stvaranje JSON objekta, http://stackoverflow.com/questions/6979092/create-json-string-from-javascript-for-loop 
+		var new_table_data = "[{";
 		for (i = 0; i< ln; i++){
 			izvedeni[i] = false; //Resetiranje flag-ova radi novih vrijednosti (eventualnih)
+			new_table_data += '"'+i+'":"'+data[i]+'",';
+			dates[i] = data[i];//Nove vrijednosti
 		}
-		sem = false; //Dok se nove vrijednosti zapisuju, ne može se pristupiti u beskonačnoj loop-petlji [binarni semafor ! :-)]
-		var fs = require('fs');
-		var stream = fs.createWriteStream("./data/dates.dat");
-		stream.once('open', function(fd) {
-			for (i = 0; i< ln; i++){
-				stream.write(data[i]);
-				stream.write(" | ");
-			}
-		stream.end();
-		sem = true;// Omogućeno čitanje
+		new_table_data = new_table_data.slice(0, -1);
+		new_table_data += "}]";
+		//Novi zapis u bazi
+		database.collection('dates').deleteMany( {}, function() {
+			database.collection('dates').insert(JSON.parse(new_table_data));
+			var sada = getLogDate();
+			log.push(sada+' - Promjena vrijednosti u tablici'); //Dodavanje u log
 		});
+			
 	});
 	
 	//Trenutno hranjenje
@@ -245,55 +260,68 @@ io.on('connection', function(socket){
 		console.log("Poslah sada");
 		var sada = getLogDate();
 		log.push(sada+' - Poslan zahtjev'); //Dodavanje u log da je poslan zahtjev
-		io.emit('real_log',log);
 		client.end();
 	});
 	
 });
 
+/** Beskonačna petlja **/
 //Beskonačna petlja servera za slanje
+//Svake minute također osvježi i dates polje
 var il = new InfiniteLoop;
 function loop() {
-	if (sem == true){ //Ako se ne upisuju nove vrijednosti
-		var dates = get_dates();
-		now = getNow();
-		var test_sun = new Date();
-		var sun = test_sun.getDay().toString(); //Dohvaćanje dana u tjednu, 0-ned,1-pon..
-		ln = dates.length;
-		for (i = 0; i < ln; i++){
-			if (dates[i] == now){
-				client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
-				client.subscribe('aquafeed');
-				client.publish('aquafeed', 'date');//Slanje Arduinu
-				console.log("Poslah u "+dates[i]);
-				izvedeni[i] = true; //Flag da je izvedeno hranjenje
-				var sada = getLogDate();
-				log.push(sada+' - Poslan zahtjev'); //Dodavanje u log da je poslan zahtjev
-				io.emit('jesam',izvedeni);
-				io.emit('real_log',log);
-				client.end();
+	
+		//var dates = get_dates();
+		get_table_dates(database, function(){
+			//Slaganje dates polja
+			dates = [];//Reset
+			i = 0;
+			do
+			{   
+				index = ""+i+"";
+				dates[i] = usdata[index];
+				i++;
 			}
-		}
-		
-		//Resetiranje flagova izvedenih svakih 24-sata
-		if (now == "00:00"){
-			for (i = 0; i< ln; i++){
-				izvedeni[i] = false;
+			while( usdata[index] != undefined );//Dok su vrijednosti iz baze definirane
+			dates.pop();//Brisanje zadnjeg elementa
+			now = getNow();
+			var test_sun = new Date();
+			var sun = test_sun.getDay().toString(); //Dohvaćanje dana u tjednu, 0-ned,1-pon..
+			ln = dates.length;
+			for (i = 0; i < ln; i++){
+				if (dates[i] == now){
+					client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
+					client.subscribe('aquafeed');
+					client.publish('aquafeed', 'date');//Slanje Arduinu
+					console.log("Poslah u "+dates[i]);
+					izvedeni[i] = true; //Flag da je izvedeno hranjenje
+					var sada = getLogDate();
+					log.push(sada+' - Poslan zahtjev'); //Dodavanje u log da je poslan zahtjev
+					io.emit('jesam',izvedeni);
+					io.emit('real_log',log);
+					client.end();
+				}
 			}
-		}
-		//Resetiranje loga svake nedjelje u 1:00 
-		if ((now == "01:00")&&(sun == "0")){
-			log = [];
-		}
-		
-	}
+			
+			//Resetiranje flagova izvedenih svakih 24-sata
+			if (now == "00:00"){
+				for (i = 0; i< ln; i++){
+					izvedeni[i] = false;
+				}
+			}
+			//Resetiranje loga svake nedjelje u 1:00 
+			if ((now == "01:00")&&(sun == "0")){
+				log = [];
+			}
+		});
+	
 }
 il.add(loop,[]).setInterval(60000).run(); //Iteracija petlje je svake minute
 il.onError(function(error){
     console.log(error); //Primanje grešaka
 });
 
-//Primanje povratne informacije od Arduina
+/** Primanje povratne informacije od Arduina **/
 client_listener = mqtt.connect('mqtt://test.mosquitto.org');
 client_listener.subscribe('aquafeed');
 client_listener.on('message', function (topic, message) {
@@ -304,22 +332,66 @@ client_listener.on('message', function (topic, message) {
 	}
 });
 
-/** Dopunske Funkcije **/
-//Dohvaćanje vremena iz datoteke
-function get_dates(){
-	datus = [];
-	var datus = fs.readFileSync('./data/dates.dat').toString().split(" | ");
-	datus.pop(); //makni zadnji element, ''
-	return datus;
-} 
-//Dohvaćanje korisničkih podataka iz datoteke
-function get_user(){
-	db_user = fs.readFileSync('./data/user.dat').toString().split("|");
-	//dbuser.pop(); //makni zadnji element, ''
-	return db_user;
-} 
+/************************ Dopunske Funkcije *******************************/
 
-//Dohvaćanje trenutnog vremena
+/**Dohvaćanje vremena iz baze**/
+//'Main' fja-a koja se poziva
+var get_table_dates = function(db, callback) {
+   ibr = 0;
+   var cursor = db.collection('dates').find(); //Dohvaća cijeli dokument
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+		usdata = doc;
+		ibr++;		
+      } else {
+        callback();
+      }
+   }); 
+};
+/**Autentikacija**/
+//Poziva se svaki put kada server zaprimi zahtjev
+function auth_test(req, res, next){
+	findusers(database, function() {
+		//Callback
+		if ((user[0] == usdata['name'] || user[0] == admin[0])&&(user[1] == usdata['pass'] || user[1] == admin[1])){
+			auth = true;
+			next();
+		}
+		else {
+			auth = false;		
+			next();
+		}
+	});
+	//Dohvaćanje zadanih vremena iz baze
+	get_table_dates(database, function(){
+		dates = [];//Reset dates polja
+		//Slaganje dates polja
+		i = 0;
+		do
+		{   //Dok su vrijednosti iz baze definirane
+			index = ""+i+"";
+			dates[i] = usdata[index];
+			i++;
+		}
+		while( usdata[index] != undefined );
+		dates.pop();//Brisanje zadnjeg elementa (null)
+		
+	});	
+}
+//Fja s callback-om
+var findusers = function(db, callback) {
+   var cursor = db.collection('user').find(); //Dohvaća cijeli dokument
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+		usdata = doc;	
+      } else {
+        callback();
+      }
+   });  
+};
+/**Dohvaćanje trenutnog vremena**/
 //Server je na UTC vremenskoh zoni
 function getNow(){
 	var time;
@@ -339,6 +411,7 @@ function getNow(){
 }
 //Dohvaćanje punog datuma za log
  function getLogDate() {
+	//var n = new Date();
     var n = new Date( new Date().getTime() + 2 * 3600 * 1000); //UTC + 2,Europe
     var year = n.getFullYear();
     var month = n.getMonth()+1; 
@@ -362,16 +435,8 @@ function getNow(){
     var dateTime = day+'/'+month+'/'+year+' '+hour+':'+minute;   
     return dateTime;
 }
-//Testiranje autentikacije
-function test_auth(user){
-	db_user = get_user();
-	if ((user[0] == db_user[0] || user[0] == admin[0])&&(user[1] == db_user[1] || user[1] == admin[1])){
-		auth = true;
-	}
-	else auth = false;
-}
 
-//Fja koja stranicama gasi caching zbog logout-a 
+/**Fja koja stranicama gasi caching zbog logout-a**/ 
 //http://stackoverflow.com/questions/20429592/no-cache-in-a-nodejs-server/20429914#20429914
 function nocache(req, res, next) {
 	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
