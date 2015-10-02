@@ -15,10 +15,13 @@ body {
   text-align: center;
   letter-spacing: 2px;
 }
-.pen-title h1 {
+.pen-title h1 a {
   margin: 0 0 20px;
-  font-size: 48px;
-  font-weight: 300;
+  font-weight: 400;
+  font-size: 42px;
+  color: #666;
+  line-height: normal;
+  text-decoration:none;
 }
 .pen-title span {
   font-size: 12px;
@@ -28,8 +31,9 @@ body {
 }
 .pen-title span a {
   color: #EF4751;
-  font-weight: 600;
-  text-decoration: none;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 28px;
 }
 
 /* Form Module */
@@ -106,7 +110,7 @@ body {
 }
 .form-module input:focus {
   border: 1px solid #EF4751;
-  color: #333333;
+  color: #666;
 }
 .form-module button {
   cursor: pointer;
