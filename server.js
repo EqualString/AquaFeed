@@ -21,7 +21,7 @@ var app = express();
 //Dodatne varijable
 var user =[],db_user =[], sem = true, semi = true, auth, log =[];
 var izvedeni=[],d,e,dates=[],datus,ln,i,index,now,usdata,usdata2,database;
-var client, client_listener;
+var client, client_listener,client_listener,send_desktop;
 var uri = 'mongodb://EqualString:UEBSAW11391@ds027479.mongolab.com:27479/aquafeed'; //Mongolab DB
 
 //Admin user
@@ -256,8 +256,8 @@ io.on('connection', function(socket){
 	socket.on('nowfeed', function(){
 		client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
 		client.subscribe('aquafeed');
-		client.publish('aquafeed', 'feedem');
-		console.log("Poslah sada");
+		client.publish('aquafeed', 'feed');
+		//console.log("Poslah sada");
 		var sada = getLogDate();
 		log.push(sada+' - Poslan zahtjev'); //Dodavanje u log da je poslan zahtjev
 		client.end();
@@ -292,7 +292,7 @@ function loop() {
 				if (dates[i] == now){
 					client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
 					client.subscribe('aquafeed');
-					client.publish('aquafeed', dates);//Slanje Arduinu
+					client.publish('aquafeed', 'feed');//Slanje Arduinu
 					console.log("Poslah u "+dates[i]);
 					izvedeni[i] = true; //Flag da je izvedeno hranjenje
 					var sada = getLogDate();
@@ -330,15 +330,46 @@ client_listener.on('message', function (topic, message) {
 		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
 		io.emit('real_log',log);//Real-time 
 	}
+});
+
+/** Primanje informacija od Desktop Aplikacije **/
+client_listener2 = mqtt.connect('mqtt://test.mosquitto.org');
+client_listener2.subscribe('aquafeed-desktop');
+client_listener2.on('message', function (topic, message) {
 	if (message == 'auth_info'){
 		var sada = getLogDate();
-		log.push(sada + ' - Desktop app login'); //Dodavanje u log povratne informacije
-		io.emit('real_log',log);//Real-time
+		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
+		io.emit('real_log',log);//Real-time 
+		send_info_to_desktop();
 	}
 });
 
 /************************ Dopunske Funkcije *******************************/
 
+function send_info_to_desktop(){
+	var sendData;
+	findusers(database, function() {
+		//Callback
+		//Slaganje polja za slanje na desktop
+		sendData = usdata['name'] + '||' + usdata['pass'] + '||';
+		//Dohvaćanje zadanih vremena iz baze
+		get_table_dates(database, function(){
+			//Slaganje ostatka polja
+			i = 0;
+			do
+			{   //Dok su vrijednosti iz baze definirane
+				index = ""+i+"";
+				sendData += usdata[index] + '||';
+				i++;
+			}
+			while( usdata[index] != undefined );
+			//console.log(sendData);
+			send_desktop = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
+			send_desktop.subscribe('aquafeed-send-desktop');
+			send_desktop.publish('aquafeed-send-desktop', sendData);
+		});	
+	});	
+}
 /**Dohvaćanje vremena iz baze**/
 //'Main' fja-a koja se poziva
 var get_table_dates = function(db, callback) {
