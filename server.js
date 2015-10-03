@@ -292,7 +292,7 @@ function loop() {
 				if (dates[i] == now){
 					client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
 					client.subscribe('aquafeed');
-					client.publish('aquafeed', 'date');//Slanje Arduinu
+					client.publish('aquafeed', dates);//Slanje Arduinu
 					console.log("Poslah u "+dates[i]);
 					izvedeni[i] = true; //Flag da je izvedeno hranjenje
 					var sada = getLogDate();
