@@ -330,6 +330,11 @@ client_listener.on('message', function (topic, message) {
 		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
 		io.emit('real_log',log);//Real-time 
 	}
+	if (message == 'auth_info'){
+		var sada = getLogDate();
+		log.push(sada + ' - Desktop app login'); //Dodavanje u log povratne informacije
+		io.emit('real_log',log);//Real-time
+	}
 });
 
 /************************ Dopunske Funkcije *******************************/
