@@ -338,7 +338,7 @@ client_listener2.subscribe('aquafeed-desktop');
 client_listener2.on('message', function (topic, message) {
 	if (message == 'auth_info'){
 		var sada = getLogDate();
-		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
+		log.push(sada + ' - Login sa desktop apliakcije'); //Dodavanje u log povratne informacije
 		io.emit('real_log',log);//Real-time 
 		send_info_to_desktop();
 	}
@@ -348,6 +348,7 @@ client_listener2.on('message', function (topic, message) {
 
 function send_info_to_desktop(){
 	var sendData;
+	console.log('Slanje na desktop');
 	findusers(database, function() {
 		//Callback
 		//Slaganje polja za slanje na desktop
