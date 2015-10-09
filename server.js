@@ -21,7 +21,7 @@ var app = express();
 //Dodatne varijable
 var user =[],db_user =[], sem = true, semi = true, auth, log =[];
 var izvedeni=[],d,e,dates=[],datus,ln,i,index,now,usdata,usdata2,database;
-var client, client_listener,client_listener,send_desktop;
+var client, client_listener, listen_desktop_auth, send_desktop;
 var uri = 'mongodb://EqualString:UEBSAW11391@ds027479.mongolab.com:27479/aquafeed'; //Mongolab DB
 
 //Admin user
@@ -186,8 +186,6 @@ var server = app.listen(server_port, function () {
 	var port = server.address().port;
 	console.log('app @ :http://localhost:8080/');
   });	
-  
-  	
 });
 
 app.use(express.static(__dirname + '/public'));//Koristi sve iz folder 'public'
@@ -325,24 +323,24 @@ il.onError(function(error){
 client_listener = mqtt.connect('mqtt://test.mosquitto.org');
 client_listener.subscribe('aquafeed');
 client_listener.on('message', function (topic, message) {
-	if (message == 'odradio'){
 		var sada = getLogDate();
 		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
 		io.emit('real_log',log);//Real-time 
-	}
 });
 
 /** Primanje informacija od Desktop Aplikacije **/
-client_listener2 = mqtt.connect('mqtt://test.mosquitto.org');
-client_listener2.subscribe('aquafeed-desktop');
-client_listener2.on('message', function (topic, message) {
-	if (message == 'auth_info'){
-		var sada = getLogDate();
-		log.push(sada + ' - Login sa desktop apliakcije'); //Dodavanje u log povratne informacije
-		io.emit('real_log',log);//Real-time 
-		send_info_to_desktop();
-	}
+
+//Listener za login
+listen_desktop_auth = mqtt.connect('mqtt://test.mosquitto.org');
+listen_desktop_auth.subscribe('aquafeed-desktop');
+listen_desktop_auth.on('message', function (topic, message) {
+	var sada = getLogDate();
+	log.push(sada + ' - Login sa desktop aplikacije'); //Dodavanje u log povratne informacije
+	io.emit('real_log',log);//Real-time 
+	send_info_to_desktop();
 });
+
+//Listener za update tablice
 
 /************************ Dopunske Funkcije *******************************/
 
@@ -368,6 +366,7 @@ function send_info_to_desktop(){
 			send_desktop = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
 			send_desktop.subscribe('aquafeed-send-desktop');
 			send_desktop.publish('aquafeed-send-desktop', sendData);
+			send_desktop.end();
 		});	
 	});	
 }
