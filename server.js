@@ -326,7 +326,8 @@ il.onError(function(error){
 });
 
 /** Primanje povratne informacije od Arduina **/
-
+client_listener = mqtt.connect('mqtt://test.mosquitto.org');
+client_listener.subscribe('aquafeed');
 client_listener.on('message', function (topic, message) {
 		var sada = getLogDate();
 		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
@@ -336,6 +337,8 @@ client_listener.on('message', function (topic, message) {
 /** Primanje informacija od Desktop Aplikacije **/
 
 //Listener za login
+listen_desktop_auth = mqtt.connect('mqtt://test.mosquitto.org');
+listen_desktop_auth.subscribe('aquafeed-desktop');
 listen_desktop_auth.on('message', function (topic, message) {
 	var sada = getLogDate();
 	log.push(sada + ' - Login sa desktop aplikacije'); //Dodavanje u log povratne informacije
