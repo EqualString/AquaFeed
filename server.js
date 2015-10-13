@@ -268,12 +268,13 @@ io.on('connection', function(socket){
 //Svake minute također osvježi i dates polje
 var il = new InfiniteLoop;
 function loop() {
-        //Init listener-a
+        
+		//Init listener-a
 		listen_desktop_auth = mqtt.connect('mqtt://test.mosquitto.org');
 		listen_desktop_auth.subscribe('aquafeed-desktop');
 		
 		client_listener = mqtt.connect('mqtt://test.mosquitto.org');
-		client_listener.subscribe('aquafeed');
+		client_listener.subscribe('aquafeed-arduino');
 		
 		//var dates = get_dates();
 		get_table_dates(database, function(){
@@ -327,7 +328,7 @@ il.onError(function(error){
 
 /** Primanje povratne informacije od Arduina **/
 client_listener = mqtt.connect('mqtt://test.mosquitto.org');
-client_listener.subscribe('aquafeed');
+client_listener.subscribe('aquafeed-arduino');
 client_listener.on('message', function (topic, message) {
 		var sada = getLogDate();
 		log.push(sada + ' - Primljena povratna informacija'); //Dodavanje u log povratne informacije
@@ -351,7 +352,7 @@ listen_desktop_auth.on('message', function (topic, message) {
 /************************ Dopunske Funkcije *******************************/
 
 function send_info_to_desktop(){
-	var sendData;
+	var sendData = '';
 	console.log('Slanje na desktop');
 	findusers(database, function() {
 		//Callback
