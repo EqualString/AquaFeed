@@ -439,7 +439,7 @@ var findusers = function(db, callback) {
 function getNow(){
 	var time;
 	//var d = new Date();
-	var d = new Date( new Date().getTime() + 2 * 3600 * 1000); //UTC + 2,Europe
+	var d = new Date( new Date().getTime() + 1 * 3600 * 1000); //UTC + 2,Europe
 	var hh = d.getHours().toString();
 	var mn = d.getMinutes().toString();	
 	if(hh<10) {
@@ -455,7 +455,7 @@ function getNow(){
 //Dohvaćanje punog datuma za log
  function getLogDate() {
 	//var n = new Date();
-    var n = new Date( new Date().getTime() + 2 * 3600 * 1000); //UTC + 2,Europe
+    var n = new Date( new Date().getTime() + 1 * 3600 * 1000); //UTC + 2,Europe
     var year = n.getFullYear();
     var month = n.getMonth()+1; 
     var day = n.getDate();
