@@ -33,7 +33,7 @@ admin[1] = "Luafr";
 /** Konfiguracija servera **/
 
 // Port aplikacije
-// Openshift ima svoj env.port
+// Openshift ima svoj env.port,heroku svoj npr..
 // Clever Cloud koristi 8080 po defaultu
 // var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
@@ -46,8 +46,7 @@ app.set('views', __dirname + '/public');
 app.use(session({
   cookieName: 'session',
   secret: 'GotYaBlueFishTank?',
-  duration: 30 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000,
+  duration: 7 * 24 * 60 * 60 * 1000, //Week session
 }));
 
 /** Server rute **/
