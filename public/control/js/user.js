@@ -1,19 +1,16 @@
 					/**Komunikacija sa serverom**/	
 					var socket = io.connect();
-					var user =[], new_user =[];
+					var new_user =[];
 					
-					socket.on('us',function(data){
-						user = data;
-						$("#top-username").append('<span class="fa fa-user"></span> '+user[0]+'<span class="caret"></span>');
-					    add_info(user);
+					socket.on('user_credentials',function(data){
+						add_info(data);
 					});
 					
 					/** -/- **/
-					
-					/** Dodavanje informacija **/
-					function add_info(info) {
-						$("#user_name").val(info[0]);
-						$("#user_pass").val(info[1]);
+					function add_info(data){
+						$("#top-username").append('<span class="fa fa-user"></span> '+data[0]+'<span class="caret"></span>');
+						$('#user_name').val(data[0]);
+						$('#user_pass').val(data[1]);
 					}
 					
 					function save_info(){

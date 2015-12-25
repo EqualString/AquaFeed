@@ -8,7 +8,7 @@
 |------------------------------------------|
 */
 
-//Dopunske 'require' skripte
+// Dopunske 'require' skripte
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -17,161 +17,168 @@ var io = require('socket.io')(server);
 var InfiniteLoop = require('infinite-loop');
 var fs = require('fs');
 var app = express();
+var session = require('client-sessions');
 
-//Dodatne varijable
+// Dodatne varijable
 var user =[],db_user =[], sem = true, semi = true, auth, log =[];
 var izvedeni=[],d,e,dates=[],datus,ln,i,index,now,usdata,usdata2,database;
 var client, client_listener, listen_desktop_auth, send_desktop;
 var uri = 'mongodb://EqualString:UEBSAW11391@ds027479.mongolab.com:27479/aquafeed'; //Mongolab DB
 
-//Admin user
+// Admin user
 var admin =[];
 admin[0] = "EqualString";
 admin[1] = "Luafr";
 
 /** Konfiguracija servera **/
 
-// port aplikacije
-// process.env.PORT dopušta da Heroku postavlja vlastiti port
-// var envport = process.env.PORT || 3000;
+// Port aplikacije
 // Openshift ima svoj env.port
 // Clever Cloud koristi 8080 po defaultu
-
+// var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
+// Express konfiguracija
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/public');
 
+app.use(session({
+  cookieName: 'session',
+  secret: 'GotYaBlueFishTank?',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
+
 /** Server rute **/
 
-app.get('/', nocache, function(req, res){
-  res.render('index.html', {
-	  username: user[0],
-	  auth: auth
-  });
+app.get('/', function(req, res){
+	res.render('index.html', {
+		username: user[0]
+	});
 });
 
-app.get('/index-login', nocache, auth_test, function(req, res){
-	if (auth === true){
+app.get('/index-auth', auth_test, function(req, res){
+	if (req.session.user){
 		res.redirect('/');
 	} else{
 		res.redirect('/login-failed');
 	}
 });
 
-app.get('/login-failed', nocache, function(req, res){
-  res.render('login-failed.html', {
-	  username: user[0],
-	  auth: auth
-  });
-});
-
-app.get('/login', nocache, function(req, res){
-  res.render('login.html', {
-	  username: user[0],
-	  auth: auth
-  });
-});
-
-app.get('/events', nocache, auth_test, function(req, res){
-  if (auth === true){
-  res.render('events.html', {
-	username: user[0]
-  });
-  } else{
-	 res.redirect('/login-failed');
+app.get('/login-auth', auth_test, function(req, res){
+	if (req.session.user){
+		res.redirect('/timeline');
+	}  else{
+		res.redirect('/login-failed');
 	}
 });
 
-app.get('/timeline', nocache, auth_test, function(req, res){
-  if (auth === true){
-  res.render('timeline.html', {
-	username: user[0]
-  });
-  } else{
-	 res.redirect('/login-failed');
+app.get('/login', function(req, res){
+  res.render('login.html');
+});
+
+app.get('/login-failed', function(req, res){
+  res.render('login-failed.html');
+});
+
+app.get('/timeline', function(req, res){
+	if (req.session.user){
+		res.render('timeline.html', {
+			username: user[0]
+		});
+	} else{
+		res.redirect('/login');
 	}
 });
 
-app.get('/email', nocache, auth_test, function(req, res){
-  if (auth === true){
-  res.render('email.html', {
-	username: user[0]
-  });
-  } else{
-	 res.redirect('/login-failed');
+app.get('/events', function(req, res){
+	if (req.session.user){
+		res.render('events.html', {
+			username: user[0]
+		});
+	} else{
+		res.redirect('/login');
+  }
+});
+
+app.get('/email', function(req, res){
+	if (req.session.user){
+		res.render('email.html', {
+			username: user[0]
+		});
+	} else{
+		res.redirect('/login');
 	}
 });
 
-app.get('/errors', nocache, auth_test, function(req, res){
-  if (auth === true){
-  res.render('errors.html', {
-	username: user[0]
-  });
-  } else{
-	 res.redirect('/login-failed');
+app.get('/errors', function(req, res){
+	if (req.session.user){
+		res.render('errors.html', {
+			username: user[0]
+		});
+	} else{
+		res.redirect('/login');
 	}
 });
 
-app.get('/log', nocache, auth_test, function(req, res){
-  if (auth === true){
-  res.render('log.html', {
-	username: user[0]
-  });
-  } else{
-	 res.redirect('/login-failed');
+app.get('/log', function(req, res){
+	if (req.session.user){
+		res.render('log.html', {
+			username: user[0]
+		});
+	} else{
+		res.redirect('/login');
 	}
 });
 
-app.get('/user', nocache, auth_test, function(req, res){
-  if (auth === true){
-	res.render('user.html');
-  } else{
-	 res.redirect('/login-failed');
+app.get('/user', function(req, res){
+	if (req.session.user){
+		res.render('user.html');
+	} else{
+		res.redirect('/login');
 	}
 });
 
-app.get('/logout', nocache, function(req, res){	
-  auth = false;	
-  user =[];
+app.get('/logout', function(req, res){	
+  user = [];
+  req.session.reset();
   res.redirect('/login');
 });
 
-app.get('/404', nocache, function(req, res){
+app.get('/404', function(req, res){
   res.render('404.html');
 });
 	
 //Redirektanje zbog sigurnosti
-app.get('/index', nocache, function(req, res){
+app.get('/index', function(req, res){
   res.redirect('/');
 });
-app.get('/index.html', nocache, function(req, res){
+app.get('/index.html', function(req, res){
   res.redirect('/');
 });
-app.get('/events.html', nocache, function(req, res){
+app.get('/events.html', function(req, res){
   res.redirect('/events');
 });
-app.get('/timeline.html', nocache, function(req, res){
+app.get('/timeline.html', function(req, res){
   res.redirect('/timeline');
 });
-app.get('/email.html', nocache, function(req, res){
+app.get('/email.html', function(req, res){
   res.redirect('/email');
 });
-app.get('/errors.html', nocache, function(req, res){
+app.get('/errors.html', function(req, res){
   res.redirect('/errors');
 });
-app.get('/log.html', nocache, function(req, res){
+app.get('/log.html', function(req, res){
   res.redirect('/log');
 });
-app.get('/user.html', nocache, function(req, res){
+app.get('/user.html', function(req, res){
   res.redirect('/user');
 });
-app.get('/login.html', nocache, function(req, res){
+app.get('/login.html', function(req, res){
   res.redirect('/login');
 });
-app.get('/404.html', nocache, function(req, res){
+app.get('/404.html', function(req, res){
   res.redirect('/404');
 });
 
@@ -201,11 +208,11 @@ app.use(function(req, res) {
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
 	//Slanje
-	socket.emit( 'datumi', dates); //Emitiranje vrijednosti iz tablice
-	socket.emit( 'izvoz', izvedeni); //Emitiranje flagova
-	socket.emit( 'log', log); //Emitiranje zapisnika
-	socket.emit( 'us', user); //Emitiranje korisnika
-	
+	socket.emit( 'datumi', dates ); //Emitiranje vrijednosti iz tablice
+	socket.emit( 'izvoz', izvedeni ); //Emitiranje flagova
+	socket.emit( 'log', log ); //Emitiranje zapisnika
+	socket.emit( 'user_credentials', user ); //Emitiranje zapisnika
+
 	//Primanje login informacija
 	socket.on('login_info', function(infos){
 		user[0] = infos[0];
@@ -377,7 +384,53 @@ function send_info_to_desktop(){
 		});	
 	});	
 }
+
+/**Autentikacija**/
 /**Dohvaćanje vremena iz baze**/
+
+//Poziva se svaki put kada server zaprimi zahtjev za login
+function auth_test(req, res, next){
+	findusers(database, function() {
+		//Callback
+		if ((user[0] == usdata['name'] || user[0] == admin[0])&&(user[1] == usdata['pass'] || user[1] == admin[1])){
+			//Stvaranje session-a
+			req.session.user = user[0]; 
+			next();
+		}
+		else {	
+		    user = [];
+			next();
+		}
+	});
+	//Dohvaćanje zadanih vremena iz baze
+get_table_dates(database, function(){
+	dates = [];//Reset dates polja
+	//Slaganje dates polja
+	i = 0;
+	do
+	{   //Dok su vrijednosti iz baze definirane
+		index = ""+i+"";
+		dates[i] = usdata[index];
+		i++;
+	}
+	while( usdata[index] != undefined );
+	dates.pop();//Brisanje zadnjeg elementa (null)
+		
+});	
+	
+}
+//Fja s callback-om
+var findusers = function(db, callback) {
+   var cursor = db.collection('user').find(); //Dohvaća cijeli dokument
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+		usdata = doc;	
+      } else {
+        callback();
+      }
+   });  
+};
 //'Main' fja-a koja se poziva
 var get_table_dates = function(db, callback) {
    ibr = 0;
@@ -392,48 +445,7 @@ var get_table_dates = function(db, callback) {
       }
    }); 
 };
-/**Autentikacija**/
-//Poziva se svaki put kada server zaprimi zahtjev
-function auth_test(req, res, next){
-	findusers(database, function() {
-		//Callback
-		if ((user[0] == usdata['name'] || user[0] == admin[0])&&(user[1] == usdata['pass'] || user[1] == admin[1])){
-			auth = true;
-			next();
-		}
-		else {
-			auth = false;		
-			next();
-		}
-	});
-	//Dohvaćanje zadanih vremena iz baze
-	get_table_dates(database, function(){
-		dates = [];//Reset dates polja
-		//Slaganje dates polja
-		i = 0;
-		do
-		{   //Dok su vrijednosti iz baze definirane
-			index = ""+i+"";
-			dates[i] = usdata[index];
-			i++;
-		}
-		while( usdata[index] != undefined );
-		dates.pop();//Brisanje zadnjeg elementa (null)
-		
-	});	
-}
-//Fja s callback-om
-var findusers = function(db, callback) {
-   var cursor = db.collection('user').find(); //Dohvaća cijeli dokument
-   cursor.each(function(err, doc) {
-      assert.equal(err, null);
-      if (doc != null) {
-		usdata = doc;	
-      } else {
-        callback();
-      }
-   });  
-};
+
 /**Dohvaćanje trenutnog vremena**/
 //Server je na UTC vremenskoh zoni
 function getNow(){
@@ -480,10 +492,11 @@ function getNow(){
 }
 
 /**Fja koja stranicama gasi caching zbog logout-a**/ 
+// Koristi se auth bet session-a i cook-ija
 //http://stackoverflow.com/questions/20429592/no-cache-in-a-nodejs-server/20429914#20429914
-function nocache(req, res, next) {
+/*function nocache(req, res, next) {
 	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
 	res.header('Expires', '-1');
 	res.header('Pragma', 'no-cache');
 	next();
-}
+}*/

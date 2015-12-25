@@ -101,7 +101,7 @@
 								<li class="menu-item">
 									<a href="#kontakt">Kontakt</a>
 								</li>
-								<%if (auth == true) { %>
+								<%if (username) { %>
 								<li class="dropdown mega-menu-item mega-menu-signin signin logged" id="headerAccount">
 									<a style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
 										<i class="fa fa-user"></i> <%= username %>
@@ -132,7 +132,7 @@
 									</ul>
 								</li>
 								<% } %>
-								<%if (auth != true) { %>
+								<%if (!username) { %>
 								<li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
 									<a style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
 										<i style="font-size:16px;" class="fa fa-sign-in"></i> Prijava
@@ -146,7 +146,7 @@
 														<div class="signin-form">
 															<span class="mega-menu-sub-title resp">Prijavi se</span>
 															<!-- Login s index-a -->
-															<form action="index-login">
+															<form action="index-auth">
 																<div class="row">
 																	<div class="form-group">
 																		<div class="col-md-12">

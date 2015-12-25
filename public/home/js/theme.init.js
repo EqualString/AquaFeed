@@ -9,7 +9,7 @@
     background:     ['#33B5E5']
 });
 $( document ).ready(function(){
-	$('#header').css('display','block'); //Preloader header fix
+	$('#header').css('display','block'); //Preloader header fix 
 });
 
 //Socket.io init
@@ -19,7 +19,7 @@ function login_cp()
 	var info = [];
 	info[0] = document.getElementById("em").value;
 	info[1] = document.getElementById("passwd").value;
-	socket.emit('login_info', info );//Komunikacija sa serverom
+	socket.emit('login_info', info );//Komunikacija sa server-om
 }
 
 //Document loaded
