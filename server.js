@@ -53,7 +53,7 @@ app.use(session({
 
 app.get('/', function(req, res){
 	res.render('index.html', {
-		username: user[0]
+		username: req.session.user //Ovisi o cookie-u
 	});
 });
 
