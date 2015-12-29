@@ -22,6 +22,8 @@ function login_cp()
 	socket.emit('login_info', info );//Komunikacija sa server-om
 }
 
+ 
+ 
 //Document loaded
 (function($) {
 	'use strict';
@@ -34,7 +36,7 @@ function login_cp()
 	    var $target = $(target);
 
 	    $('html, body').stop().animate({
-	        'scrollTop': $target.offset().top -108
+	        'scrollTop': $target.offset().top -113
 	    }, 950, 'swing', function () {
 	        //window.location.hash = target; //Ne stavlja se u putanju anchor
 	    });

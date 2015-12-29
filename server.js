@@ -8,16 +8,15 @@
 |------------------------------------------|
 */
 
-// Dopunske 'require' skripte
-var express = require('express');
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-var mqtt = require('mqtt');
-var io = require('socket.io')(server);
+// Dopunske 'require' skripte (moduli)
+var express      = require('express');
+var MongoClient  = require('mongodb').MongoClient;
+var assert       = require('assert');
+var mqtt         = require('mqtt');
+var io           = require('socket.io')(server);
 var InfiniteLoop = require('infinite-loop');
-var fs = require('fs');
-var app = express();
-var session = require('client-sessions');
+var app          = express();
+var session      = require('client-sessions');
 
 // Dodatne varijable
 var user =[],db_user =[], sem = true, semi = true, auth, log =[];
@@ -45,7 +44,7 @@ app.set('views', __dirname + '/public');
 
 app.use(session({
   cookieName: 'session',
-  secret: 'GotYaBlueFishTank?',
+  secret: 'GotYaBlueFishTank?',  //Secret string
   duration: 7 * 24 * 60 * 60 * 1000, //Week session
 }));
 
@@ -196,7 +195,7 @@ var server = app.listen(server_port, function () {
 
 app.use(express.static(__dirname + '/public'));//Koristi sve iz folder 'public'
 
-//Stranica 404
+//Stranica 404, nema respons-a od middleware-a
 app.use(function(req, res) {
     res.redirect('/404');
 });
