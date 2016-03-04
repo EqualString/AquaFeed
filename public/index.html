@@ -37,7 +37,6 @@
 		<script src="home/vendor/modernizr/modernizr.js"></script>
 		<script src="home/vendor/jquery.flexslider/jquery.flexslider.js"></script>
 		<script type="text/javascript" src="http://l2.io/ip.js?var=myip"></script>
-		<script src="control/js/socket.io.js"></script>
 	
 		<!--[if IE]>
 			<link rel="stylesheet" href="css/ie.css">
@@ -147,8 +146,8 @@
 																<div class="row">
 																	<div class="form-group">
 																		<div class="col-md-12">
-																			<label>Korisničko ime</label>
-																			<input type="text" id="em" value="" class="form-control input-lg">
+																			<label>Korisničko ime ili e-mail adresa</label>
+																			<input type="text" id="username" name="username" value="" class="form-control input-lg">
 																		</div>
 																	</div>
 																</div>
@@ -157,7 +156,7 @@
 																		<div class="col-md-12">
 																			<a class="pull-right wut" id="headerRecover" href="#">(Zaboravljena lozinka?)</a>
 																			<label>Lozinka</label>
-																			<input type="password" id="passwd" value="" class="form-control input-lg">
+																			<input type="password" id="passwd" name="passwd" value="" class="form-control input-lg">
 																		</div>
 																	</div>
 																</div>
@@ -170,7 +169,7 @@
 																		</span>
 																	</div>
 																	<div class="col-md-6">
-																		<button type="submit" onclick="login_cp();" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">Prijava</button>
+																		<button type="submit" onclick="" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">Prijava</button>
 																	</div>
 																</div>	
 															</form>
@@ -903,7 +902,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-7">
-								<p>© 2015 AquaFeed. Sva prava pridržana.</p>
+								<p>© 2016 AquaFeed. Sva prava pridržana.</p>
 							</div>
 							<div class="col-md-4">
 								<p>Vaša IP adresa: <strong id="user-ip" style="color:#fff;"></strong> .</p>

@@ -6,7 +6,7 @@
 						dd = data;
 						var len = dd.length;
 						
-						if( len <= 1){
+						if( len == 1){
 							$("#heading").append('<i class="fa fa-clock-o"></i> Imate '+len+'. događaj koji se izvodi svakodnevno.');
 						}
 						else{

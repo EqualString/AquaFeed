@@ -64,7 +64,7 @@
             </div>
             <nav class="navigation">
             	<ul class="list-unstyled" id="navi">
-                	<li><a href="index"><img class="aside-img" src="control/images/aside.png"/><span class="nav-label"> AquaFeed</span></a></li>
+                	<li><a href="index"><img class="aside-img" src="control/images/aside.png"/><span class="nav-label"> Početna</span></a></li>
 					<li class="has-submenu"><a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">FeedTime</span></a>
                     	<ul class="list-unstyled">
                         	<li><a href="timeline">Timeline</a></li>
@@ -132,38 +132,95 @@
 	   <div class="warper container-fluid">
             <div class="page-header"><h3>Postavke <small>korisničkog računa</small></h3></div>
             
-            
-            <div class="row">
-            
-            	<div class="col-sm-3">
+            	<div class="col-sm-4">
                 	<div class="panel panel-default">
                         <div class="panel-heading">Promjenite Vaše korisničko ime i lozinku</div>
                         <div class="panel-body">
                         
-                        	
-                              <div class="form-group">
-                                <label>Korisničko ime</label>
-                                <input class="form-control"  id="user_name" placeholder="Korisničko ime">
-                              </div>
-							  <div class="form-group">
-                                <label>Lozinka</label>
-                                <input class="form-control"  id="user_pass" placeholder="Lozinka">
-                              </div>
-                              <hr>
-                              <div class="form-group no-margn">
-                                <button class="btn btn-success btn-block" onclick="save_info();">Spremi promjene!</button>
-                              </div>
-                            
-   
-                        </div>
+                        	<div class="row" style="margin-left:2px;">
+								<div class="col-md-6">
+									<label>Korisničko ime</label>
+									<input class="form-control"  id="user-name" onblur="checkname()" placeholder="Korisničko ime">
+								</div>
+								<div class="col-md-6" id="status1">
+									<p class="validation-error" style="opacity:0;"><i class="glyphicon glyphicon-remove"></i></p>
+								</div>
+							</div> 
+							<div class="row" style="margin-left:2px; margin-top:20px;">
+								<div class="col-md-6">
+									<label>Trenutna lozinka</label>
+									<input type="password" class="form-control" id="old-pass" onblur="checkpass()" placeholder="Vaša stara lozinka">
+								</div>
+								<div class="col-md-6" id="status3">
+									<p class="validation-error" style="opacity:0;"><i class="glyphicon glyphicon-remove"></i></p>
+								</div>
+							</div>
+							<div class="row" style="margin-left:2px; margin-top:20px;">
+								<div class="col-md-6">
+									<label>Nova lozinka</label>
+									<input type="password" class="form-control" id="user-pass" placeholder="Nova lozinka">
+								</div>
+								<div class="col-md-6" id="status2">
+									<p class="validation-error" style="opacity:0;"><i class="glyphicon glyphicon-remove"></i></p>
+								</div>
+							</div> 	
+							<div id="ie-checkbox" class="row" style="margin-left:15px; margin-top:20px;">
+								<label class="cr-styled"><input type="checkbox" id="show-pass" ng-model="todo.done"><i class="fa"></i><span style="font-size:14px; font-weight:normal; margin-left:3px;">Prikaži lozinke</span></p></label>	
+							</div>	
+							<hr class="xs">
+							<div class="col-md-7" style="margin-top:4px;">
+								<button class="btn btn-primary btn-block" style="margin-left:0px;" onclick="save_new_user_info()">Spremi promjene</button>
+                            </div>
+						
+						</div>	
                     </div>
                 </div>
-            
-            </div>
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">Vaši osobni podaci</div>
+							<div class="panel-body">
+							
+								<div class="row" style="margin-left:2px; margin-right:2px;">
+									<div class="col-md-6">
+										<label>Ime</label>
+										<p class="form-control p-input" id="firstname"></p>
+									</div>
+									<div class="col-md-6">
+										<label>Prezime</label>
+										<p class="form-control p-input" id="lastname"></p>
+									</div>
+								</div> 
+								<div class="row" style="margin-left:2px; margin-right:2px; margin-top:20px;">
+									<div class="col-md-12">
+										<label>Adresa</label>
+										<p class="form-control p-input" id="adress"></p>
+									</div>
+								</div> 
+								<hr class="xs">
+								<div class="row" style="margin-left:2px; margin-right:2px; margin-top:20px;">
+									<div class="col-md-8">
+										<label>Kontakt e-mail</label>
+										<p class="form-control p-input" id="email"></p>
+									</div>
+									<div class="col-md-2" id="status4">
+									</div>
+								</div>
+								<div class="row" style="margin-left:2px; margin-right:2px; margin-top:17px;">
+									<div class="col-md-8">
+										<label>Novi kontakt e-mail</label>
+										<input type="text" class="form-control" id="new-email" placeholder="Nova e-mail adresa">
+									</div>
+								</div>
+							
+							</div>	
+						</div>
+					</div>
+				</div>
         </div>
         <!-- Warper Ends Here (working area) -->
         <footer class="container-fluid footer">
-        	Copyright &copy; 2015 <a href="index" target="_blank">AquaFeed</a>
+        	Copyright &copy; 2016 <a href="index" target="_blank">AquaFeed</a>
             <a href="#" class="pull-right scrollToTop"><i class="fa fa-chevron-up"></i></a>
         </footer>
     </section>
@@ -187,6 +244,26 @@
       </div>
     </div>
 	
+	<!-- Modal Failure -->
+    <div class="modal fade" id="modal-mail-not-activated" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" style="color:#c9302c"><i class="fa fa-exclamation-triangle"></i> Kontakt mail</h4>
+          </div>
+          <div class="modal-body">
+            <p>Vaša kontakt e-mail adresa, <span id="modal-mail" style="font-weight:bold"></span> nije provjerena.<p>
+			<p>Ukoliko želite biti u mogućnosti primati tjedne izvještaje te promijeniti lozinku automatski ukoliko ju zaboravite, savjetujemo Vas da ju aktivirate.</p>
+          </div>
+          <div class="modal-footer">
+			<button type="button" id="activate-email-modal "class="btn btn-primary">Pošalji aktivacijski mail</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Zatvori</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	
     <!-- NanoScroll -->
     <script src="control/js/jquery.nicescroll.min.js"></script>
     
@@ -198,6 +275,8 @@
 	
     <!-- Custom JQuery -->
 	<script src="control/js/custom.js" type="text/javascript"></script>
+	<script src="control/js/ajax.js" type="text/javascript"></script>
+	<script src="control/js/passwd-strenght.js" type="text/javascript"></script>
 	<script src="control/js/user.js" type="text/javascript"></script>
     
 </body>

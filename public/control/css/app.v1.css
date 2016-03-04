@@ -74,7 +74,14 @@ a:hover{
 	margin-top:10px;
 	margin-bottom:10px;
 }
-
+.validation-error{
+	margin-top:28px; 
+	font-size:18px; 
+	color:#E06060;
+}
+.p-input{
+	background:#CECECE;
+}
 /*****************************
 Loader
 *****************************/

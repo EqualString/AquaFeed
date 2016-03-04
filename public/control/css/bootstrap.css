@@ -2249,7 +2249,7 @@ table th[class*="col-"] {
 }
 @media screen and (max-width: 767px) {
   .table-responsive {
-    width: 100%;
+    width: 40%;
     margin-bottom: 15px;
     overflow-x: auto;
     overflow-y: hidden;
@@ -2814,7 +2814,7 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #fff;
-  background-color: #428bca;
+  background-color: #00A2D3;
   border-color: #357ebd;
 }
 .btn-primary:hover,

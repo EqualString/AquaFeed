@@ -6,10 +6,10 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "ejs": "~2.3.3",
     "express": "~4.13.3",
 	"client-sessions": "~0.7.0",
-	"body-parser": "~1.15.0",
-	"ejs": "~2.3.3",
+	"mongodb": "~2.0",
 	"mqtt": "~1.4.0",
 	"infinite-loop": "~0.2.2",
 	"sendgrid": "^1.9.2",
