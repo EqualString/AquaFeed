@@ -11,8 +11,6 @@
 // Dopunske vendor skripte (moduli)
 var express      = require('express');
 var bodyParser   = require('body-parser');
-//var mysql        = require('mysql'); 
-//var assert       = require('assert');
 //var mqtt         = require('mqtt');
 //var InfiniteLoop = require('infinite-loop');
 var app          = express();
@@ -21,20 +19,13 @@ var session      = require('client-sessions');
 //Extra moduli
 var time    	 = require('./lib/time-getting.js');
 var db   	     = require('./lib/db-use.js');
+var mail   	     = require('./lib/mailer.js');
 
 /** Konfiguracija servera **/
 
 // Port aplikacije
 // var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-
-//SQL Baza podataka na db4free.net
-/*var connection = mysql.createConnection({
-  host     : 'db4free.net',
-  user     : 'equalstring',
-  password : 'UEBSAW11391',
-  database : 'equaldb'
-});*/
 
 // Express konfiguracija
 app.engine('.html', require('ejs').__express);
@@ -150,11 +141,21 @@ app.get('/404', function(req, res){
   res.render('404.html');
 });
 
+//POST-ovi sa fronted-a (AJAX)
 app.post('/testUser', function(req, res){
 
 	//Testiranje potencijalnog novog korisničkog imena
 	db.testUser( req.body.testUsername, req.session.username, function(echo){
 		res.send(''+echo); //AJAX slanje, '0'-> dostupno, '1'-> nedostupno, echo varijablom :)
+	});
+	
+});
+
+app.post('/testEmail', function(req, res){
+
+	//Testiranje potencijalnog novog korisničkog imena
+	db.testEmailAdress( req.body.testEmail, function(echo){
+		res.send(''+echo); //AJAX slanje, '0'-> dostupno, '1'-> nedostupno
 	});
 	
 });
@@ -227,11 +228,9 @@ io.sockets.on("connection", function(socket) {
 	socket.on( 'times-update', function (data){
 		db.updateTimes( data, socket.request.session.userID ); //Update vremena
 	});
-	/*socket.on( 'testUser', function (data){
-		db.testUser( data, socket.request.session.username, function (echo){
-			socket.emit( 'testedUser' , echo ); //Echo je povratak putem socketa :-), (1->dostupno,0->nedostupno)
-		});
-	});*/
+	socket.on( 'sendCurActMail', function (){
+		mail.sendCurAct( socket.request.session.userData[2] ); //Slanje aktivacijskog maila na trenutnu adresu
+	});
 	
 });
 

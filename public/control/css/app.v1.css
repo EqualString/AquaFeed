@@ -3,7 +3,7 @@
 body{
 	background-color:#f9f9f9;
 	color:#333;
-	font-family: 'PT Sans', sans-serif;
+	font-family: "Open Sans", Arial, sans-serif;
 	position:relative;
 	width:100%;
 	height:100%;
@@ -44,6 +44,9 @@ a:hover{
 }
 #email-form a:hover{
 	color:#00A2D3;
+}
+aside.left-panel.collapsed .navigation ul li ul li a:hover {
+   color:#00A2D3;
 }
 .btn-send {
     color: #FFF;
@@ -94,7 +97,6 @@ Loader
   left: 0;
   height:100%;
   width:100%;
-  cursor:wait;
 }
 
 .loading {
@@ -201,19 +203,19 @@ Left Panel (aside navigation)
 *****************************/
 
 aside.left-panel{
-	background-color:#222;
+	background-color:#242E3A;
 	width:230px;
 	position:fixed;
 	padding:25px 0px;
 	box-shadow:inset -5px 0px 8px rgba(0,0,0,0.3);
-	height:100%;
 	top:0px;
+	bottom:0px;
 	left:0px;}
 	
 aside.left-panel.collapsed{
 	overflow:visible !important;
-	position:absolute;
-	bottom:0px;}
+	bottom:0px;
+}
 
 
 /*** Aside sizes ***/
@@ -231,10 +233,11 @@ aside.left-panel.lg + .content{
 
 
 /*** Aside Collapsed ***/
-@media (min-width: 768px) {
+
 aside.left-panel.collapsed{
 	width:80px;
-	text-align:center;}
+	text-align:center;
+}
 	
 aside.left-panel.collapsed + .content{
 	margin-left:75px;}
@@ -254,7 +257,7 @@ aside.left-panel.collapsed i.fa{
 	
 aside.left-panel.collapsed .navigation > ul > li.has-submenu:after{
 	display:none;}
-}
+
 
 
 /*****************************
@@ -266,7 +269,8 @@ User
 	
 .user h4.user-name{
 	color:#fff;
-	font-size:16px;}
+	font-size:13px;
+}
 	
 .user img{
 	border:0.5px solid #7B7F7D;
@@ -422,10 +426,10 @@ aside:not(.collapsed) .navigation ul li.active ul{
 
 
 /*** Aside Collapsed Sub Menu ***/
-@media (min-width: 768px) {
+
 aside.left-panel.collapsed .navigation ul li ul{
 	position:absolute;
-	z-index:3;
+	z-index:99999;
 	left:100%;
 	top:0px;
 	background-color:#F2F2F4;
@@ -455,7 +459,7 @@ aside.left-panel.collapsed .navigation ul li ul li a{
 	border:0px;
 	color:#8f8f9f;
 	border-bottom:1px dashed #ECECEE;}
-}
+
 
 
 /*****************************
@@ -464,12 +468,11 @@ Top Header
 	
 header{
 	background-color:#f2f2f4;
-	border-bottom:1px solid #ececee;
+	border-bottom:3px solid #ececee;
 	padding-top:4px;
-	padding-bottom:4px;}
+	padding-bottom:4px;
+}
 	
-	
-
 .navbar-toggle{
 	margin:8px 20px 8px 0px;
 	display:block;
@@ -757,12 +760,6 @@ Styled Radio/Checkbox
 .dashboard-stats:hover .sparkline,
 .dashboard-stats:hover i.fa.stats-icon{
 	opacity:1;}
-	
-
-
-
-
-
 
 /****Messages-Chating****/
 
@@ -916,10 +913,6 @@ Styled Radio/Checkbox
 	border-color:#4fcdfc;}
 
 
-
-
-
-
 /*****************************
 Footer
 *****************************/
@@ -929,21 +922,17 @@ Footer
     border-top: 1px solid #ececee;
     padding-bottom: 15px;
     padding-top: 15px;
-	
 }
-
-
-
-
-
+footer{
+	margin-bottom:-200px;
+	margin-left:100px;
+}
 
 /***********************************************
 ================================================
  Custom Bootstrap / Overwriting
 ================================================
 ************************************************/
-
-
 
 /*****************************
  Grid
@@ -958,9 +947,6 @@ Footer
     padding-left: 0;
     padding-right: 0;
 }
-
-
-
 
 /*****************************
  Color >> Backgrounds + Text 
@@ -1059,18 +1045,6 @@ Footer
 .text-info{
 	color:#4DC5F9;}	
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*****************************
  Form Elements
 *****************************/
@@ -1118,9 +1092,6 @@ Footer
 .form-control-flat{
 	border-radius:0px;}
 
-
-
-
 /*****************************
 Form Elements
 *****************************/
@@ -1130,15 +1101,14 @@ Form Elements
 	line-height:34px;}
 
 
-
-
-
 /*****************************
 Panel Styling
 *****************************/
 
 .panel{
-	margin-bottom:30px;}
+	margin-bottom:80px;
+	z-index:-1;
+}
 
 .panel-heading{
 	font-weight:700;}
@@ -1152,7 +1122,9 @@ Panel Styling
 .panel-default > .panel-heading,
 .panel-default > .panel-footer{
 	border-color: #e8e8eb;
-	box-shadow:none;}		
+	color: #293541 !important;
+	box-shadow:none;
+}		
 
 .panel-default > .panel-heading,
 .btn-default{
@@ -1217,19 +1189,11 @@ Panel Styling
 	color:#fff;
 	box-shadow:none;}
 	
-	
-		
-
-
-	
 /*** Clean Panel Heading ***/
 .panel-heading.clean,
 .panel-footer.clean{
 	background:none;
 	border:none;}
-
-
-
 
 
 /*****************************
@@ -1250,8 +1214,6 @@ Panel Styling
 
 .dropdown-menu.lg{
 	min-width:400px;}
-
-	
 
 
 .dropdown-menu.arrow:after,
@@ -1277,8 +1239,6 @@ Panel Styling
 .dropdown-menu.arrow.arrow-top-left{
 	top:calc(100% + 15px);}
 
-
-
 /**Top Right Arrow**/
 .dropdown-menu.arrow.arrow-top-right:after,
 .dropdown-menu.arrow.arrow-top-right:before{
@@ -1293,9 +1253,6 @@ Panel Styling
 .dropdown-menu.arrow.arrow-top-right:after{
 	border-bottom-color:#fff;}
 
-
-
-
 /**Top Left Arrow**/
 .dropdown-menu.arrow.arrow-top-left:after,
 .dropdown-menu.arrow.arrow-top-left:before{
@@ -1306,9 +1263,6 @@ Panel Styling
 .dropdown-menu.arrow.arrow-top-left:before{
 	left:5px;}
 
-
-
-
 .dropdown-menu.arrow:after{
 	height:10px;
 	width:10px;
@@ -1316,11 +1270,6 @@ Panel Styling
 
 .dropdown-menu.arrow.panel-default:after{
 	border-bottom-color:#F5F5F5;}
-
-
-
-
-
 
 /*****************************
 Progress Bars
@@ -1338,11 +1287,6 @@ Progress Bars
 .progress.progress-lg{
 	height:24px;}
 
-
-
-
-
-
 /*****************************
 Horizaontal Row
 *****************************/
@@ -1353,7 +1297,10 @@ hr.sm{
 
 hr.xs{
 	margin-top:10px;
-	margin-bottom:10px;}
+	margin-bottom:10px;
+	border: 3px;
+	border-top: 3px solid #ececee;
+}
 	
 
 hr.dotted{
@@ -1372,56 +1319,11 @@ Tabs with panel
 	border-top-left-radius:0px;
 	border-top-right-radius:0px;}
 
-
-
-
-
-
-
-
 /****************************************
 =========================================
 Responsive Stying
 =========================================
 *****************************************/
-
-@media (max-width: 768px) {
-	
-	
-	
-	aside.left-panel.collapsed{
-	width:250px;
-	left:0px;
-	overflow:hidden !important;}
-	
-	aside.left-panel.collapsed + .content{
-	margin-left:0px;
-	transform:translate3d(250px, 0px, 0px);
-	-ms-transform:translate3d(250px, 0px, 0px); 
-	-webkit-transform:translate3d(250px, 0px, 0px); 
-	-moz-transition: translate3d(250px, 0px, 0px);
-	-o-transition: translate3d(250px, 0px, 0px)}
-	
-
-	
-	aside.left-panel{
-		left:100%;}
-	
-	section.content{
-		margin-left:0px;}
-		
-	.content > .container-fluid{
-		padding-left:15px;
-		padding-right:15px;}
-		
-	.page-header h1{
-		margin-top:0px;}
-	
-}
-
-
-
-
 
 @media (max-width: 450px) {
 	.dropdown-menu{
@@ -1444,41 +1346,3 @@ Responsive Stying
 		right:44px;}
 	
 }
-
-
-
-
-
-/****************************************
-=========================================
-Just For Demo / Showcase
-=========================================
-*****************************************/
-
-.showcase-btn li, .showcase-btn{
-	margin-bottom:10px;}
-	
-.showcase-switch-button{
-	margin-right:15px;}
-	
-.showcase-pagination{
-	margin-top:10px;
-	margin-bottom:10px;}
-
-
-
-
-	
-.showcase-icons div{
-	line-height:40px;
-	cursor:pointer;
-	height:40px;}
-	
-.showcase-icons i{
-	
-	transition: font-size 0.2s ease 0s;
-	text-align:center;
-	width:40px;}
-	
-.showcase-icons > div:hover i{
-	font-size:26px;}

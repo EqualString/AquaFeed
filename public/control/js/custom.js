@@ -32,7 +32,7 @@ $(function(){
 	Aside Navigation Menu
 	********************************/
 
-	$("aside.left-panel nav.navigation > ul > li:has(ul) > a").click(function(){
+	/*$("aside.left-panel nav.navigation > ul > li:has(ul) > a").click(function(){
 		
 		if( $("aside.left-panel").hasClass('collapsed') == false || $(window).width() < 768 ){
 
@@ -50,7 +50,7 @@ $(function(){
 		
 		}
 		
-	});
+	});*/
 	
 	/********************************
 	popover
