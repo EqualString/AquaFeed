@@ -31,7 +31,7 @@
 		<!-- Current Page CSS -->
 		<link rel="stylesheet" href="home/vendor/rs-plugin/css/settings.css" media="screen">
 		<link rel="stylesheet" href="home/vendor/circle-flip-slideshow/css/component.css" media="screen">
-		<link rel="stylesheet" href="home/css/preloader.css">
+		<link rel="stylesheet" href="home/css/loader.css">
 
 		<!-- Head Libs -->
 		<script src="home/vendor/modernizr/modernizr.js"></script>
@@ -48,16 +48,26 @@
 		<![endif]-->
 
 	</head>
-	<body id="main-div" class="royal_loader">
+	
+	<body id="main-div" class="loader">
 		<noscript>
 			Za potpuni i ispravan rad stranice potrebno je omogućiti javascript.
 		</noscript>
-		<div class="body">
+		<!-- Loader -->
+		<div class="loader-container">
+			<ul class="loader-list">
+				<li class="list__item list__item--burst color-11">
+					<i class="icon icon-main-logo2 loader-logo"></i><h3 class="list__text">AquaFeed</h3>
+				</li>
+			</ul>
+		</div>
+		<!-- // -->
+		<div class="global-wrap">
 			<header id="header" class="flat-menu clean-top">
 				<div class="header-top">
 					<div class="container">
 						<p>
-							AquaFeed | <span><i class="fa fa-phone"></i>+ (385) 098 948 7820</span> | <a href="mailto:AquaFeed@gmail.com">AquaFeed@gmail.com</a>
+							AquaFeed | <span><i class="fa fa-phone"></i>+ (385) 098 948 7820</span> | <a href="mailto:AquaFeed@linuxmail.org">AquaFeed@linuxmail.org</a>
 						</p>
 						<ul class="social-icons">
 							<li class="facebook"><a href="http://www.facebook.com/" target="_blank" data-placement="bottom" data-tooltip title="Facebook">Facebook</a></li>
@@ -98,8 +108,8 @@
 									<a href="#kontakt">Kontakt</a>
 								</li>
 								<%if (username) { %>
-								<li class="dropdown mega-menu-item mega-menu-signin signin logged" id="headerAccount">
-									<a style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
+								<li class="dropdown mega-menu-item mega-menu-signin signin logged">
+									<a id="headerAccount" style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
 										<i class="fa fa-user"></i> <%= username %>
 										<i class="fa fa-angle-down"></i>
 									</a>
@@ -129,8 +139,8 @@
 								</li>
 								<% } %>
 								<%if (!username) { %>
-								<li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
-									<a style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
+								<li class="dropdown mega-menu-item mega-menu-signin signin">
+									<a id="headerAccount" style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
 										<i style="font-size:16px;" class="fa fa-sign-in"></i> Prijava
 										<i class="fa fa-angle-down"></i>
 									</a>
@@ -153,8 +163,8 @@
 																</div>
 																<div class="row">
 																	<div class="form-group">
-																		<div class="col-md-12">
-																			<a class="pull-right wut" id="headerRecover" href="#">(Zaboravljena lozinka?)</a>
+																		<div class="col-md-12" id="pass-field">
+																			<a class="pull-right passRecover" href="#">(Zaboravljena lozinka?)</a>
 																			<label>Lozinka</label>
 																			<input type="password" id="passwd" name="passwd" value="" class="form-control input-lg">
 																		</div>
@@ -173,7 +183,7 @@
 																	</div>
 																</div>	
 															</form>
-															<p class="sign-up-info">Nemate korisnički račun? <a href="#narudžba">Prijavite se</a></p>
+															<p class="sign-up-info">Nemate korisnički račun? <a id="nar-field" href="#narudžba">Prijavite se</a></p>
 														</div>
 													</div>
 												</div>
@@ -490,7 +500,7 @@
 							<p class="tall">
 								 Unutar upravljačke ploče imate mogućnosti trenutnog hranjenja ili slaganja dnevnih termina. Uređivanje termina i hranjenje je vrlo jednostavno, jednim klikom miša.
 								 Dovoljno je još samo pripremiti hranu u spremnik na AquaFeed mehanizmu koji stoji na rubu akvarija i to je to. Sa dovoljnom količinom hrane i namještenim terminima svi Vaši 
-								 problemi su s nevjerojatnom lakoćom rješeni.
+								 problemi su nevjerojatnom lakoćom rješeni.
 							</p>
 						</div>
 						<div class="col-md-6 push-top">
@@ -500,12 +510,12 @@
 					<hr/>
 					<div class="row">
 						<div class="col-md-6 push-top">
-							<img class="img-responsive" src="home/img/sponsor/clevercloud.png" data-appear-animation="fadeInLeft">
+							<img class="img-responsive" src="home/img/openshift.png" data-appear-animation="fadeInLeft">
 						</div>
 						<div class="col-md-6">
-							<h2 data-appear-animation="fadeInRight" class="push-top">Clever Cloud<i class="fa fa-copyright"></i></h2>
+							<h2 data-appear-animation="fadeInRight" class="push-top">OpenShift by RedHat® (PaaS)</h2>
 							<p class="lead">
-								Svi Vaši zapisi i podaci su spremljeni na internetu. Korištenjem <a style="color:#CE1A3D;" target="_blank" href="https://www.clever-cloud.com/en/">Clever Cloud</a> servera su sigurni i dostupni samo Vama!
+								Svi Vaši zapisi i podaci su spremljeni na internetu. Korištenjem <a style="color:#CE1A3D;" target="_blank" href="https://www.openshift.com/">Openshift RedHat</a> servera su sigurni i dostupni samo Vama!
 							</p>
 							<p class="tall">
 								Podacima pristupate putem tajnog korisničkog imena i lozinke. Pristup Vam je omogućen danonoćno te tako imate potpunu ovlast nad terminima hranjenja.
@@ -568,7 +578,7 @@
 								<h3><i class="fa fa-copyright"></i> AquaFeed</h3>
 								<p class="featured lead">IoT platforma Vam omogućuje pristup aplikaciji, u bilo koje vrijeme i sa velikog broja uređaja.
 									Tvrtka Telit Wireless Solutions je napravila zanimljiv promotivan video "Jedan dan u životu IoT-a", pogledajte video: 
-									<a class="popup-youtube" href="https://www.youtube.com/watch?v=fFqEx--b7hU"><i class="fa fa-youtube-play"></i> YouTube</a>.
+									<a class="popup-youtube" href="https://www.youtube.com/watch?v=ZgWbWCv0J5E"><i class="fa fa-youtube-play"></i> YouTube</a>.
 								</p>
 							</div>
 							
@@ -582,7 +592,7 @@
 							<div id="h2">
 								<h3>Cloud <i class='fa fa-cloud'></i></h3>
 								<p class='featured lead'>Računarstvo u oblaku Vam omogućava da se vaši podaci ne nalaze unutar naše infrastrukture, nego na sigurnim serverima.
-									Cloud serveri Vam također omogućavaju danonoćni pristup Vašim podacima.
+									OpenShift serveri Vam također omogućavaju danonoćni pristup Vašim podacima.
 								</p>
 							</div>
 							
@@ -600,7 +610,7 @@
 			<!-- / -->
 			<!-- Narudžba -->
 			<section id="narudzba" class="highlight" style="padding-top:50px">
-				<div class="container center">
+				<div class="container center" style="margin-bottom:60px;">
 					<div class="row" id="projects">
 						<div class="row center col-md-12">
 							<h1 data-appear-animation="fadeInLeft" style="padding-bottom:30px;" class="short word-rotator-title">
@@ -618,7 +628,7 @@
 							<div class="col-md-3 col-sm-6">
 								<div data-appear-animation="fadeInLeft" class="plan">
 									<div class="plan-ribbon-wrapper"><div class="plan-ribbon">Popularno!</div></div>
-									<h3 style="color:#0077B3;">Cijena<span>35€</span></h3>
+									<h3 style="color:#0077B3;">Cijena<span>TBA</span></h3>
 									<ul>
 										<li>Danonoćno <b>Održavanje sustava</b></li>
 										<li><b>2 godine</b> garancije na mehanički dio</li>
@@ -628,29 +638,36 @@
 							</div>
 						</div>
 						<!-- Forma -->
-						<div class="form-group">
-							<form>
-							<div class="col-md-3">	
-								<label>Vaše ime</label>
-								<input type="text" value="" data-msg-required="Molimo unesite Vaše ime." maxlength="100" class="form-control" name="name" id="name" required>
+						<div class="col-md-8">
+							<div class="row">
+								<div class="col-md-5">	
+									<label>Vaše ime</label>
+									<input type="text" value="" data-msg-required="Molimo unesite Vaše ime." maxlength="100" class="form-control" name="name" id="name" required>
+								</div>
+								<div class="col-md-5">	
+									<label>Vaše prezime</label>
+									<input type="text" value="" data-msg-required="Molimo unesite Vaše prezime." maxlength="100" class="form-control" name="name" id="name" required>
+								</div>
+							</div>	
+							<div class="row">
+								<div class="col-md-5">	
+									<label>Email adresa</label>
+									<input type="text" value="" data-msg-required="Molimo unesite Vašu e-mail adresu." maxlength="100" class="form-control" name="name" id="name" required>
+								</div>
+								<div data-appear-animation="fadeInLeft" style="margin-top:20px;" class="col-md-5">
+									<button type="submit" style="background-color:#fff; color:#333;" class="btn btn-lg" id="narudzba">
+										Naruči <i class="glyphicon glyphicon-shopping-cart"></i>
+									</button>
+								</div>
+							</div>	
+							<div class="row">
+								<div style="padding-top: 20px;"class="col-md-4">
+									<p class="ad-info" style="color:#fff;">*Unesite tražene podatke i sve ostalo prepustite nama.</p>
+								</div>
+								<div style="padding-top: 20px;"class="col-md-4">
+									<p class="ad-info" style="color:#fff;">*Kontaktirat ćemo Vas putem unesene e-mail adrese.</p>
+								</div>
 							</div>
-							<div class="col-md-3">	
-								<label>Vaše prezime</label>
-								<input type="text" value="" data-msg-required="Molimo unesite Vaše prezime." maxlength="100" class="form-control" name="name" id="name" required>
-							</div>
-							<div class="col-md-3">	
-								<label>Email adresa</label>
-								<input type="text" value="" data-msg-required="Molimo unesite Vašu e-mail adresu." maxlength="100" class="form-control" name="name" id="name" required>
-							</div>
-							<div data-appear-animation="fadeInLeft" style="margin-top:20px;" class="col-md-3">
-								<button type="submit" style="background-color:#fff; color:#333;" class="btn btn-lg" id="narudzba">
-									Naruči <i class="glyphicon glyphicon-shopping-cart"></i>
-								</button>
-							</div>
-							<div style="padding-top: 20px;"class="col-md-3">
-								<p class="ad-info" style="color:#fff;"><br>*Unesite tražene podatke i sve ostalo prepustite nama.<br><br>*Kontaktirat ćemo Vas putem unesene e-mail adrese.</p>
-							</div>
-							</form>
 						</div>
 						<!-- / -->
 					</div>
@@ -882,7 +899,7 @@
 								<ul class="contact">
 									<li><p><i class="fa fa-map-marker"></i> <strong>Adresa:</strong> Vukovarska 72, Osijek</p></li>
 									<li><p><i class="fa fa-phone"></i> <strong>Telefon:</strong> +(385) 098 948 7820</p></li>
-									<li><p><i class="fa fa-envelope"></i> <strong>Email:</strong> <a href="mailto:AquaFeed@gmail.com">AquaFeed@gmail.com</a></p></li>
+									<li><p><i class="fa fa-envelope"></i> <strong>Email:</strong> <a href="mailto:AquaFeed@linuxmail.org">AquaFeed@linuxmail.org</a></p></li>
 								</ul>
 							</div>
 						</div>
@@ -913,7 +930,7 @@
 			</footer>
 		</div>
 	
-		<!-- Vendor -->
+		<!-- Vendor skripte -->
 		<script src="home/vendor/jquery/jquery.js"></script>
 		<script src="home/vendor/jquery.appear/jquery.appear.js"></script>
 		<script src="home/vendor/jquery.easing/jquery.easing.js"></script>
@@ -930,18 +947,24 @@
 		<script src="home/vendor/magnific-popup/jquery.magnific-popup.js"></script>
 		<script src="home/vendor/jquery.menuOnScroll/jquery.menuOnScroll.js"></script>		
 		
-		<!-- Specific Page Vendor -->
+		<!-- Specifične vendor skripte -->
 		<script src="home/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
 		<script src="home/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 		<script src="home/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
 		
-		<!-- Theme Base, Components and Settings -->
-		<script src="home/js/theme.js"></script>
+		<!-- Main skripte -->
+		<script src="home/js/main.js"></script>
+		<script type="text/javascript" src="home/js/imagesloaded.pkgd.min.js"></script>
 		<script type="text/javascript" src="home/js/jquery.nicescroll.min.js"></script>
-		<script type="text/javascript" src="home/js/royal_preloader.min.js"></script>
-		
-		<!-- Theme Initialization Files -->
-		<script src="home/js/theme.init.js"></script>
+		<script type="text/javascript" src="home/js/jquery.disablescroll.min.js"></script>
+		<script src="home/js/loader/segment.min.js"></script>
+		<script src="home/js/loader/d3-ease.v0.6.js"></script>
+		<script src="home/js/loader/letters.js"></script>
+		<script src="home/js/loader/mo.min.js"></script>
+		<script src="home/js/loader/loader.js"></script>
+
+		<!-- Inicijalizacijska skripta -->
+		<script src="home/js/main.init.js"></script>
 
 	</body>
 </html>

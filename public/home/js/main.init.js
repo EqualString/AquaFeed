@@ -1,18 +1,25 @@
+//Loader :-)
+
+//Onemogućavanje scroll-a
+var $window = $(window);
+$window.disablescroll();
+
+//Postavlja scroller na top
+$('html, body').scrollTop(0);
+
+$(window).load(function() {
+	
+	$('.global-wrap').imagesLoaded( function() { //Nakon što su se "podigle" sve slike u DOM
+		setTimeout(function(){
+			$('.global-wrap').css("visibility","visible"); //Otkrivanje global-a
+			$(".loader-container").fadeOut(950); //FadeOut loader-a
+			$("body").removeClass("loader"); //Micanje loader klase sa body-a (Margin, background i overflow(scrollbar))
+			$window.disablescroll("undo"); //Omogućavanje scroll-a
+		}, 3750);	
+	});
+
+});
  
-//Preloader
-Royal_Preloader.config({
-    mode:           'text', // 'number', "text" ili "logo"
-    text:           'AQUAFEED©',
-    timeout:        0,
-    showInfo:       true,
-    opacity:        1,
-    background:     ['#33B5E5']
-});
-
-$( document ).ready(function(){
-	$('#header').css('display','block'); //Preloader header fix 
-});
-
 //Document loaded
 (function($) {
 	'use strict';
@@ -38,8 +45,7 @@ $( document ).ready(function(){
 	
 	$('#user-ip').text(myip); //Dohvaćanje IP adrese
 	
-	var faded = 450;
-	var i,br=0;
+	var i,faded = 450;
 	$("#s31").click( function(){
 			//Zamjena
 			$('#s31').css("display","none");
@@ -95,34 +101,23 @@ $( document ).ready(function(){
 	}
 	
 	//YT video-popup
-		$('.popup-youtube').magnificPopup({
-			disableOn: 700,
-			type: 'iframe',
-			mainClass: 'mfp-fade',
-			removalDelay: 160,
-			preloader: false,
-			fixedContentPos: false
-			/*callbacks: {
-                close: function() {
-                    if(audio_played == true){
-						var audio = document.getElementById("audio-bg");
-						audio.play();
-					}
-				},
-				open: function() {
-					var audio = document.getElementById("audio-bg");
-					if(!audio.paused){ 
-						audio.pause();
-						audio_played = true;
-					}
-					else{
-						audio_played = false;
-					}	
-					
-				}
-            }*/
+	$('.popup-youtube').magnificPopup({
+		disableOn: 700,
+		type: 'iframe',
+		mainClass: 'mfp-fade',
+		removalDelay: 160,
+		preloader: false,
+		fixedContentPos: false
+		/*callbacks: {
+            close: function() {
+				$window.disablescroll("undo");
+			},
+			open: function() {
+				$window.disablescroll();
+			}
+        }*/
 			
-		});
+	});
 		
 	// Scroll to Top.
 	if (typeof theme.PluginScrollToTop !== 'undefined') {

@@ -24,8 +24,8 @@ var mail   	     = require('./lib/mailer.js');
 /** Konfiguracija servera **/
 
 // Port aplikacije
-// var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+//var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 // Express konfiguracija
 app.engine('.html', require('ejs').__express);
@@ -94,6 +94,24 @@ app.get('/events', db.times, function(req, res){
   }
 });
 
+app.get('/log', db.log, function(req, res){
+	if (req.session.username){
+		res.render('log.html', {
+			username: req.session.username
+		});
+	} else{
+		res.redirect('/login');
+	}
+});
+
+app.get('/user', db.userInfo, function(req, res){
+	if (req.session.username){
+		res.render('user.html');
+	} else{
+		res.redirect('/login');
+	}
+});
+
 app.get('/email', function(req, res){
 	if (req.session.username){
 		res.render('email.html', {
@@ -109,24 +127,6 @@ app.get('/errors', function(req, res){
 		res.render('errors.html', {
 			username: req.session.username
 		});
-	} else{
-		res.redirect('/login');
-	}
-});
-
-app.get('/log', db.log, function(req, res){
-	if (req.session.username){
-		res.render('log.html', {
-			username: req.session.username
-		});
-	} else{
-		res.redirect('/login');
-	}
-});
-
-app.get('/user', function(req, res){
-	if (req.session.username){
-		res.render('user.html');
 	} else{
 		res.redirect('/login');
 	}
@@ -153,7 +153,7 @@ app.post('/testUser', function(req, res){
 
 app.post('/testEmail', function(req, res){
 
-	//Testiranje potencijalnog novog korisničkog imena
+	//Testiranje potencijalnog novog korisničkog kontak maila
 	db.testEmailAdress( req.body.testEmail, function(echo){
 		res.send(''+echo); //AJAX slanje, '0'-> dostupno, '1'-> nedostupno
 	});
@@ -196,7 +196,7 @@ app.get('/404.html', function(req, res){
 var server = app.listen(server_port, function () {
 	var host = server.address().address;
 	var port = server.address().port;
-	console.log('app @ :http://localhost:8080/');
+	console.log('app @ :http://'+ server_port);
 });
 
 app.use(express.static(__dirname + '/public'));//Koristi sve iz foldera 'public'
@@ -229,79 +229,14 @@ io.sockets.on("connection", function(socket) {
 		db.updateTimes( data, socket.request.session.userID ); //Update vremena
 	});
 	socket.on( 'sendCurActMail', function (){
-		mail.sendCurAct( socket.request.session.userData[2] ); //Slanje aktivacijskog maila na trenutnu adresu
+		mail.sendCurAct( socket.request.session.userData[2], socket.request.session.userID ); //Slanje aktivacijskog maila na trenutnu adresu
+	});
+	socket.on( 'email-update', function (data){
+		db.updateEmail( data, socket.request.session.userID ); //Update e-maila u bazi
+		mail.sendNewEmail( data, socket.request.session.userID ); //Slanje aktivacijskog e-maila na novu adresu
 	});
 	
 });
-
-/** Server akcije **/
-//Socket.io 
-//Korištenje socketa za real-time komunikaciju client-server dijela
-/*var io = require('socket.io')(server);
-io.on('connection', function(socket){
-	
-	//Slanje
-	//Emitiranje vrijednosti iz tablice
-	socket.emit( 'izvoz', izvedeni ); //Emitiranje flagova
-	socket.emit( 'log', log ); //Emitiranje zapisnika
-	socket.emit( 'user_credentials', user ); //Emitiranje zapisnika*/
-
-	//Primanje login informacija
-	/*socket.on('login_info', function(infos){
-		user[0] = infos[0];
-		user[1] = infos[1];
-	});*/
-	
-	//Izmjena računa/lozinke
-	/*socket.on('change_user', function(infodata){
-		//Chainano zbog redoslijeda operacija 1.brisanje, 2.ubacivanje
-		database.collection('user').deleteMany( {}, function() {
-			database.collection('user').insertOne( {
-				"name" : infodata[0],
-				"pass" : infodata[1],
-			}, function(err, result) {
-				assert.equal(err, null);
-				user = infodata; //Novi user[] 
-				var sada = time.getLogDate();
-				log.push(sada+' - Promjena korisničkog imena/lozinke'); //Dodavanje u log 
-			});
-		});
-	});
-	
-	//Izmjena vrijednosti u bazi vrijednostima iz tablice
-	socket.on('table_data', function(data){
-		ln = data.length;
-		dates = [];//Resetiranje dates polja
-		//Stvaranje JSON objekta, http://stackoverflow.com/questions/6979092/create-json-string-from-javascript-for-loop 
-		var new_table_data = "[{";
-		for (i = 0; i< ln; i++){
-			izvedeni[i] = false; //Resetiranje flag-ova radi novih vrijednosti (eventualnih)
-			new_table_data += '"'+i+'":"'+data[i]+'",';
-			dates[i] = data[i];//Nove vrijednosti
-		}
-		new_table_data = new_table_data.slice(0, -1);
-		new_table_data += "}]";
-		//Novi zapis u bazi
-		database.collection('dates').deleteMany( {}, function() {
-			database.collection('dates').insert(JSON.parse(new_table_data));
-			var sada = time.getLogDate();
-			log.push(sada+' - Promjena vrijednosti u tablici'); //Dodavanje u log
-		});
-			
-	});
-	
-	//Trenutno hranjenje
-	socket.on('nowfeed', function(){
-		client = mqtt.connect('mqtt://test.mosquitto.org');  //Free Broker
-		client.subscribe('aquafeed');
-		client.publish('aquafeed', 'feed');
-		//console.log("Poslah sada");
-		var sada = time.getLogDate();
-		log.push(sada+' - Poslan zahtjev'); //Dodavanje u log da je poslan zahtjev
-		client.end();
-	});
-	
-});*/
 
 /**Fja koja stranicama gasi caching zbog logout-a**/ 
 // Koristi se auth bet session-a i cook-ija

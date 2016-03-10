@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,latin-ext);
 
 body{
-	background-color:#f9f9f9;
+	background-color: #f2f2f4;
 	color:#333;
 	font-family: "Open Sans", Arial, sans-serif;
 	position:relative;
@@ -84,6 +84,11 @@ aside.left-panel.collapsed .navigation ul li ul li a:hover {
 }
 .p-input{
 	background:#CECECE;
+}
+.bg{
+	background: transparent url("../images/tex1.jpg") repeat scroll 0% 0%;
+	height: 100%;
+	width:100%;
 }
 /*****************************
 Loader
@@ -193,24 +198,21 @@ Loader
 .l1 div, .l4 div { animation: rot1 3s ease 0s infinite; }
 .l2 div, .l3 div { animation: rot2 3s ease 0s infinite; }
 
-
-
-
-
-
 /*****************************
 Left Panel (aside navigation)
 *****************************/
 
 aside.left-panel{
 	background-color:#242E3A;
-	width:230px;
+	width:80px;
 	position:fixed;
 	padding:25px 0px;
 	box-shadow:inset -5px 0px 8px rgba(0,0,0,0.3);
 	top:0px;
 	bottom:0px;
-	left:0px;}
+	left:0px;
+	z-index:6;
+}
 	
 aside.left-panel.collapsed{
 	overflow:visible !important;
@@ -436,7 +438,9 @@ aside.left-panel.collapsed .navigation ul li ul{
 	box-shadow:none;
 	padding:10px 0px;
 	min-width:200px;
-	border:1px solid #dddddd;}
+	border:1px solid #dddddd;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+}
 	
 aside.left-panel.collapsed .navigation ul li ul:before{
 	display:block;
@@ -574,8 +578,6 @@ header .navbar-default .navbar-nav > li > a{
 	padding-bottom:0px;
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);}
 
-
-
 /*****************************
 Content Area (right)
 *****************************/
@@ -589,9 +591,13 @@ Content Area (right)
 
 
 .warper{
+	z-index:5;
 	padding-top:20px;
 	padding-bottom:20px;
-	min-height:550px;}
+	min-height:550px;
+	margin-right:0px;
+	width:auto;
+}
 
 /*** Page Header / Page Title ***/
 
@@ -919,14 +925,15 @@ Footer
 
 .footer {
     background-color: #f2f2f4;
-    border-top: 1px solid #ececee;
+	border-top: 3px solid #ececee;
     padding-bottom: 15px;
     padding-top: 15px;
+	padding-left: 15px;
+	position: relative;
+	width:100%;
+    bottom: 0px; 
 }
-footer{
-	margin-bottom:-200px;
-	margin-left:100px;
-}
+
 
 /***********************************************
 ================================================
@@ -1107,7 +1114,7 @@ Panel Styling
 
 .panel{
 	margin-bottom:80px;
-	z-index:-1;
+	z-index:99;
 }
 
 .panel-heading{
