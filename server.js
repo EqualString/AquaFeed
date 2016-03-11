@@ -25,7 +25,7 @@ var mail   	     = require('./lib/mailer.js');
 
 // Port aplikacije
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-//var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 // Express konfiguracija
 app.engine('.html', require('ejs').__express);
@@ -192,10 +192,18 @@ app.get('/404.html', function(req, res){
   res.redirect('/404');
 });
 
-//Konfiguracija servera
-var server = app.listen(server_port, function () {
+/** Konfiguracija servera **/
+
+//Klasična
+/*var server = app.listen(server_port, function () {
 	var host = server.address().address;
 	var port = server.address().port;
+	console.log('app @ :http://'+ server_port);
+});*/
+
+//OpenShift(server_port & server_ip)
+var server = require('http').createServer(app);
+server.listen(server_port, server_ip_address, function(){
 	console.log('app @ :http://'+ server_port);
 });
 
@@ -239,7 +247,7 @@ io.sockets.on("connection", function(socket) {
 });
 
 /**Fja koja stranicama gasi caching zbog logout-a**/ 
-// Koristi se auth bet session-a i cook-ija
+// Koristi se auth bez session-a i cook-ija
 //http://stackoverflow.com/questions/20429592/no-cache-in-a-nodejs-server/20429914#20429914
 /*function nocache(req, res, next) {
 	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');

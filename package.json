@@ -1,6 +1,6 @@
 {
   "name": "AquaFeed",
-  "description": "AF with Clever Cloud",
+  "description": "AF with OpenShift",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
