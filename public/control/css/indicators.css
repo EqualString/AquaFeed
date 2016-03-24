@@ -1,0 +1,112 @@
+/* Corner indicator */
+.corner-indicator {
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	right: 0;
+	width: 300px;
+	height: 300px;
+	background: #058BB7;
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+	-webkit-transform: translateX(100%) translateY(-100%) rotate(45deg); /*Skriva ga desno*/
+	transform: translateX(100%) translateY(-100%) rotate(45deg);
+	pointer-events: none;
+}
+
+.corner-indicator.la-animate {
+	-webkit-transform: translateX(50%) translateY(-50%) rotate(45deg);
+	transform: translateX(50%) translateY(-50%) rotate(45deg);
+}
+
+/* Loading circle idea from http://codepen.io/Metty/details/lgJck */
+.corner-indicator::before,
+.corner-indicator::after {
+	position: absolute;
+	bottom: 30px;
+	left: 50%;
+	display: block;
+	border: 5px solid #fff;
+	border-radius: 50%;
+	content: '';
+}
+
+.corner-indicator::before {
+	margin-left: -40px;
+	width: 80px;
+	height: 80px;
+	border-right-color: #047C9E;
+	border-left-color: #047C9E;
+	-webkit-animation: rotation 3s linear infinite;
+	animation: rotation 3s linear infinite;
+}
+
+.corner-indicator::after {
+	bottom: 50px;
+	margin-left: -20px;
+	width: 40px;
+	height: 40px;
+	border-top-color: #047C9E;
+	border-bottom-color: #047C9E;
+	-webkit-animation: rotation 1s linear infinite;
+	animation: rotation 1s linear infinite;
+}
+
+
+@-webkit-keyframes rotation {
+	0% 		{ -webkit-transform: rotate(0deg); }
+	50% 	{ -webkit-transform: rotate(180deg); }
+	100% 	{ -webkit-transform: rotate(360deg); }
+}
+
+@keyframes rotation {
+	0% 		{ transform: rotate(0deg); }
+	50% 	{ transform: rotate(180deg); }
+	100% 	{ transform: rotate(360deg); }
+}
+
+/* Rectangle spinner */
+.spinner {
+  margin: auto;
+  margin-top:7px;
+  margin-bottom:5px;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 16px;
+  height: 16px;
+  background-color: #00A2D3;
+  margin-right:2px;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}

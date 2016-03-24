@@ -24,8 +24,8 @@ var mail   	     = require('./lib/mailer.js');
 /** Konfiguracija servera **/
 
 // Port aplikacije
-var server_port = process.env.OPENSHIFT_NODEJS_PORT;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP;
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 // Express konfiguracija
 app.engine('.html', require('ejs').__express);
@@ -50,24 +50,13 @@ app.get('/', function(req, res){
 	});
 });
 
-app.get('/index-auth', db.auth, function(req, res){
-	if (req.session.username){
-		res.redirect('/');
-	} else{
-		res.redirect('/login-failed');
-	}
-});
-
-app.get('/login-auth', db.auth, function(req, res){
-	if (req.session.username){
-		res.redirect('/timeline');
-	}  else{
-		res.redirect('/login-failed');
-	}
-});
-
 app.get('/login', function(req, res){
-  res.render('login.html');
+	if (req.session.username){
+		res.redirect('/timeline'); //Ako postoji sessija
+	} else{
+		res.render('login.html');
+	}
+  
 });
 
 app.get('/login-failed', function(req, res){
@@ -142,6 +131,9 @@ app.get('/404', function(req, res){
 });
 
 //POST-ovi sa fronted-a (AJAX)
+
+app.post('/login-auth', db.auth ); //Login 
+
 app.post('/testUser', function(req, res){
 
 	//Testiranje potencijalnog novog korisničkog imena

@@ -20,6 +20,7 @@ body {
 	line-height: 22px;
 	margin: 0;
 	z-index:1;
+	overflow-x:hidden;
 }
 
 /** Custom scrollbar **/
@@ -63,6 +64,10 @@ body.sticky-menu-active #top-logo{
 	text-transform: none; 
 	font-weight:600; 
 	letter-spacing: 2px;
+}
+
+#login-status{
+	display:none;
 }
 
 #pass-field a:hover{
@@ -137,12 +142,20 @@ body.sticky-menu-active #top-logo{
 	margin-top:9px;
 	font-size: 1.5em;
 }
-
+.signin-form input[type=text]:focus,.signin-form input[type=password]:focus{
+	box-shadow: 0 0 2px #00A2D3;
+	border: 2px solid #00A2D3;
+}
 
 /* Responsive */
 @media (max-width: 479px) {
 	body {
 		font-size: 13px;
+	}
+}
+@media (max-height: 680px) {
+	.remember-box{
+		display:none;
 	}
 }
 /* Header */

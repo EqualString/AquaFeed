@@ -1,13 +1,4 @@
 
-/********************************
-Preloader
-********************************/
-$(window).load(function() {
-  $('.loading-container').fadeOut(1000, function() {
-	$(this).remove();
-  });
-});	
-
 $(function(){
 
 	/*$('.dropdown-menu').click(function(event){
@@ -105,8 +96,8 @@ $(function(){
 	Chosen Select
 	********************************/
 	if( $.isFunction($.fn.chosen) ){
-		$('.chosen-select').chosen();
-        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+		$('#time-zone-region').chosen({disable_search_threshold: 7});
+		$('#time-zone-location').chosen({disable_search_threshold: 7});
 	}
 	
 	/********************************
@@ -185,7 +176,7 @@ function toggleFullScreen() {
 }
 
 //Onemogućuje povezivanje na 'lažni' link, tj. na '#'
-[].slice.call( document.querySelectorAll('a[href="#"') ).forEach( function(el) {
+/*[].slice.call( document.querySelectorAll('a[href="#"') ).forEach( function(el) {
 	el.addEventListener( 'click', function(ev) { ev.preventDefault(); } );
-});
+});*/
 

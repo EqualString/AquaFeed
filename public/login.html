@@ -3,66 +3,113 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>AquaFeed | Prijava</title>
-		<link rel="shortcut icon" href="control/images/favicon.ico">
-		<meta name="description" content="AquaFeed IOT Device Control Panel">
-		<meta name="author" content="Egredžija Alen">
+		<meta name="keywords" content="AquaFeed, IoT, Arduino" />
+		<meta name="description" content="AquaFeed - IoT rješenje za Vaš akavariji">
+		<meta name="author" content="Alen Egredžija">
+		<link rel="icon" href="home/img/favicon/favicon.ico">
 		
-		<link rel="stylesheet" href="control/css/login-reset.css">
-		<link rel="stylesheet" href="control/css/font-awesome.css" type="text/css"/>
-		<link rel="stylesheet" href="control/css/login-style.css">
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="home/vendor/bootstrap/bootstrap.css">
+		
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="home/css/style-elements.css">
+		<link rel="stylesheet" href="home/css/theme-animate.css">
+		<link rel="stylesheet" href="home/css/style.css">
+		<link rel="stylesheet" href="home/css/style-color.css">
+		<link rel="stylesheet" href="home/css/magnific-popup.css">
+		<link rel="stylesheet" href="control/css/indicators.css">
+		<link rel="stylesheet" href="control/css/login.css">
+		
+		<!-- Font -->
+		<link rel="stylesheet" href="home/css/glyphicon.css">
+		<link rel="stylesheet" href="home/css/font-awesome.css">
 		<link rel="stylesheet" href="home/css/myicon.css">
 		
-		 <!-- JQuery v1.9.1 -->
-		<script src="control/js/jquery-1.9.1.min.js" type="text/javascript"></script>
-		<script src="control/js/socket.io.js"></script>
-		
+		<!-- Google reCaptcha -->
+		<script src='https://www.google.com/recaptcha/api.js?hl=hr'></script>
 		
 	</head>
-<body>
-
-<!-- Title-->
-<div class="pen-title">
-  <h1><a href="index">AquaFeed<i class="icon icon-main-logo2"></i></a></h1>
-  <span><a><i class="fa fa-cogs"></i> Upravljačka ploča</a></span>
-</div>
-<!-- Form Module-->
-<div class="module form-module">
-  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
-    <div class="tooltip">Klikni me</div>
-  </div>
-  <div class="form">
-    <h2>Prijava</h2>
-    <form action="login-auth">
-      <input id="em" type="text" placeholder="Korisničko Ime"/>
-      <input id="passwd" type="password" placeholder="Lozinka"/>
-      <button onclick="login_cp();"><i class="fa fa-lock"></i> Prijava</button>
-    </form>
-  </div>
-  <div class="form">
-    <h2>Zatraži vlastiti račun</h2>
-    <form>
-      <input id="ime" type="text" placeholder="Vaše Ime" required />
-	  <input id="prezime" type="text" placeholder="Vaše Prezime" required />
-      <input id="kontakt_email" type="email" placeholder="Email Addresa" required />
-      <button id="naruci">Prijavi se</button>
-    </form>
-  </div>
-  
-  
-</div>
-<script>
-$('.toggle').click(function(){
-  // Switches the Icon
-  $(this).children('i').toggleClass('fa-pencil');
-  // Switches the forms  
-  $('.form').animate({
-    height: "toggle",
-    'padding-top': 'toggle',
-    'padding-bottom': 'toggle',
-    opacity: "toggle"
-  }, "slow");
-});
-</script>
-   <script src="control/js/login.js"></script>
+<body>	
+	<div id="canavas"></div>
+	<div class="corner-indicator"></div>
+	<div class="row featured-boxes">
+		<div class="container">
+			<div class="login-header">
+				<a href="index"><i class="icon icon-main-logo2"></i></a>
+				<p class="list__text">AquaFeed</p>
+			</div>
+			<div class="featured-box featured-box-secundary default info-content login">
+				<div class="box-content">
+					<h4>Prijava u sustav</h4>
+					<form onsubmit="return false;">
+						<div id="credentials">
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<label>Korisničko ime ili e-mail adresa</label>
+										<input type="text" value="" id="username" class="form-control input-lg" required>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<a class="pull-right" href="#">(Zaboravljena lozinka?)</a>
+										<label>Lozinka</label>
+										<input type="password" id="passwd" value="" class="form-control input-lg" required>
+									</div>
+								</div>
+							</div>
+						</div>	
+						<!-- Status-->
+						<div id="login-status" class="alert" role="alert">
+							<button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+							<div id="status-text"></div>
+						</div>
+						<!-- // -->
+						<!-- Captcha -->
+						<div id="captcha-status" class="alert alert-danger" role="alert">
+							Nažalost imali ste nekoliko neuspjelih pokušaja prijave. Molimo Vas da nam dokažete da ste ljudsko biće.
+						</div>
+						<div id="captcha">
+							<div class="g-recaptcha" data-sitekey="6LetbBcTAAAAAOZ7lysOR74EwCHB63s-W8k47gQW" data-callback="verifyCallback"></div>
+						</div>	
+						<!-- // -->
+						<div id="form-submits">
+							<div class="row">
+								<div class="col-md-6">
+									<span class="remember-box checkbox">
+										<label for="rememberme">
+											<input type="checkbox" id="rememberme" name="rememberme">Zapamti me
+										</label>
+									</span>
+								</div>
+								<div class="col-md-6">
+									<input id="login-btn" type="submit" value="Prijava" class="btn btn-primary pull-right push-bottom">
+								</div>
+							</div>
+						</div>			
+					</form>
+				</div>
+			</div>
+			<div class="footer">
+				<p>Vukovarska 72, 31000 Osijek Croatia</p>
+				<p id="copyright">© 2016 AquaFeed<p>
+			</div>
+		</div>	
+	</div>
+	<script src="control/js/jquery-1.12.1.js"></script>	
+	<script src="control/js/ajax.js"></script>	
+	<script src="control/js/login/segment.min.js"></script>
+	<script src="control/js/login/d3-ease.v0.6.js"></script>
+	<script src="control/js/login/letters.js"></script>
+	<script src="control/js/login/raphael.js"></script>
+	<script src="control/js/login/classie.js"></script>
+	<script src="control/js/login/bubbles.js"></script>
+	<script src="control/js/login/animated.js"></script>
+	<script src="control/js/login/login.js"></script>
 </body>
 </html>

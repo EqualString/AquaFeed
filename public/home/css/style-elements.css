@@ -1674,7 +1674,7 @@ html.boxed .pricing-table .plan, html.boxed .pricing-table h3 {
 	box-sizing: border-box;
 	border-bottom: 1px solid #DFDFDF;
 	border-left: 1px solid #ECECEC;
-	border-radius: 8px;
+	border-radius: 13px;
 	border-right: 1px solid #ECECEC;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
 	margin-bottom: 20px;
@@ -1696,9 +1696,8 @@ html.boxed .pricing-table .plan, html.boxed .pricing-table h3 {
 }
 
 .featured-box .box-content {
-	border-radius: 8px;
-	border-top: 3px solid #33B8FF;
-	border-top-width: 4px;
+	border-radius:11px;
+	border-top: 6px solid #33B8FF;
 	padding: 30px 30px 10px 30px;
 }
 

@@ -57,7 +57,7 @@
 
 					var burst = new mojs.Burst({
 						parent: word,
-						duration: 1800,
+						duration: 1600,
 						delay: 1000 + 115*i,
 						shape : 'circle',
 						fill : '#f6f6f6',

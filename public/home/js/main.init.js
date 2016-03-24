@@ -12,7 +12,12 @@ $(window).load(function() {
 	$('.global-wrap').imagesLoaded( function() { //Nakon što su se "podigle" sve slike u DOM
 		setTimeout(function(){
 			$('.global-wrap').css("visibility","visible"); //Otkrivanje global-a
-			$(".loader-container").fadeOut(950); //FadeOut loader-a
+			
+			//FadeOut loader-a
+			$(".loader-container").addClass("magictime vanishOut").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+				$(this).css("visibility","hidden");
+			});
+			
 			$("body").removeClass("loader"); //Micanje loader klase sa body-a (Margin, background i overflow(scrollbar))
 			$window.disablescroll("undo"); //Omogućavanje scroll-a
 		}, 3750);	
@@ -44,6 +49,8 @@ $(window).load(function() {
     });
 	
 	$('#user-ip').text(myip); //Dohvaćanje IP adrese
+	var ua = detect.parse(navigator.userAgent);
+	$('#browser-agent').text(ua.browser.family);
 	
 	var i,faded = 450;
 	$("#s31").click( function(){

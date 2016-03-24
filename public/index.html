@@ -22,6 +22,8 @@
 		<link rel="stylesheet" href="home/css/style.css">
 		<link rel="stylesheet" href="home/css/style-color.css">
 		<link rel="stylesheet" href="home/css/magnific-popup.css">
+		<link rel="stylesheet" href="control/css/indicators.css">
+		<link rel="stylesheet" href="home/css/magic.css">
 		
 		<!-- Font -->
 		<link rel="stylesheet" href="home/css/glyphicon.css">
@@ -152,12 +154,12 @@
 														<div class="signin-form">
 															<span class="mega-menu-sub-title resp">Prijavi se</span>
 															<!-- Login s index-a -->
-															<form action="index-auth">
+															<form onsubmit="return false;">
 																<div class="row">
 																	<div class="form-group">
 																		<div class="col-md-12">
 																			<label>Korisničko ime ili e-mail adresa</label>
-																			<input type="text" id="username" name="username" value="" class="form-control input-lg">
+																			<input type="text" id="username" name="username" value="" class="form-control input-lg" required>
 																		</div>
 																	</div>
 																</div>
@@ -166,10 +168,16 @@
 																		<div class="col-md-12" id="pass-field">
 																			<a class="pull-right passRecover" href="#">(Zaboravljena lozinka?)</a>
 																			<label>Lozinka</label>
-																			<input type="password" id="passwd" name="passwd" value="" class="form-control input-lg">
+																			<input type="password" id="passwd" name="passwd" value="" class="form-control input-lg" required>
 																		</div>
 																	</div>
 																</div>
+																<!-- Status-->
+																<div id="login-status" class="alert" role="alert">
+																	<button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+																	<div id="status-text"></div>
+																</div>
+																<!-- // -->
 																<div class="row">
 																	<div class="col-md-6">
 																		<span class="remember-box checkbox">
@@ -179,11 +187,11 @@
 																		</span>
 																	</div>
 																	<div class="col-md-6">
-																		<button type="submit" onclick="" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">Prijava</button>
+																		<button type="submit" id="login-btn" class="btn btn-primary pull-right push-bottom">Prijava</button>
 																	</div>
 																</div>	
 															</form>
-															<p class="sign-up-info">Nemate korisnički račun? <a id="nar-field" href="#narudžba">Prijavite se</a></p>
+															<p class="sign-up-info">Nemate korisnički račun? <a id="nar-field" href="#narudzba">Prijavite se</a></p>
 														</div>
 													</div>
 												</div>
@@ -436,7 +444,7 @@
 									 data-y="260"
 									 data-speed="500"
 									 data-start="2000"
-									 data-easing="easeOutExpo">Ponudite nam Vaše povjerenje.
+									 data-easing="easeOutExpo">Povjerite nam Vaše povjerenje.
 								</div>
 								<a class="tp-caption customin btn btn-lg btn-primary main-button" href="#proizvod"
 										data-x="230" data-hoffset="0"
@@ -543,7 +551,7 @@
 						<div class="row center">
 							<span class="sun"></span>
 							<span class="cloud"></span>
-							<p class="ad-info">*Za detaljnije informacije dovoljna je interakcija mišem.</p>
+							<p class="ad-info">*Za detaljnije informacije dovoljan je klik mišem.</p>
 							<div class="col-md-2 col-md-offset-1">
 								<div class="process-image" data-appear-animation="bounceIn">
 									<a id="s1">
@@ -830,7 +838,7 @@
 						<div class="col-md-6">
 
 							<h4 class="push-top"><strong>Helpdesk</strong> služba</h4>
-							<p>Naša služba za korisinike radi danonoćno. Vaše pitanje ćemo proučiti i odgovoriti u što kraćem vremenskom roku.</p>
+							<p>Naša služba za korisnike radi danonoćno. Vaše pitanje ćemo proučiti i odgovoriti u što kraćem vremenskom roku.</p>
 
 							<hr/>
 
@@ -922,7 +930,7 @@
 								<p>© 2016 AquaFeed. Sva prava pridržana.</p>
 							</div>
 							<div class="col-md-4">
-								<p>Vaša IP adresa: <strong id="user-ip" style="color:#fff;"></strong> .</p>
+								<p>Vaša IP adresa: <strong id="user-ip" style="color:#fff;"></strong> , na <span id="browser-agent"></span>.</p>
 							</div>
 						</div>
 					</div>
@@ -951,20 +959,21 @@
 		<script src="home/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
 		<script src="home/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 		<script src="home/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+		<script src="home/js/imagesloaded.pkgd.min.js"></script>
+		<script src="home/js/jquery.nicescroll.min.js"></script>
+		<script src="home/js/jquery.disablescroll.min.js"></script>
+		<script src="home/js/detect.min.js"></script>
 		
 		<!-- Main skripte -->
 		<script src="home/js/main.js"></script>
-		<script type="text/javascript" src="home/js/imagesloaded.pkgd.min.js"></script>
-		<script type="text/javascript" src="home/js/jquery.nicescroll.min.js"></script>
-		<script type="text/javascript" src="home/js/jquery.disablescroll.min.js"></script>
+		<script src="control/js/ajax.js"></script>	
 		<script src="home/js/loader/segment.min.js"></script>
 		<script src="home/js/loader/d3-ease.v0.6.js"></script>
 		<script src="home/js/loader/letters.js"></script>
 		<script src="home/js/loader/mo.min.js"></script>
 		<script src="home/js/loader/loader.js"></script>
-
-		<!-- Inicijalizacijska skripta -->
 		<script src="home/js/main.init.js"></script>
+		<script src="home/js/main-login.js"></script>
 
 	</body>
 </html>
