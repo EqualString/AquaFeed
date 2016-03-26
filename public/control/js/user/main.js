@@ -3,7 +3,7 @@
 var socket = io.connect();
 var newInfo =[];
 var oldInfo = [];
-var err,err2,err2 = false; //Usernam & passwd errors
+var err,err2 = false; //Username & passwd errors
 var same_em, erm = false; //E-mail errors
 
 
@@ -12,8 +12,10 @@ $(document).ready(function() {
 	
 		socket.on('userData',function(data){
 			oldInfo = data; 
+			
 			//Ubacivanje podataka
 			add_info(data);
+			
 			setTimeout( function(){	
 				//Loader
 				$('.loading-container').fadeOut(535, function() {
@@ -21,40 +23,33 @@ $(document).ready(function() {
 				});
 				
 				//Ne aktiviran mail
-			if( oldInfo[6] == '0' ){
-			
-				$('#status4').html('<button class="btn btn-primary btn-sm" style="margin-top:26px;" onclick="activate_old()"><i class="fa fa-envelope"></i> Aktivacija</button>'); //Ikona pokraj adrese
-				setTimeout(function(){ 
+				if( oldInfo[6] == '0' ){
 				
-					//Modal
-					$('#modal-mail').text(oldInfo[2]);
-					$('#modal-mail-not-activated').modal('show');
+					$('#status4').html('<button class="btn btn-primary btn-sm" style="margin-top:26px;" onclick="activate_old()"><i class="fa fa-envelope"></i> Aktivacija</button>'); //Ikona pokraj adrese
+					setTimeout(function(){ 
 					
-					//Firefox autocomplete, automatski popuni input lozinke nakon verzije 38!
-					if ( $('#old-pass').val() == oldInfo[1] ){
+						//Modal
+						$('#modal-mail').text(oldInfo[2]);
+						$('#modal-mail-not-activated').modal('show');
 						
-						$('#status3').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i></p>');
-						err2 = false;
+						if($('#user-name').val()){
+							checkname(); //Ako je bio autocomplete browser-a
+						}
 						
-					}
-					
-				},750);	
+						
+					},750);	
 				
 			} else {
 				$('#status4').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i></p>');
 			}	
 			
 			},1570); 
-			
-			
-			
 		});
 		
 		msie();//Skriva checkbox ako je IE
 	
 });				
 
-					
 /** -/- **/
 function msie() {
     var ua = window.navigator.userAgent;
@@ -74,7 +69,7 @@ function hide_alerts(){
 }
 function add_info(data){
 
-	$("#top-username").append('<span class="fa fa-user"></span> '+data[0]+'<span class="caret"></span>');
+	$("#top-username").html('<span class="fa fa-user"></span> '+data[0]+'<span class="caret"></span>');
 	$('#user-name').val(data[0]);
 	$('#email').text(data[2]);	
 	$('#firstname').text(data[3]);	
@@ -106,22 +101,36 @@ function activate_old(){
 //Update korisničke e-mail adrese putem socket-a			
 function save_new_user_info(){
 
-	hide_alerts();
-	var name = $('#user-name').val();
-	var passOld = $('#old-pass').val();
+	var nameNew = $('#user-name').val();
 	var passNew = $('#user-pass').val();
 	
-	if (( passNew == "")&&(passOld != "")&&(err == false)&&(err2 == false)) { //Unesena dobra stara lozinka, nova lozinka => prazna, update korisničkog imena
+	var infoModal = $('#modal-new-info');
+	var infoModalText = $('#modal-new-info .modal-body');
+	var saveStatus = $('#alert-save-newinfo');
+	var saveStatusText = $('#newinfo-txt');
+	
+	saveStatus.hide();
+	checkname();
+	checkpass (passNew);	
+	
+	if ((err == false)&&(err2 == false)) { 
+		newInfo[0] = nameNew;
+		newInfo[1] = passNew;
+		newInfo[2] = oldInfo[2]; //Eventualno novi e-mail
 		
+		infoModalText.html();
+		infoModalText.html('<p>Vaši novi podaci za prijavu u sustav:</p><p>Korisničko ime: <strong>'+nameNew+'</strong>,<br>Lozinka: <strong>'+passNew+'</strong>.</p><p>Također Vam je poslan mail sa novim podacima na: <strong>'+oldInfo[2]+'</strong>.<br>Vaš AquaFeed Tim.</p>');
+		infoModal.modal('show');
+		socket.emit('newCred-update', newInfo);
+		$("#top-username").html();
+		$("#top-username").html('<span class="fa fa-user"></span> '+nameNew+'<span class="caret"></span>');
+	}else {
+		saveStatusText.html();
+		saveStatusText.html("Molimo provjerite polja za unos.");
+		saveStatus.removeClass("alert-success").addClass("alert-danger");
+		saveStatus.fadeIn('slow').show();
 	}
-	if ( erm == true){ //Postoji greška
-		$('#alert-save-email-error').fadeIn('slow').show();
-	} else if (same_em == true){ //Unesena jednaka adresa
-		$('#alert-save-email-warning').fadeIn('slow').show();
-	} else { //Update adrese
-		socket.emit('email-update', em);
-		$('#alert-save-email-succes').fadeIn('slow').show();
-	}
+
 	
 }
 
@@ -143,35 +152,10 @@ function save_new_user_email(){
 	} else { //Update adrese
 		socket.emit('email-update', em);
 		$('#alert-save-email-succes').fadeIn('slow').show();
+		oldInfo[2] = em;
 	}
 	
 }
-
-//Skrivanje alert-a
-$('#alert-save-email-succes .close').click(function() {
-	$('#alert-save-email-succes').hide(); 
-});
-$('#alert-activate-email-succes .close').click(function() {
-	$('#sended-mail').css("display","none"); 
-});
-$('#alert-save-email-error .close').click(function() {
-	$('#alert-save-email-error').hide(); 
-});
-$('#alert-save-email-warning .close').click(function() {
-	$('#alert-save-email-warning').hide(); 
-});
-
-//Prikaz lozinki putem checkbox-a
-$('#show-pass').change(function () {
-    var oldPass = $('#old-pass');
-	var newPass = $('#user-pass');
-	
-    var type = $(this).is(':checked') ? 'text' : 'password'; //Tip ovisan o checkboxu
-	
-	oldPass.attr('type', type );
-	newPass.attr('type', type ); //ReplaceWith ne bi radio zbog keyup listenera
-	
-});
 
 //Testiranje novog maila
 function checkemail() {
@@ -212,15 +196,44 @@ function checkemail() {
 	
 }
 
+//Promjena vremenske zone uređaja
+function save_new_user_timezone(){
+	
+	$('#alert-save-timezone').hide();
+	var newTimezone = $("#time-zone-location").val();
+	if (oldInfo[7] != newTimezone){
+		$("#new-timezone-txt").text(newTimezone);
+		$('#alert-save-timezone').fadeIn('slow').show();
+		socket.emit('timeZone-update', newTimezone);
+		oldInfo[7] = newTimezone;
+	}
+	
+}
+
+//Prikaz lozinke putem checkbox-a
+$('#show-pass').change(function () {
+	
+	var newPass = $('#user-pass');
+    var type = $(this).is(':checked') ? 'text' : 'password'; //Tip ovisan o checkboxu
+	
+	newPass.attr('type', type ); //ReplaceWith ne bi radio zbog keyup listenera
+	
+});
+
 //Testiranje korisničkog imena
 function checkname() {
 
 		var tmn = $('#user-name').val();
-		if( tmn === ""){
+		
+		if( tmn == oldInfo[0]){ //Staro korisničko ime
+			$('#status1').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i></p>');
+			err = false;
+		}
+		else if( tmn === ""){
 			$('#status1').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Ispunite polje.</p>');
 			err = true;
 		}
-		if( tmn.length < 3){
+		else if( tmn.length < 3){
 			$('#status1').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Min. 3 znaka.</p>');
 			err = true;
 		}
@@ -245,44 +258,56 @@ function checkname() {
 		
 }
 
-//Provjera stare lozinke
-function checkpass(){
-	var oldPass = $('#old-pass').val();
-	
-	if ( oldPass == oldInfo[1] ){
-		$('#status3').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i></p>');
-		err2 = false;
-	}else {
-		$('#status3').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i></p>');
-		err2 = true;
-	}
-}
-
-//Testiranje lozinke					
+//Testiranje lozinke	nakon svakog unosa				
 $("#user-pass").on("keypress keyup keydown", function() {
 
-	var ts1 = $(this).val();	
-	if (ts1.length < 6) {
+	var passNew = $(this).val();	
+	checkpass (passNew);	
+	
+});
+
+function checkpass (ts1) {
+	
+		if (ts1.length < 6) {
         $('#status2').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Min. 6 znakova.</p>');
-		err3 = true;
-    } else if (ts1.length > 50) {
-        $('#status2').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Max. 50 znakova.</p>');
-		err3 = true;
+		err2 = true;
+    } else if (ts1.length > 30) {
+        $('#status2').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Max. 30 znakova.</p>');
+		err2 = true;
     } else if (ts1.search(/\d/) == -1) {
         $('#status2').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Min. 1 broj.</p>');
-		err3 = true;
+		err2 = true;
     } else if (ts1.search(/[a-zA-Z]/) == -1) {
         $('#status2').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Min. 1 slovo.</p>');
-		err3 = true;
+		err2 = true;
     } else if (ts1.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1) {
         $('#status2').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i> Nedopušteni znak.</p>');
-		err3 = true;
+		err2 = true;
     } else{
 		//Test "jačine" lozinke
 		var pass_score = checkPassStrength(ts1);
 		var pass_string = '<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i> Jakost: '+pass_score+'.</p>';
 		$('#status2').html(pass_string);
-		err3 = false;
-	}				
-									
-});					
+		err2 = false;
+	}		
+}
+
+//Skrivanje alert-a
+$('#alert-save-email-succes .close').click(function() {
+	$('#alert-save-email-succes').hide(); 
+});
+$('#alert-activate-email-succes .close').click(function() {
+	$('#sended-mail').css("display","none"); 
+});
+$('#alert-save-email-error .close').click(function() {
+	$('#alert-save-email-error').hide(); 
+});
+$('#alert-save-email-warning .close').click(function() {
+	$('#alert-save-email-warning').hide(); 
+});		
+$('#alert-save-timezone .close').click(function() {
+	$('#alert-save-timezone').hide(); 
+});	
+$('#alert-save-newinfo .close').click(function() {
+	$('#alert-save-newinfo').hide(); 
+});						

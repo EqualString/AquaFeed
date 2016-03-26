@@ -176,7 +176,7 @@ function toggleFullScreen() {
 }
 
 //Onemogućuje povezivanje na 'lažni' link, tj. na '#'
-/*[].slice.call( document.querySelectorAll('a[href="#"') ).forEach( function(el) {
+[].slice.call( document.querySelectorAll('a[href="#"') ).forEach( function(el) {
 	el.addEventListener( 'click', function(ev) { ev.preventDefault(); } );
-});*/
+});
 

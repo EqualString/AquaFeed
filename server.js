@@ -228,6 +228,13 @@ io.sockets.on("connection", function(socket) {
 	socket.on( 'times-update', function (data){
 		db.updateTimes( data, socket.request.session.userID ); //Update vremena
 	});
+	socket.on( 'timeZone-update', function (data){
+		db.updateTimeZone( data, socket.request.session.userID ); //Update vremenske zone
+	});
+	socket.on( 'newCred-update', function (data){
+		socket.request.session.username = data[0];
+		db.updateCredentials( data, socket.request.session.userID ); //Update novih podataka za prijavu (Novo ime&lozinka)
+	});
 	socket.on( 'sendCurActMail', function (){
 		mail.sendCurAct( socket.request.session.userData[2], socket.request.session.userID ); //Slanje aktivacijskog maila na trenutnu adresu
 	});
@@ -238,16 +245,6 @@ io.sockets.on("connection", function(socket) {
 	
 });
 
-/**Fja koja stranicama gasi caching zbog logout-a**/ 
-// Koristi se auth bez session-a i cook-ija
-//http://stackoverflow.com/questions/20429592/no-cache-in-a-nodejs-server/20429914#20429914
-/*function nocache(req, res, next) {
-	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-	res.header('Expires', '-1');
-	res.header('Pragma', 'no-cache');
-	next();
-}
-*/
 
 
 

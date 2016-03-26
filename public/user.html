@@ -33,7 +33,7 @@
 	
 </head>
 <body>	
-    <!-- Preloader -->
+    <!-- Loader -->
     <div class="loading-container">
         <div class="sk-cube-grid">
 			<div class="sk-cube sk-cube1"></div>
@@ -218,19 +218,24 @@
                                     </div>
                                 </div>
 								<hr class="xs">
+								<!-- Save alert -->
+								<div id="alert-save-timezone" class="alert alert-success alert-dismissible" role="alert" style="display:none;">
+									<button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+									Uspješno ste promjenili vremensku zonu Vašeg uređaja na: <span id="new-timezone-txt"></span>.
+								</div>
+								<!-- // -->
 								<div class="col-md-7" style="margin-top:4px;">
-									<button class="btn btn-primary btn-block" style="margin-left:0px;" onclick="save_new_user_info()">Spremi promjene</button>
+									<button class="btn btn-primary btn-block" style="margin-left:0px;" onclick="save_new_user_timezone()">Spremi promjene</button>
 								</div>  
 							</div>							
 						</div>
 						<div class="panel panel-default"  style="margin-top:-50px;">
 							<div class="panel-heading"><i class="fa fa-key"></i> Promjena korisničkog imena i lozinke</div>
 							<div class="panel-body">
-							
 								<div class="row" style="margin-left:2px;">
 									<div class="col-md-6">
 										<label>Novo korisničko ime</label>
-										<input class="form-control"  id="user-name" onblur="checkname()" placeholder="Korisničko ime">
+										<input class="form-control"  id="user-name" type="text" onblur="checkname()" placeholder="Korisničko ime" autocomplete="false">
 									</div>
 									<div class="col-md-6" id="status1">
 									</div>
@@ -238,7 +243,7 @@
 								<div class="row" style="margin-left:2px; margin-top:20px;">
 									<div class="col-md-6">
 										<label>Nova lozinka</label>
-										<input type="password" class="form-control" id="user-pass" placeholder="Nova lozinka">
+										<input type="password" class="form-control" id="user-pass" placeholder="Nova lozinka" autocomplete="new-password">
 									</div>
 									<div class="col-md-6" id="status2">
 									</div>
@@ -247,10 +252,15 @@
 									<label class="cr-styled"><input type="checkbox" id="show-pass" ng-model="todo.done"><i class="fa"></i><span style="font-size:14px; font-weight:normal; margin-left:3px;">Prikaži lozinku</span></p></label>	
 								</div>	
 								<hr class="xs">
+								<!-- Save alert -->
+								<div id="alert-save-newinfo" class="alert alert-dismissible" role="alert" style="display:none;">
+									<button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+									<span id="newinfo-txt"></span>
+								</div>
+								<!-- // -->
 								<div class="col-md-7" style="margin-top:4px;">
 									<button class="btn btn-primary btn-block" style="margin-left:0px;" onclick="save_new_user_info()">Spremi promjene</button>
 								</div>
-
 							</div>	
 						</div>	
 					</div>
@@ -264,8 +274,27 @@
     </section>
     <!-- Content Block Ends Here (right box)-->
 
-	<!-- Modal Succes -->
+	<!-- Modal Sended mail -->
     <div class="modal fade" id="modal-succes" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">AquaFeed<i class="icon icon-main-logo2" style="font-size:25px;"></i></h4>
+          </div>
+          <div class="modal-body">
+            <p>Poslali smo Vam aktivacijski e-mail na adresu: <span id="cur-mail" style="font-weight:bold"></span>.</p>
+			<p>Molimo provjerite Vašu ulaznu poštu. Vaš AquaFeed Tim.<p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Zatvori</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	<!-- Modal New Info -->
+    <div class="modal fade" id="modal-new-info" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg">
@@ -320,7 +349,7 @@
 	
     <!-- Custom JQuery -->
 	<script src="control/js/custom.js" type="text/javascript"></script>
-	<script src="control/js/user/ajax.js" type="text/javascript"></script>
+	<script src="control/js/ajax.js" type="text/javascript"></script>
 	<script src="control/js/user/passwd-strenght.js" type="text/javascript"></script>
 	<script src="control/js/user/timezones-data.js" type="text/javascript"></script>
 	<script src="control/js/user/timezones-select.js" type="text/javascript"></script>
