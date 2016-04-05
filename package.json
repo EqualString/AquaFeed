@@ -2,6 +2,9 @@
   "name": "AquaFeed",
   "description": "AF with OpenShift",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "express": "~4.13.3",
 	"client-sessions": "~0.7.0",
