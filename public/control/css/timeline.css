@@ -225,16 +225,19 @@ body, html { padding: 0; margin: 0;}
 }
 .logo-small{
 	float:left;
-	font-size:48px;
+	font-size:30px;
 	margin-left:-34px;
 	margin-top:-3px;
+}
+.logo-small span{
+	font-size:48px;
 }
 
 .apps-small{
 	float:right;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 667px) {
 	.left-panel{
 		display:none;
 	}
