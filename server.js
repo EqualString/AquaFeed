@@ -24,8 +24,11 @@ var mail   	     = require('./lib/mailer.js');
 /** Konfiguracija servera **/
 
 // Port aplikacije
-var server_port = process.env.OPENSHIFT_NODEJS_PORT;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP;
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
+app.set('port', server_port);
+app.set('ip', server_ip_address);
 
 // Express konfiguracija
 app.engine('.html', require('ejs').__express);
@@ -186,7 +189,7 @@ app.get('/404.html', function(req, res){
 
 //OpenShift(server_port & server_ip)
 var server = require('http').createServer(app);
-server.listen(server_port, server_ip_address, function(){
+server.listen(app.get('port'), app.get('ip'), function(){
 	console.log('app @ :http://'+ server_port);
 });
 
