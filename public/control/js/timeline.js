@@ -1,6 +1,6 @@
 
 var socket = io.connect();
-var dd,izvedeni,iti;
+var dd,izvedeni,returned;
 
 window.onbeforeunload = function(e) {
   socket.disconnect();
@@ -20,18 +20,26 @@ socket.on('times',function(data){
 	
 	socket.on('flags',function(data){
 	
-		setTimeout( function(){	
+		izvedeni = data;
 		
-			//Loader
-			$('.loading-container').fadeOut(535, function() {
-				$(this).remove();
-			});
+		socket.on('ardRet',function(data){
+		
+			returned = data;
+	
+			setTimeout( function(){	
 			
-			izvedeni = data;
-			startTime();
-			//timeline();
+				//Loader
+				$('.loading-container').fadeOut(535, function() {
+					$(this).remove();
+				});
+				
+				
+				startTime();
+				timeline();
+				
+			},1270); 	
 			
-		},1270); 	
+		});
 		
 	});
 
@@ -43,28 +51,36 @@ socket.on('jesam',function(data){
 });
 
 function timeline() {
-	var done;
+	var done1,done2;
 	var len = dd.length;
 	var timeline = $('.tmtimeline')
 						
-	$("#timeline").html("");//Obriši
+	timeline.html('');//Obriši
 							
 	for (var i=0;i<len;i++){
-								
-								
+		
+		
 		if (izvedeni[i] == 1){ //Ako ima flag da je izveden
-			done = "glyphicon-ok successed";
+			done1 = "glyphicon-ok";
 		}
 		else {
-			done = "glyphicon-remove waited";
+			done1 = "glyphicon-remove";
 		}
-								
-		$("#timeline").append('<li class="clearfix"><time class="tl-time"><h3 class="text-timeline">'
-		+dd[i]+'</h3></time><i class="icon icon-fishes bg-timeline tl-icon text-white">'
-		+'</i><div class="tl-content"><div class="panel panel-timeline"><div class="panel-body">'
-		+(i+1)+'. Dnevno hranjenje </div></div><span class="label label-timeline">'
-		+'<i class="glyphicon '+done+'"></i></span></div></li>');	
-								
+		if (returned[i] == 1){ //Ako ima flag da je izveden
+			done2 = "glyphicon-ok";
+		}
+		else {
+			done2 = "glyphicon-remove";
+		}
+		
+		
+		timeline.append('<li><time class="tmtime"><span>'+dd[i]+'</span></time>'
+			+'<div class="tmicon icon-fishes"></div>'
+			+'<div class="tmlabel">'
+			+'<h2>'+(i+1)+'. Dnevno hranjenje</h2>'
+			+'<p>Zahtjev poslan - <i class="status-icon glyphicon '+done1+'"></i><span class="right-status">Zahtjev odrađen - <i class="status-icon glyphicon '+done2+'"></i></span></p>'
+			+'</div>'
+			+'</li>');	
 	}
 }
 
