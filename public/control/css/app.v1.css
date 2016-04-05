@@ -68,12 +68,34 @@ aside.left-panel.collapsed .navigation ul li ul li a:hover {
 .btn-table{
 	font-size :14px;
 }
+/** Custom stilovi za time-picker **/
 .bootstrap-datetimepicker-widget a{
 	color: #222 !important;
 }
 .bootstrap-datetimepicker-widget a:hover{
 	color: #00A2D3 !important;
 }
+.bootstrap-datetimepicker-widget .btn{
+	-webkit-box-shadow: none!important;
+	-moz-box-shadow: none!important;
+	box-shadow: none!important;
+}
+.timepicker-hour:hover,
+.timepicker-minute:hover{
+	color: #00A2D3 !important;
+}
+@media screen and (max-width: 932px) {
+   .col-sm-2{
+		width:40.33%!important;
+	}
+}
+@media screen and (max-width: 768px) {
+   .table-btns{
+		margin-left:15px;
+		margin-top:5px;
+	}
+}
+
 .img-onlogin{
 	display: block;
 	margin-left: auto;
@@ -93,6 +115,19 @@ aside.left-panel.collapsed .navigation ul li ul li a:hover {
 	background: transparent url("../images/tex1.jpg") repeat scroll 0% 0%;
 	height: 100%;
 	width:100%;
+}
+.time-table{
+	width:750px;
+	margin-left:15px;
+}
+.table-resp{
+	margin-bottom: 0;
+	border: 0;
+}
+@media screen and (max-width: 863px) {
+   .time-table{
+		width:80.33%;
+	}
 }
 /*****************************
 Loader
@@ -196,6 +231,9 @@ aside.left-panel.collapsed{
 	bottom:0px;
 }
 
+aside.left-panel.collapsed .navigation ul li ul li.active a {
+   color: #00A2D3!important;
+}
 
 /*** Aside sizes ***/
 	

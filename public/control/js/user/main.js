@@ -6,6 +6,10 @@ var oldInfo = [];
 var err,err2 = false; //Username & passwd errors
 var same_em, erm = false; //E-mail errors
 
+$(window).on('beforeunload', function(){
+    socket.close();
+	socket.disconnect();
+});	
 
 $(document).ready(function() { 
 	hide_alerts();
@@ -32,8 +36,12 @@ $(document).ready(function() {
 						$('#modal-mail').text(oldInfo[2]);
 						$('#modal-mail-not-activated').modal('show');
 						
+						//Autocomplete
 						if($('#user-name').val()){
 							checkname(); //Ako je bio autocomplete browser-a
+						}
+						if($("#user-pass").val()){
+							checkpass($("#user-pass").val()); //Autocomplete Firefox
 						}
 						
 						
@@ -122,8 +130,19 @@ function save_new_user_info(){
 		infoModalText.html('<p>Vaši novi podaci za prijavu u sustav:</p><p>Korisničko ime: <strong>'+nameNew+'</strong>,<br>Lozinka: <strong>'+passNew+'</strong>.</p><p>Također Vam je poslan mail sa novim podacima na: <strong>'+oldInfo[2]+'</strong>.<br>Vaš AquaFeed Tim.</p>');
 		infoModal.modal('show');
 		socket.emit('newCred-update', newInfo);
-		$("#top-username").html();
-		$("#top-username").html('<span class="fa fa-user"></span> '+nameNew+'<span class="caret"></span>');
+		var ajax = ajaxObj( "POST", "/session-username" );
+		ajax.onreadystatechange = function() {
+			if(ajaxReturn(ajax) == true) {
+				if(ajax.responseText == "1"){ 
+					$("#top-username").html();
+					$("#top-username").html('<span class="fa fa-user"></span> '+nameNew+'<span class="caret"></span>');
+					oldInfo[0] = nameNew; //Update zbog checkname fje-e
+					checkname();
+				}
+			}
+		}
+		ajax.send("newUsername="+nameNew);		
+		
 	}else {
 		saveStatusText.html();
 		saveStatusText.html("Molimo provjerite polja za unos.");
@@ -258,7 +277,7 @@ function checkname() {
 		
 }
 
-//Testiranje lozinke	nakon svakog unosa				
+//Testiranje lozinke nakon svakog unosa				
 $("#user-pass").on("keypress keyup keydown", function() {
 
 	var passNew = $(this).val();	
@@ -310,4 +329,5 @@ $('#alert-save-timezone .close').click(function() {
 });	
 $('#alert-save-newinfo .close').click(function() {
 	$('#alert-save-newinfo').hide(); 
-});						
+});		
+		

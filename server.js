@@ -132,25 +132,16 @@ app.get('/404', function(req, res){
 
 //POST-ovi sa fronted-a (AJAX)
 
-app.post('/login-auth', db.auth ); //Login 
+app.post('/login-auth', db.auth); //Login 
 
-app.post('/testUser', function(req, res){
+app.post('/session-username', function(req, res){ //Promjena korisničkog imena sessije bez /logout-a
+	req.session.username = req.body.newUsername;
+	res.send('1');
+}); 
 
-	//Testiranje potencijalnog novog korisničkog imena
-	db.testUser( req.body.testUsername, req.session.username, function(echo){
-		res.send(''+echo); //AJAX slanje, '0'-> dostupno, '1'-> nedostupno, echo varijablom :)
-	});
-	
-});
+app.post('/testUser', db.testUser); //Testiranje potencijalnog novog korisničkog imena
 
-app.post('/testEmail', function(req, res){
-
-	//Testiranje potencijalnog novog korisničkog kontak maila
-	db.testEmailAdress( req.body.testEmail, function(echo){
-		res.send(''+echo); //AJAX slanje, '0'-> dostupno, '1'-> nedostupno
-	});
-	
-});
+app.post('/testEmail', db.testEmailAdress); //Testiranje potencijalnog novog korisničkog maila
 
 //Redirektanje
 app.get('/index', function(req, res){
@@ -222,6 +213,7 @@ io.sockets.on("connection", function(socket) {
 	socket.emit( 'times', socket.request.session.times ); //Slanje vremena
 	socket.emit( 'log', socket.request.session.log ); //Emitiranje zapisnika
 	socket.emit( 'flags', socket.request.session.flags ); //Emitiranje flagova
+	socket.emit( 'ardRet', socket.request.session.ardRet ); //Emitiranje flagova od strane Arduina
 	socket.emit( 'userData', socket.request.session.userData ); //Emitiranje svih korisničkih podataka
 	
 	//Primanje
@@ -232,7 +224,6 @@ io.sockets.on("connection", function(socket) {
 		db.updateTimeZone( data, socket.request.session.userID ); //Update vremenske zone
 	});
 	socket.on( 'newCred-update', function (data){
-		socket.request.session.username = data[0];
 		db.updateCredentials( data, socket.request.session.userID ); //Update novih podataka za prijavu (Novo ime&lozinka)
 	});
 	socket.on( 'sendCurActMail', function (){
