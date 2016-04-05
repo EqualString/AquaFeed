@@ -3,7 +3,7 @@
   "description": "AF with OpenShift",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "supervisor server.js"
   },
   "dependencies": {
     "express": "~4.13.3",
