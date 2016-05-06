@@ -37,7 +37,9 @@ $("#login-btn").click( function(){
 						statusText.html();
 						statusText.html('<span class="spinner"><i class="fa fa-check-circle fa-2x"></i></span>');
 						loginStatus.fadeIn('slow').show();
-						window.location = '/timeline'; //Redirect, jer je nemoguće POST -> POST na serveru
+						setTimeout( function() {
+							window.location = '/timeline'; //Redirect, jer je nemoguće POST -> POST na serveru
+						}, 1650);	
 					}, 2100);
 					
 				}
@@ -51,7 +53,7 @@ $("#login-btn").click( function(){
 						loginStatus.fadeIn('slow').show();
 						indicator.removeClass("la-animate");
 						login_counter ++;
-						if((login_counter == 3)&&(screen.width >= 664)){ captchaShow(); } //Na malim ekranima se nece prikazati
+						if(login_counter == 3){ captchaShow(); }
 					}, 2100);
 					
 				}
@@ -65,7 +67,7 @@ $("#login-btn").click( function(){
 						loginStatus.fadeIn('slow').show();
 						indicator.removeClass("la-animate");
 						login_counter ++;
-						if((login_counter == 3)&&(screen.width >= 664)){ captchaShow(); } //Na malim ekranima se neće prikazati
+						if(login_counter == 3){ captchaShow(); }
 					}, 2100);
 					
 				}

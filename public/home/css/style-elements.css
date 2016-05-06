@@ -1637,6 +1637,7 @@ hr.invisible {
 	padding: 20px;
 	position: relative;
 	text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+	box-shadow: 0 20px 25px rgba(0, 0, 0, 0.17);
 }
 
 .pricing-table .btn {
@@ -3168,6 +3169,7 @@ ul.team-list {
 
 ul.team-list .team-item {
 	margin-bottom: 35px;
+	box-shadow: 0 20px 25px rgba(0, 0, 0, 0.17);
 }
 
 ul.team-list .team-item .thumb-info-social-icons {

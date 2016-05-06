@@ -71,7 +71,11 @@
   margin-top:7px;
   margin-bottom:5px;
   width: 70px;
-  text-align: center;
+  text-align: center!important;
+}
+.spinner i{
+  margin-left:auto!important;
+  margin-right:auto!important;
 }
 
 .spinner > div {
@@ -94,6 +98,10 @@
 .spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
+}
+.success{
+	position:relative;
+	left:45%;
 }
 
 @-webkit-keyframes sk-bouncedelay {

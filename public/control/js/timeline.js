@@ -1,18 +1,25 @@
-
 var socket = io.connect();
-var dd,izvedeni,returned;
+var userID,timesData,izvedeni,returned,string;
 
 window.onbeforeunload = function(e) {
-  socket.disconnect();
+	socket.close();
+	socket.disconnect();
 };
 
 socket.on('times',function(data){
 
-	dd = data;
-	var len = dd.length;
-
-	if( len == 1){
-		$("#heading").append('<i class="fa fa-clock-o"></i> Imate '+len+'. događaj koji se izvodi svakodnevno.');
+	if(data==null){ //Test sesije
+		window.location = '/login';
+	}
+	timesData = data;
+	var len = timesData.length;
+	$("#heading").html('');
+	
+	if(len == 0){
+		$("#heading").append('<i class="fa fa-clock-o"></i> Nemate predviđenih događaja.');
+	}
+	else if(len == 1){
+		$("#heading").append('<i class="fa fa-clock-o"></i> Imate 1. događaj koji se izvodi svakodnevno.');
 	}
 	else{
 		$("#heading").append('<i class="fa fa-clock-o"></i> Imate '+len+'. događaja koji se izvode svakodnevno.');
@@ -25,19 +32,19 @@ socket.on('times',function(data){
 		socket.on('ardRet',function(data){
 		
 			returned = data;
-	
-			setTimeout( function(){	
 			
+			setTimeout( function(){	
+				
 				//Loader
 				$('.loading-container').fadeOut(535, function() {
 					$(this).remove();
+					animInit();
 				});
-				
-				
+					
 				startTime();
 				timeline();
-				
-			},1270); 	
+					
+			},1270); 
 			
 		});
 		
@@ -45,20 +52,18 @@ socket.on('times',function(data){
 
 });
 
-socket.on('jesam',function(data){
-	izvedeni = data;
-	timeline();
+socket.on('updateFlags',function(data){
+	alert("!");
 });
 
 function timeline() {
 	var done1,done2;
-	var len = dd.length;
-	var timeline = $('.tmtimeline')
-						
+	var len = timesData.length;
+	var timeline = $('.tmtimeline');
+	
 	timeline.html('');//Obriši
-							
+	
 	for (var i=0;i<len;i++){
-		
 		
 		if (izvedeni[i] == 1){ //Ako ima flag da je izveden
 			done1 = "glyphicon-ok";
@@ -66,15 +71,14 @@ function timeline() {
 		else {
 			done1 = "glyphicon-remove";
 		}
-		if (returned[i] == 1){ //Ako ima flag da je izveden
+		if (returned[i] == 1){ //Ako ima flag da je vracena povratna informacija
 			done2 = "glyphicon-ok";
 		}
 		else {
 			done2 = "glyphicon-remove";
 		}
 		
-		
-		timeline.append('<li><time class="tmtime"><span>'+dd[i]+'</span></time>'
+		timeline.append('<li><time class="tmtime"><span>'+timesData[i]+'</span></time>'
 			+'<div class="tmicon icon-fishes"></div>'
 			+'<div class="tmlabel">'
 			+'<h2>'+(i+1)+'. Dnevno hranjenje</h2>'

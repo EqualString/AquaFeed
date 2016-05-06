@@ -26,8 +26,12 @@ $("#login-btn").click( function(){
 					
 					setTimeout( function() {
 						loginStatus.hide();
+						loginStatus.removeClass("alert-info").addClass("alert-success");
+						statusText.html();
+						statusText.html('<span class="spinner"><i class="fa fa-check-circle fa-2x success"></i></span>');
+						loginStatus.fadeIn('slow').show();
 						window.location = '/index'; //Redirect, jer je nemoguće POST -> POST na serveru
-					}, 2000);
+					}, 1750);
 					
 				}
 				if(ajax.responseText == "2"){ //Nepostojeći korisnik
@@ -38,7 +42,7 @@ $("#login-btn").click( function(){
 						statusText.html();
 						statusText.html('<span>Nismo u mogućnosti pronaći traženog korisnika u našem sustavu.</span>');
 						loginStatus.fadeIn('slow').show();
-					}, 2000);
+					}, 1750);
 					
 				}
 				if(ajax.responseText == "3"){ //Neodgovarajuća lozinka
@@ -49,7 +53,7 @@ $("#login-btn").click( function(){
 						statusText.html();
 						statusText.html('<span>Nažalost unesena lozinka ne odgovara traženom korisničkom računu.</span>');
 						loginStatus.fadeIn('slow').show();
-					}, 2000);
+					}, 1750);
 					
 				}
 			}

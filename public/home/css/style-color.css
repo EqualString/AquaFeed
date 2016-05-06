@@ -204,8 +204,13 @@ body.dark .pagination > .active > a:hover,
 }
 
 section.highlight {
-	background-color: #0698CB !important;
-	border-color: #0077b3 !important;
+	border-color: #0698CB !important;
+	background-color: #00A2D3;
+	background-image: url(../img/sales.svg);
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: 2460px;
+	clear: both;
 }
 
 section.page-top h1 {

@@ -82,7 +82,9 @@
 				//Započni animaciju
 				word.style.opacity = '1'; //Fix da se prvo ne pokaže text prije nego SVG slova
 				instance.hideInstantly();
-				timelines[1].start();
+				if(screen.width >= 991){ //Nece biti mo.js animacije za male ekrane(Troši GPU snagu)
+					timelines[1].start();
+				}
 				instance.show({callback : endPlayCallback}); //Callback na završnu fj-u (prikaz log-a)
 				
 		}

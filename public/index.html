@@ -8,8 +8,9 @@
 		<meta name="description" content="AquaFeed - IoT rješenje za Vaš akavariji">
 		<meta name="author" content="Alen Egredžija">
 		<link rel="icon" href="home/img/favicon/favicon.ico">
+		
 		<!-- Mobile Metas -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
 
 		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="home/vendor/bootstrap/bootstrap.css">
@@ -29,6 +30,7 @@
 		<link rel="stylesheet" href="home/css/glyphicon.css">
 		<link rel="stylesheet" href="home/css/font-awesome.css">
 		<link rel="stylesheet" href="home/css/myicon.css">
+		<link rel="stylesheet" href="home/css/logos.css">
 
 		<!-- Current Page CSS -->
 		<link rel="stylesheet" href="home/vendor/rs-plugin/css/settings.css" media="screen">
@@ -37,7 +39,6 @@
 
 		<!-- Head Libs -->
 		<script src="home/vendor/modernizr/modernizr.js"></script>
-		<script src="home/vendor/jquery.flexslider/jquery.flexslider.js"></script>
 		<script type="text/javascript" src="http://l2.io/ip.js?var=myip"></script>
 	
 		<!--[if IE]>
@@ -51,7 +52,7 @@
 
 	</head>
 	
-	<body id="main-div" class="loader">
+	<body id="main-div" class="loader sticky-menu-deactive">
 		<noscript>
 			Za potpuni i ispravan rad stranice potrebno je omogućiti javascript.
 		</noscript>
@@ -59,12 +60,13 @@
 		<div class="loader-container">
 			<ul class="loader-list">
 				<li class="list__item list__item--burst color-11">
-					<i class="icon icon-main-logo2 loader-logo"></i><h3 class="list__text">AquaFeed</h3>
+					<i class="logo logo-new-logo-inv loader-logo"></i><h3 class="list__text">AquaFeed</h3>
 				</li>
 			</ul>
 		</div>
 		<!-- // -->
 		<div class="global-wrap">
+		<section id="naslovna">
 			<header id="header" class="flat-menu clean-top">
 				<div class="header-top">
 					<div class="container">
@@ -79,12 +81,14 @@
 					</div>
 				</div>
 				<div class="container">
+					<div id="top-logo">
 						<a href="index">
-							<i id="top-logo" class="icon icon-main-logo2"></i>
+							<i class="logo logo-new-logo"></i>
 						</a>
+					</div>	
 					<button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
 						<i class="fa fa-bars"></i>
-					</button>
+					</button> 
 				</div>
 				<div class="navbar-collapse nav-main-collapse collapse">
 					<div class="container">
@@ -111,7 +115,7 @@
 								</li>
 								<%if (username) { %>
 								<li class="dropdown mega-menu-item mega-menu-signin signin logged">
-									<a id="headerAccount" style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
+									<a id="headerAccount" class="dropdown-toggle signup-menu">
 										<i class="fa fa-user"></i> <%= username %>
 										<i class="fa fa-angle-down"></i>
 									</a>
@@ -142,7 +146,7 @@
 								<% } %>
 								<%if (!username) { %>
 								<li class="dropdown mega-menu-item mega-menu-signin signin">
-									<a id="headerAccount" style="font-family:'Slider-font'; font-size:14px; font-weight:700; top:1px;" class="dropdown-toggle signup-menu">
+									<a id="headerAccount" class="dropdown-toggle signup-menu">
 										<i style="font-size:16px;" class="fa fa-sign-in"></i> Prijava
 										<i class="fa fa-angle-down"></i>
 									</a>
@@ -206,9 +210,7 @@
 				</div>
 			</header>
 
-			
-			<section id="naslovna">
-				<div class="slider-container">
+				<div class="slider-container web-tablet">
 					<div class="slider" id="revolutionSlider" data-plugin-revolution-slider data-plugin-options='{"startheight": 500}'>
 						<ul>
 							<li data-transition="fade" data-slotamount="12" data-masterspeed="300">
@@ -437,7 +439,7 @@
 									 data-y="180"
 									 data-speed="300"
 									 data-start="1500"
-									 data-easing="easeOutExpo">AquaFeed<i class="icon icon-main-logo2"></i></div>
+									 data-easing="easeOutExpo">AquaFeed<i class="logo logo-new-logo-inv header-logo-txt"></i></div>
 
 								<div class="tp-caption bottom-label txt-light sft stb"
 									 data-x="187"
@@ -487,7 +489,7 @@
 								</p>
 							</div>
 							<div class="col-md-4">
-								<div class="get-started">
+								<div class="get-started web-tablet">
 									<a href="#narudzba" class="btn btn-lg btn-primary">Kupi sada<i class="glyphicon glyphicon-shopping-cart"></i></a>
 									<div class="learn-more">ili <a href="#proizvod">saznaj više.</a></div>
 								</div>
@@ -497,11 +499,11 @@
 				</div>
 			</section>
 			
-			<section id="proizvod" class="featured" style="padding-top:35px;">
+			<section id="proizvod" class="featured">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-6">
-							<h2 data-appear-animation="fadeInLeft" class="push-top">AquaFeed<i style="font-size:35px;" class="icon icon-main-logo2"></i></h2>
+							<h2>AquaFeed<i class="logo logo-new-logo logo-in-text"></i></h2>
 							<p class="lead">
 								Posjedujete mobitel, tablet, dlanovnik ili laptop? Onda imate sve što je potrebno da Vaši ljubimci nisu nikada gladni. Naime našoj <a href="/timeline" target="_blank">Upravljačkoj ploči</a> se pristupa putem interneta!
 							</p>
@@ -521,7 +523,7 @@
 							<img class="img-responsive" src="home/img/openshift.png" data-appear-animation="fadeInLeft">
 						</div>
 						<div class="col-md-6">
-							<h2 data-appear-animation="fadeInRight" class="push-top">OpenShift by RedHat® (PaaS)</h2>
+							<h2 class="push-top">OpenShift by RedHat® (PaaS)</h2>
 							<p class="lead">
 								Svi Vaši zapisi i podaci su spremljeni na internetu. Korištenjem <a style="color:#CE1A3D;" target="_blank" href="https://www.openshift.com/">Openshift RedHat</a> servera su sigurni i dostupni samo Vama!
 							</p>
@@ -534,12 +536,12 @@
 				</div>
 			</section>
 			
-			<section id="platforma" style="padding-top:50px;">
+			<section id="platforma" class="platform">
 				<div class="container">
 					<div class="row center">
 						<div class="col-md-12">
 							<h1 data-appear-animation="fadeInLeft"><strong>IoT</strong> platforma.</h1>
-							<p class="featured lead">
+							<p class="lead">
 								Internet of Things (IoT), ili Internet objekata, nam je omogućio implementaciju naše infrastrukutre.
 								Infrastruktura se bazira na rješenjima koja spajaju fizički svijet s povezanošću na internetske servise.	
 							</p>
@@ -584,7 +586,7 @@
 						
 							<div id="h0">
 								<h3><i class="fa fa-copyright"></i> AquaFeed</h3>
-								<p class="featured lead">IoT platforma Vam omogućuje pristup aplikaciji, u bilo koje vrijeme i sa velikog broja uređaja.
+								<p class="lead">IoT platforma Vam omogućuje pristup aplikaciji, u bilo koje vrijeme i sa velikog broja uređaja.
 									Tvrtka Telit Wireless Solutions je napravila zanimljiv promotivan video "Jedan dan u životu IoT-a", pogledajte video: 
 									<a class="popup-youtube" href="https://www.youtube.com/watch?v=ZgWbWCv0J5E"><i class="fa fa-youtube-play"></i> YouTube</a>.
 								</p>
@@ -617,17 +619,18 @@
 			</section>	
 			<!-- / -->
 			<!-- Narudžba -->
-			<section id="narudzba" class="highlight" style="padding-top:50px">
-				<div class="container center" style="margin-bottom:60px;">
+			<section id="narudzba" class="highlight">
+				<div class="container center">
 					<div class="row" id="projects">
 						<div class="row center col-md-12">
-							<h1 data-appear-animation="fadeInLeft" style="padding-bottom:30px;" class="short word-rotator-title">
-								<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
-										<span class="word-rotate-items">
-											<span>Zainteresirani <strong>Ste?</strong></span>
-											<span>Želite naručiti <strong>Aquafeed?</strong></span>
-										</span>
+							<h1 data-appear-animation="fadeInLeft" class="word-rotator-title">
+								<span class="word-rotate no-mobile" data-plugin-options='{"delay": 2000}'>
+									<span class="word-rotate-items">
+										<span>Zainteresirani <strong>Ste?</strong></span>
+										<span>Želite naručiti <strong>Aquafeed?</strong></span>
+									</span>
 								</span>
+								<span class="mobile-only">Zainteresirani <strong>Ste?</strong></span>
 							</h1>
 						</div>
 					</div>	
@@ -662,8 +665,8 @@
 									<label>Email adresa</label>
 									<input type="text" value="" data-msg-required="Molimo unesite Vašu e-mail adresu." maxlength="100" class="form-control" name="name" id="name" required>
 								</div>
-								<div data-appear-animation="fadeInLeft" style="margin-top:20px;" class="col-md-5">
-									<button type="submit" style="background-color:#fff; color:#333;" class="btn btn-lg" id="narudzba">
+								<div data-appear-animation="fadeInLeft" class="col-md-5">
+									<button type="submit" class="btn btn-lg btn-order" id="narudzba">
 										Naruči <i class="glyphicon glyphicon-shopping-cart"></i>
 									</button>
 								</div>
@@ -683,17 +686,18 @@
 			</section>		
 			<!-- / -->
 			<!-- O nama -->	
-			<section id="onama" style="background-image: url(home/img/parallax-transparent.jpg);">
+			<section id="onama" class="about">
 				<div class="container">
 					<div class="row center col-md-12">
-						<h1 data-appear-animation="fadeInLeft" style="padding-bottom:50px; padding-top:50px;" class="short word-rotator-title">
+						<h1 data-appear-animation="fadeInLeft" class="word-rotator-title">
 							<strong>Tim</strong>
-							<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
+							<span class="word-rotate no-mobile" data-plugin-options='{"delay": 2000}'>
 								<span class="word-rotate-items">
-									<span>iza AquaFeed-a.</span>
+									<span class="no-mobile">iza AquaFeed-a.</span>
 									<span>zaslužan za AquaFeed.</span>
 								</span>
 							</span>
+							<span class="mobile-only">iza AquaFeed-a.</span>
 						</h1>
 					</div>
 					<div class="row center col-md-12">
@@ -773,13 +777,13 @@
 			</section>
 			<!--/ -->
 			<!-- Section kontakt -->
-			<section id="kontakt">
+			<section id="kontakt" class="contact">
 				<div class="container">
 					<div class="row center col-md-12">
-						<h1 data-appear-animation="fadeInLeft" style="margin-bottom:35px;" class="short word-rotator-title">
+						<h1 data-appear-animation="fadeInLeft" class="word-rotator-title">
 							Imate pitanja? 
 							<strong>
-								<span class="word-rotate" data-plugin-options='{"delay": 2000}'>
+								<span class="word-rotate no-mobile" data-plugin-options='{"delay": 2000}'>
 									<span class="word-rotate-items">
 										<span>Slobodno nas pitajte.</span>
 										<span>Kontaktirajte nas.</span>
@@ -830,7 +834,7 @@
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<input type="submit" value="Pošalji poruku" class="btn btn-primary btn-lg" data-loading-text="Loading...">
+										<input type="submit" value="Pošalji poruku" class="btn btn-primary btn-lg btn-shadow">
 									</div>
 								</div>
 							</form>
@@ -862,8 +866,8 @@
 						<div class="row">
 							<div class="center">
 								<h3>
-									<strong>AquaFeed<i style="font-size:35px;" class="icon icon-main-logo2"></i></strong> je sve što je potrebno Vašim <strong>Ribicama</strong> ! 
-									<a data-appear-animation="fadeInLeft" href="#narudzba" class="btn btn-lg btn-primary" data-appear-animation="bounceIn">
+									<strong>AquaFeed<i class="logo logo-new-logo" style="font-size:30px;"></i></strong> je sve što je potrebno Vašim <strong>Ribicama</strong> ! 
+									<a data-appear-animation="fadeInLeft" href="#narudzba" class="btn btn-lg btn-primary btn-shadow" data-appear-animation="bounceIn">
 										Kupi sada <i style="font-size:16px;" class="glyphicon glyphicon-shopping-cart"></i> 
 									</a>
 									<span class="arrow hlb hidden-xs hidden-sm hidden-md" data-appear-animation="rotateInUpLeft" style="top: -22px;"></span>
@@ -942,16 +946,11 @@
 		<script src="home/vendor/jquery/jquery.js"></script>
 		<script src="home/vendor/jquery.appear/jquery.appear.js"></script>
 		<script src="home/vendor/jquery.easing/jquery.easing.js"></script>
-		<script src="home/vendor/jquery-cookie/jquery-cookie.js"></script>
 		<script src="home/vendor/bootstrap/bootstrap.js"></script>
 		<script src="home/vendor/common/common.js"></script>
 		<script src="home/vendor/jquery.validation/jquery.validation.js"></script>
 		<script src="home/vendor/jquery.stellar/jquery.stellar.js"></script>
-		<script src="home/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.js"></script>
-		<script src="home/vendor/jquery.gmap/jquery.gmap.js"></script>
-		<script src="home/vendor/isotope/jquery.isotope.js"></script>
 		<script src="home/vendor/owlcarousel/owl.carousel.js"></script>
-		<script src="home/vendor/jflickrfeed/jflickrfeed.js"></script>
 		<script src="home/vendor/magnific-popup/jquery.magnific-popup.js"></script>
 		<script src="home/vendor/jquery.menuOnScroll/jquery.menuOnScroll.js"></script>		
 		

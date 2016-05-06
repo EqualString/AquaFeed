@@ -6,17 +6,19 @@ var oldInfo = [];
 var err,err2 = false; //Username & passwd errors
 var same_em, erm = false; //E-mail errors
 
-$(window).on('beforeunload', function(){
-    socket.close();
+window.onbeforeunload = function(e) {
+	socket.close();
 	socket.disconnect();
-});	
+};
 
 $(document).ready(function() { 
 	hide_alerts();
 	
 		socket.on('userData',function(data){
 			oldInfo = data; 
-			
+			if(data == null){ //Test sessije
+				window.location = '/login';
+			}
 			//Ubacivanje podataka
 			add_info(data);
 			
@@ -24,6 +26,7 @@ $(document).ready(function() {
 				//Loader
 				$('.loading-container').fadeOut(535, function() {
 					$(this).remove();
+					animInit();
 				});
 				
 				//Ne aktiviran mail
@@ -245,7 +248,7 @@ function checkname() {
 		var tmn = $('#user-name').val();
 		
 		if( tmn == oldInfo[0]){ //Staro korisničko ime
-			$('#status1').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i></p>');
+			$('#status1').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i> Dostupno.</p>');
 			err = false;
 		}
 		else if( tmn === ""){
@@ -267,7 +270,7 @@ function checkname() {
 							err = true;
 						}
 						if(ajax.responseText == "0"){ //Dostupno
-							$('#status1').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i></p>');
+							$('#status1').html('<p class="validation-error" style="color:#7cc576;"><i class="glyphicon glyphicon-ok"></i> Dostupno.</p>');
 							err = false;
 						}
 					}

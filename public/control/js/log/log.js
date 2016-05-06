@@ -2,18 +2,23 @@
 	var socket = io.connect();
 	var zapis = [];
 	
-	$(window).on('beforeunload', function(){
+	window.onbeforeunload = function(e) {
 		socket.close();
 		socket.disconnect();
-	});	
+	};
 
 	socket.on('log',function(data){
+		
+		if(data == null){ //Test sessije
+			window.location = '/login';
+		}
 		zapis = data;
 		create_log();
 		setTimeout( function(){	
 			//Loader
 			$('.loading-container').fadeOut(535, function() {
 				$(this).remove();
+				animInit();
 			});
 		},1570); 
 	});

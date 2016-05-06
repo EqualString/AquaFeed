@@ -1,10 +1,6 @@
 
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-body, html { padding: 0; margin: 0;}
 
-.panel-container{
-	margin-left:3px;
-}
 .timeline-panel{
 	width:485px;
 	margin-right:50px;
@@ -199,9 +195,7 @@ body, html { padding: 0; margin: 0;}
 	}	
 }
 @media screen and (max-width: 1264px) {
-	.panel-container{
-		margin-left:-3px;
-	}
+	
 	.timeline-panel{
 		width:600px;
 		margin-right:0px;
@@ -220,55 +214,4 @@ body, html { padding: 0; margin: 0;}
 }
 
 
-.small-screen{
-	display:none;
-}
-.logo-small{
-	float:left;
-	font-size:30px;
-	margin-left:-34px;
-	margin-top:-3px;
-}
-.logo-small span{
-	font-size:48px;
-}
-
-.apps-small{
-	float:right;
-}
-
-@media screen and (max-width: 667px) {
-	.left-panel{
-		display:none;
-	}
-	aside.left-panel.collapsed + .content {
-		margin-left: -15px;
-	}
-	.dropdown-backdrop {
-		z-index: 90;
-	}
-	.page-header h3{
-		margin-top:10px;
-	}
-	.big-screen{
-		display:none;
-	}
-	.small-screen{
-		display:block;
-	}
-	.top-head{
-		border-bottom: 2px solid #ccc;
-	}
-	.nav-toolbar > li > a {
-		width:40px;
-		height:40px;
-		font-size:25px;
-		margin-top:12px;
-		padding:2px;
-	}
-	.nav-toolbar{
-		width:100%;
-		float:left;
-	}
-}
 

@@ -1,8 +1,16 @@
 	var socket = io.connect();
 	var dd;
 
+	window.onbeforeunload = function(e) {
+		socket.close();
+		socket.disconnect();
+	};
+
 	socket.on('times',function(timesData){ //Socket
 		
+		if(timesData==null){ //Test sesije (rješava problem sa "back" i cachingom)
+			window.location = '/login';
+		}
 		dd = timesData;
 		create_table();
 		
@@ -12,6 +20,7 @@
 		setTimeout( function(){	//Loader
 			$('.loading-container').fadeOut(535, function() {
 				$(this).remove();
+				animInit();
 			});
 		},1570); 	
 		

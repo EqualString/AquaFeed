@@ -1,8 +1,9 @@
 /** Animacija za logo i text **/
 (function() {
 
-	logo = document.querySelector('.login-header  i'); //Logo
-	form = document.querySelector('.login'); //Forma
+	container = document.querySelector('.container');
+	logo 	  = document.querySelector('.login-header  i'); //Logo
+	form      = document.querySelector('.login'); //Forma
 	
 	//Opcije Animacije za tekst
 	var options = 
@@ -27,6 +28,17 @@
 					classie.add(logo, 'fade_in_logo');
 					logo.style.opacity = '1';
 					setTimeout(function(){ //Prikaz forme sa zadrškom
+						
+						if(screen.height <= 650){ //Animacija je na sredini, ali se poslije pozicija mijenja
+							container.style.top = '300px';
+						}
+						else if(screen.height <= 700){
+							container.style.top = '320px';
+						}
+						else if(screen.height <= 800){
+							container.style.top = '330px';
+						}
+						
 						form.style.display = 'block';
 						classie.add(form, 'fade_in_form');
 						form.style.opacity = '1';

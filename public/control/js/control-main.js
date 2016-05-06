@@ -1,47 +1,43 @@
+//Opcije Animacije za tekst
+var options = 
+	{ 	
+		size : 45,
+		weight : 10,
+		color: '#428bca',
+		duration: 0.6,
+		fade: 0.6,
+		delay: 0.55,
+		easing: d3_ease.easeSinInOut.ease
+	};
+	
+function animInit() {
+	
+	var word = document.querySelector('.logo-text'), //Tekst (aquafeed)
+	
+	// inicijalizacija plugina
+	instance = new Letters(word, options),
+	endPlayCallback = function() {
+		//word.style.display = 'none';
+	};
+
+	// prikaz riječi
+	instance.showInstantly();
+
+	//Započni animaciju
+	word.style.opacity = '1'; //Fix da se prvo ne pokaže text prije nego SVG slova
+	instance.hideInstantly();
+	instance.show({callback : endPlayCallback}); //Callback na završnu fj-u (prikaz log-a)
+
+}
+
+$(".apps-small").click(function(){
+	$(this).toggleClass("open navicon-open");
+});
+
 
 $(function(){
-
-	/*$('.dropdown-menu').click(function(event){
-	  event.stopPropagation();
-	});*/
 	
 	
-	/********************************
-	Toggle Aside Menu
-	********************************/
-	
-	$(document).on('click', '.navbar-toggle', function(){
-	
-		$('aside.left-panel').toggleClass('collapsed');
-		/*$('#navi li ul li a').each( function (){
-			 $(this).addClass('coll');
-		});*/
-
-	});
-	
-	/********************************
-	Aside Navigation Menu
-	********************************/
-
-	/*$("aside.left-panel nav.navigation > ul > li:has(ul) > a").click(function(){
-		
-		if( $("aside.left-panel").hasClass('collapsed') == false || $(window).width() < 768 ){
-
-		$("aside.left-panel nav.navigation > ul > li > ul").slideUp(300);
-		$("aside.left-panel nav.navigation > ul > li").removeClass('active');
-		
-		if(!$(this).next().is(":visible"))
-		{
-			
-			$(this).next().slideToggle(300,function(){ $("aside.left-panel:not(.collapsed)").getNiceScroll().resize(); });
-			$(this).closest('li').addClass('active');
-		}
-		
-		return false;
-		
-		}
-		
-	});*/
 	
 	/********************************
 	popover

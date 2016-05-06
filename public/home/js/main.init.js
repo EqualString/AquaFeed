@@ -2,12 +2,12 @@
 
 //Onemogućavanje scroll-a
 var $window = $(window);
+var $body = $('body');
+
+
 $window.disablescroll();
 
-//Postavlja scroller na top
-$('html, body').scrollTop(0);
-
-$(window).load(function() {
+$window.load(function() {
 	
 	$('.global-wrap').imagesLoaded( function() { //Nakon što su se "podigle" sve slike u DOM
 		setTimeout(function(){
@@ -20,6 +20,10 @@ $(window).load(function() {
 			
 			$("body").removeClass("loader"); //Micanje loader klase sa body-a (Margin, background i overflow(scrollbar))
 			$window.disablescroll("undo"); //Omogućavanje scroll-a
+			
+			//Postavlja scroller na top
+			$('html, body').scrollTop(0);
+
 		}, 3750);	
 	});
 
@@ -28,24 +32,50 @@ $(window).load(function() {
 //Document loaded
 (function($) {
 	'use strict';
-
+	
 	// Dodatak za svaki anchor link :)
 	$('a[href^="#"]').on('click',function (e) {
 	    e.preventDefault();
-
+	
 	    var target = this.hash;
 	    var $target = $(target);
-
-	    $('html, body').stop().animate({
-	        'scrollTop': $target.offset().top -113
-	    }, 950, 'swing', function () {
-	        //window.location.hash = target; //Ne stavlja se u putanju anchor
-	    });
+		
+		$('#mainMenu a').each(function () {
+            $(this).parent().removeClass('active');
+        });	
+		
+		if(target == '#naslovna'){
+			$('html, body').stop().animate({
+				'scrollTop': 0
+			}, 950, 'swing', function() {
+				
+				if ($(window).width() < 991 && $('.nav-main-collapse').hasClass('in')) { //Na mobilnoj verziji skriva meni
+					$('.nav-main-collapse').collapse('hide');
+				}
+				
+			});
+		}
+		else {
+			$('html, body').stop().animate({
+				'scrollTop': $target.offset().top - 50
+			}, 950, 'swing', function () {
+				
+				//window.location.hash = target; //Ne stavlja se u putanju anchor
+				$(this).parent().addClass('active');
+				
+				if ($(window).width() < 991 && $('.nav-main-collapse').hasClass('in')) {
+					$('.nav-main-collapse').collapse('hide');
+				}
+				
+			});
+		}	
 	});	
+	
 	//menuOnscroll init
 	//Unutar klase isključen scroll, koristi se samo da se postavi 'active' na meniju
 	$('#mainMenu').menuOnScroll({
-		menuSelector: '.menu-item'
+		menuSelector: '.menu-item',
+		headerOffset: 100
     });
 	
 	$('#user-ip').text(myip); //Dohvaćanje IP adrese
@@ -340,7 +370,7 @@ $(window).load(function() {
 
 	'use strict';
 
-	if ($.isFunction($.fn['themePluginRevolutionSlider'])) {
+	if (($.isFunction($.fn['themePluginRevolutionSlider']))&&(screen.width >= 767)) {
 
 		$(function() {
 			$('[data-plugin-revolution-slider]:not(.manual), .slider-container .slider:not(.manual)').each(function() {
@@ -455,12 +485,12 @@ $(window).load(function() {
 
 }).apply(this, [jQuery]);
 
-// Word Rotate
+//Word Rotate
 (function($) {
 
 	'use strict';
 
-	if ($.isFunction($.fn['themePluginWordRotate'])) {
+	if (($.isFunction($.fn['themePluginWordRotate']))&&(screen.width >= 991)) {
 
 		$(function() {
 			$('[data-plugin-word-rotate]:not(.manual), .word-rotate:not(.manual)').each(function() {
@@ -487,11 +517,6 @@ $(window).load(function() {
 	// Sticky Menu
 	if (typeof theme.StickyMenu !== 'undefined') {
 		theme.StickyMenu.initialize();
-	}
-
-	// Nav Menu
-	if (typeof theme.Nav !== 'undefined') {
-		theme.Nav.initialize();
 	}
 
 	// Search
