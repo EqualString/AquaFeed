@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset="UTF-8">
+		<title>AquaFeed | Aktivacija</title>
+		<meta name="keywords" content="AquaFeed, IoT, Arduino" />
+		<meta name="description" content="AquaFeed - IoT rješenje za Vaš akavariji">
+		<meta name="author" content="Alen Egredžija">
+		<link rel="icon" href="home/img/favicon/favicon.ico">
+		
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="home/vendor/bootstrap/bootstrap.css">
+		
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="home/css/style-elements.css">
+		<link rel="stylesheet" href="home/css/theme-animate.css">
+		<link rel="stylesheet" href="home/css/style.css">
+		<link rel="stylesheet" href="home/css/style-color.css">
+		<link rel="stylesheet" href="home/css/magnific-popup.css">
+		<link rel="stylesheet" href="control/css/indicators.css">
+		<link rel="stylesheet" href="control/css/login.css">
+		
+		<!-- Font -->
+		<link rel="stylesheet" href="home/css/glyphicon.css">
+		<link rel="stylesheet" href="home/css/font-awesome.css">
+		<link rel="stylesheet" href="home/css/myicon.css">
+		<link rel="stylesheet" href="home/css/logos.css">
+		
+		<!-- Google reCaptcha -->
+		<script src='https://www.google.com/recaptcha/api.js?hl=hr'></script>
+		
+	</head>
+<body>	
+	<div id="canavas"></div>
+	<div class="corner-indicator"></div>
+	<div class="row featured-boxes">
+		<div class="container">
+			<div class="login-header">
+				<a href="index"><i class="logo logo-new-logo-inv"></i></a>
+				<p class="list__text">AquaFeed</p>
+			</div>
+			<div class="featured-box featured-box-secundary default info-content login">
+				<div class="box-content">
+					<h4>Aktivacija korisničke e-mail adrese</h4>
+					<form onsubmit="return false;">
+						<div id = "status" class="alert alert-info" role="alert">
+							Na korak ste do aktivacije Vaše e-mail adrese. Molimo Vas da nam dokažete da ste ljudsko biće.
+						</div>
+						<!-- Captcha -->
+						<div id="captcha">
+							<div class="g-recaptcha" style="display:block" data-sitekey="6LetbBcTAAAAAOZ7lysOR74EwCHB63s-W8k47gQW" data-callback="verifyCallback"></div>
+						</div>	
+					</form>
+				</div>
+			</div>
+			<div class="footer">
+				<p>Vukovarska 72, 31000 Osijek Croatia</p>
+				<p id="copyright">© 2016 AquaFeed<p>
+			</div>
+		</div>	
+	</div>
+	<script src="control/js/jquery-1.12.1.js"></script>	
+	<script src="control/js/ajax.js"></script>	
+	<script src="control/js/events/moment.js"></script>
+	<script src="control/js/login/segment.min.js"></script>
+	<script src="control/js/login/d3-ease.v0.6.js"></script>
+	<script src="control/js/login/letters.js"></script>
+	<script src="control/js/login/raphael.js"></script>
+	<script src="control/js/login/classie.js"></script>
+	<script src="control/js/login/bubbles.js"></script>
+	<script src="control/js/login/animated.js"></script>
+	<script src="control/js/activation.js"></script>	
+</body>
+</html>

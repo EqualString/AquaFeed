@@ -22,10 +22,21 @@
 			});
 		},1570); 
 	});
-	
-	socket.on('real_log',function(data){
-		zapis = data;
-		create_log();
+	/** Realtime komunikacija sa workerom putem REST POST-a koji obrađuje server **/
+	socket.on('userID',function(data){
+		
+		userID = data; // Dohvaćanje ID-a korisnika
+		
+		// Jedinstveni konekcijski stringovi za korisnika
+		var connString = 'update-log-ID-'+userID; 
+		
+		// Realtime socket komunikacija
+		socket.on(connString,function(data){ 
+			
+			zapis = data;
+			create_log();
+			
+		});
 	});
 	
 	function create_log(){

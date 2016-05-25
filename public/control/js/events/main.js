@@ -29,6 +29,8 @@
 	function saveTable (){
 
 		resolve_table();
+		var logTime = moment().format('DD/MM/YYYY HH:mm');
+		dd.push(logTime); //Zadnja vrijednost je logTime
 		socket.emit('times-update', dd ); //Slanje putem soceket-a server-u
 		$('#modal-succes').modal('show');
 

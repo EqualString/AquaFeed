@@ -161,6 +161,14 @@ body.sticky-menu-active #top-logo{
 	margin-top:9px;
 	font-size: 1.5em;
 }
+.order-info{
+	font-family: "Slider-font" , cursive ;
+	font-weight: normal;
+	margin-top:9px;
+	font-size: 1.5em;
+	padding-top:20px;
+	color:#FFF;
+}
 .signin-form input[type=text]:focus,.signin-form input[type=password]:focus{
 	box-shadow: 0 0 2px #00A2D3;
 	border: 2px solid #00A2D3;
@@ -996,6 +1004,16 @@ body.scrolling .nav-main-collapse.collapsing {
 	.mobile-only{
 		display:block;
 	}
+	.tablet-padding{
+		margin-bottom:15px;
+	}
+	.col-sm-6 {
+		width:100%!important;
+	}
+	.resp-pics{
+		text-align:center;
+		text-align:-moz-center;
+	}	
 }
 /* Header Center - Sticky Menu */
 @media (min-width: 992px) {
@@ -1334,16 +1352,7 @@ body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu:hover li:hover li:
 		display:none !important;
 	}
 }
-@media screen and (max-height: 640px) and (max-width:992px) {
-	.home-concept .our-work {
-		margin-top: 26px !important;
-		margin-bottom:8px !important;
-	}
-	.project-image i{
-		font-size:120px!important;
-		margin-top:3px;
-	}
-}	
+
 @media (max-width: 991px) {
 	/* Header */
 	#header {
@@ -2262,6 +2271,15 @@ aside ul.nav-list > li > a {
 	.home-concept .fc-slideshow img {
 		max-height: 145px;
 		max-width: 145px;
+	}
+	.project-image i{
+		margin-bottom:0px;
+		margin-top:5px;
+		font-size:120px;
+	}
+	.home-concept .our-work {
+		margin-top: 40px;
+		font-size: 1.7em;
 	}
 }
 /* Page 404 */

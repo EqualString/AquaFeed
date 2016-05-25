@@ -109,7 +109,7 @@ function activate_old(){
 
 }		
 
-//Update korisničke e-mail adrese putem socket-a			
+//Update korisničkih podataka			
 function save_new_user_info(){
 
 	var nameNew = $('#user-name').val();
@@ -132,6 +132,8 @@ function save_new_user_info(){
 		infoModalText.html();
 		infoModalText.html('<p>Vaši novi podaci za prijavu u sustav:</p><p>Korisničko ime: <strong>'+nameNew+'</strong>,<br>Lozinka: <strong>'+passNew+'</strong>.</p><p>Također Vam je poslan mail sa novim podacima na: <strong>'+oldInfo[2]+'</strong>.<br>Vaš AquaFeed Tim.</p>');
 		infoModal.modal('show');
+		var logTime = moment().format('DD/MM/YYYY HH:mm');
+		newInfo.push(logTime); //Zadnja vrijednost je logTime
 		socket.emit('newCred-update', newInfo);
 		var ajax = ajaxObj( "POST", "/session-username" );
 		ajax.onreadystatechange = function() {
@@ -160,8 +162,9 @@ function save_new_user_info(){
 function save_new_user_email(){
 
 	hide_alerts();
-	var em = $('#new-email').val();
-	if ( em == "") { //Nije popunjen input
+	var em = [];
+	em[0] = $('#new-email').val();
+	if ( em[0] == "") { //Nije popunjen input
 		$('#status5').html('<p class="validation-error"><i class="glyphicon glyphicon-remove"></i><p>'); //Prazan
 		$('#alert-save-email-error .error-txt').text('Niste popunili traženo polje.');
 		$('#alert-save-email-error').fadeIn('slow').show();
@@ -172,9 +175,11 @@ function save_new_user_email(){
 	} else if (same_em == true){ //Unesena jednaka adresa
 		$('#alert-save-email-warning').fadeIn('slow').show();
 	} else { //Update adrese
+		var logTime = moment().format('DD/MM/YYYY HH:mm');
+		em.push(logTime); //Zadnja vrijednost je logTime
 		socket.emit('email-update', em);
 		$('#alert-save-email-succes').fadeIn('slow').show();
-		oldInfo[2] = em;
+		oldInfo[2] = em[0];
 	}
 	
 }
@@ -222,12 +227,15 @@ function checkemail() {
 function save_new_user_timezone(){
 	
 	$('#alert-save-timezone').hide();
-	var newTimezone = $("#time-zone-location").val();
-	if (oldInfo[7] != newTimezone){
-		$("#new-timezone-txt").text(newTimezone);
+	var newTimezone = [];
+	newTimezone[0] = $("#time-zone-location").val();
+	if (oldInfo[7] != newTimezone[0]){
+		$("#new-timezone-txt").text(newTimezone[0]);
 		$('#alert-save-timezone').fadeIn('slow').show();
+		var logTime = moment().format('DD/MM/YYYY HH:mm');
+		newTimezone.push(logTime); //Zadnja vrijednost je logTime
 		socket.emit('timeZone-update', newTimezone);
-		oldInfo[7] = newTimezone;
+		oldInfo[7] = newTimezone[0];
 	}
 	
 }

@@ -4,7 +4,6 @@
 var $window = $(window);
 var $body = $('body');
 
-
 $window.disablescroll();
 
 $window.load(function() {

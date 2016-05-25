@@ -581,10 +581,12 @@ header{
 	border:1px solid #d3d3db!important;
 	border-radius:0.1875em;
 	height:34px;
-	width:50px;
+	width:auto;
 	text-align:center;
 	display:block;
 	padding:4px;
+	padding-left:8px;
+	padding-right:8px;
 	box-shadow: inset 0 -2px 0 rgba(0,0,0,.135);
 }
 .navbar-nav > li > a:hover,

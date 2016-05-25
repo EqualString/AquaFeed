@@ -15,9 +15,8 @@ var app          = express();
 var session      = require('client-sessions');
 
 // Extra moduli
-var time    	 = require('./lib/time-getting.js');
 var db   	     = require('./lib/db-use.js');
-var mail   	     = require('./lib/mailer.js');
+var tools  	     = require('./lib/tools.js');
 
 /** Konfiguracija servera **/
 
@@ -128,6 +127,14 @@ app.get('/404', function(req, res){
   res.render('404.html');
 });
 
+app.get('/activation-mail', function(req, res){
+  res.render('activation.html');
+});
+
+app.get('/lost-password', function(req, res){
+  res.render('lost-password.html');
+});
+
 // POST-ovi sa fronted-a (AJAX)
 
 app.post('/login-auth', db.auth); // Login 
@@ -141,17 +148,25 @@ app.post('/testUser', db.testUser); // Testiranje potencijalnog novog korisničk
 
 app.post('/testEmail', db.testEmailAdress); // Testiranje potencijalnog novog korisničkog maila
 
+app.post('/email-activation', tools.decryptID, db.activateEmail); // Aktivacija e-mail adrese
+
+app.post('/password-reset-step-one', db.findUser); // Prvi korak u resetiranju izgubljene lozinke (trazenje korisnika u bazi)
+
+app.post('/password-reset-step-two', tools.createPass, db.saveNewPass, tools.sendNewPass); // Drugi korak u resetiranju izgubljene lozinke (generiranje nove lozinke, spremanje u bazu i slanje maila sa novim podacima)
+
 // REST api (info sa worker aplikacije)
-app.post('/api/worker', db.times, function(req, res){
+app.post('/api/worker', db.timeline, db.realTimeLog, function(req, res){
 	
-	var sessionAPINAME = 'aquafeed-arduino-'+req.session.userID;
-	console.log(req.session.username);
-	if(req.body.key === sessionAPINAME){
-		
-		io.sockets.emit('updateFlags', req.session.flags);
-		io.sockets.emit('updateArdRet', req.session.ardRet);
-	}
-		
+	// Jedinstveni konekcijski stringovi
+	var connString_1 = 'update-flags-ID-'+req.body.key;
+	var connString_2 = 'update-ardRet-ID-'+req.body.key;
+	var connString_3 = 'update-log-ID-'+req.body.key;
+	
+	// Slanje novih vrijednosti iz baze putem socketa na timeline i log
+	io.emit(connString_1, res.locals.flags);
+	io.emit(connString_2, res.locals.ardRet);
+	io.emit(connString_3, res.locals.log);
+
 });
 
 // Redirektanje
@@ -214,6 +229,7 @@ io.use(function(socket, next) {
 io.sockets.on("connection", function(socket) {
 
 	// Slanje na konekciji frontend-a
+	socket.emit( 'userID', socket.request.session.userID ); // Emitiranje ID-a
 	socket.emit( 'times', socket.request.session.times ); // Emitiranje vremena
 	socket.emit( 'log', socket.request.session.log ); // Emitiranje zapisnika
 	socket.emit( 'flags', socket.request.session.flags ); // Emitiranje flagova
@@ -231,14 +247,19 @@ io.sockets.on("connection", function(socket) {
 		db.updateCredentials( data, socket.request.session.userID ); // Update novih podataka za prijavu (Novo ime&lozinka)
 	});
 	socket.on( 'sendCurActMail', function (){
-		mail.sendCurAct( socket.request.session.userData[2], socket.request.session.userID ); // Slanje aktivacijskog maila na trenutnu adresu
+		tools.sendActivationMail( socket.request.session.userData[2], socket.request.session.userID ); // Slanje aktivacijskog maila na trenutnu adresu
 	});
 	socket.on( 'email-update', function (data){
 		db.updateEmail( data, socket.request.session.userID ); // Update e-maila u bazi
-		mail.sendNewEmail( data, socket.request.session.userID ); // Slanje aktivacijskog e-maila na novu adresu
+		tools.sendActivationMail( data[0], socket.request.session.userID ); // Slanje aktivacijskog e-maila na novu adresu
+	});
+	socket.on( 'nowfeed', function (data){
+		db.updateNowFeedLog( data ); // Update log-a za trenutni zahtjev
+		tools.sendNowFeedRequest( data[0] ); // Proslijeđivanje zahtjeva na worker
 	});
 
 });
+
 
 
 
