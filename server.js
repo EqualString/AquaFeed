@@ -152,7 +152,7 @@ app.post('/email-activation', tools.decryptID, db.activateEmail); // Aktivacija 
 
 app.post('/password-reset-step-one', db.findUser); // Prvi korak u resetiranju izgubljene lozinke (trazenje korisnika u bazi)
 
-app.post('/password-reset-step-two', tools.createPass, db.saveNewPass, tools.sendNewPass); // Drugi korak u resetiranju izgubljene lozinke (generiranje nove lozinke, spremanje u bazu i slanje maila sa novim podacima)
+app.post('/password-reset-step-two', tools.createPass, db.saveNewPass, tools.sendNewPassMail); // Drugi korak u resetiranju izgubljene lozinke (generiranje nove lozinke, spremanje u bazu i slanje maila sa novim podacima)
 
 // REST api (info sa worker aplikacije)
 app.post('/api/worker', db.timeline, db.realTimeLog, function(req, res){

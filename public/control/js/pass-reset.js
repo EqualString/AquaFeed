@@ -82,7 +82,7 @@ var verifyCallback = function() {
 					$(".g-recaptcha").hide();
 					status.removeClass("alert-info").addClass("alert-success");
 					status.html();
-					status.html('Uspješno ste promijenili Vašu lozinku. Nova lozinka Vam je poslana putem e-mail adrese.<br>Vaš AquaFeed Tim.');
+					status.html('Uspješno ste promijenili Vašu lozinku. Nova lozinka Vam je poslana putem Vaše e-mail adrese.<br></br>Vaš AquaFeed Tim.');
 					status.fadeIn('slow').show();
 						
 				}, 1350);
