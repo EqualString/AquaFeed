@@ -39,7 +39,6 @@
 
 		<!-- Head Libs -->
 		<script src="home/vendor/modernizr/modernizr.js"></script>
-		<script type="text/javascript" src="http://l2.io/ip.js?var=myip"></script>
 	
 		<!--[if IE]>
 			<link rel="stylesheet" href="css/ie.css">
@@ -71,7 +70,7 @@
 				<div class="header-top">
 					<div class="container">
 						<p>
-							AquaFeed | <span><i class="fa fa-phone"></i>+ (385) 098 948 7820</span> | <a href="mailto:AquaFeed@linuxmail.org">AquaFeed@linuxmail.org</a>
+							AquaFeed |<span><i class="fa fa-phone"></i>+ (385) 098 948 7820</span> | <a href="mailto:AquaFeed@linuxmail.org">AquaFeed@linuxmail.org</a>
 						</p>
 						<ul class="social-icons">
 							<li class="facebook"><a href="http://www.facebook.com/" target="_blank" data-placement="bottom" data-tooltip title="Facebook">Facebook</a></li>
@@ -170,7 +169,7 @@
 																<div class="row">
 																	<div class="form-group">
 																		<div class="col-md-12" id="pass-field">
-																			<a class="pull-right passRecover" href="#">(Zaboravljena lozinka?)</a>
+																			<a class="pull-right passRecover" href="lost-password">(Zaboravljena lozinka?)</a>
 																			<label>Lozinka</label>
 																			<input type="password" id="passwd" name="passwd" value="" class="form-control input-lg" required>
 																		</div>
@@ -803,16 +802,16 @@
 								<strong>Error!</strong> There was an error sending your message.
 							</div>
 							
-							<form id="contactForm">
+							<form id="contactForm" onsubmit="return false;">
 								<div class="row">
 									<div class="form-group">
 										<div class="col-md-6 tablet-padding">
 											<label>Vaše ime *</label>
-											<input type="text" value="" data-msg-required="Molimo unesite Vaše ime." maxlength="100" class="form-control" name="name" id="name" required>
+											<input type="text" value="" maxlength="100" class="form-control" name="name" id="name" required>
 										</div>
 										<div class="col-md-6">
 											<label>Vaša Email adresa *</label>
-											<input type="email" value="" data-msg-required="Molimo unesite Vašu email adresu." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" id="email" required>
+											<input type="email" value="" maxlength="100" class="form-control" name="email" id="email" required>
 										</div>
 									</div>
 								</div>
@@ -834,7 +833,7 @@
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<input type="submit" value="Pošalji poruku" class="btn btn-primary btn-lg btn-shadow">
+										<input id="send-msg-email" type="submit" value="Pošalji poruku" class="btn btn-primary btn-lg btn-shadow">
 									</div>
 								</div>
 							</form>
@@ -888,20 +887,17 @@
 								<h4>Newsletter</h4>
 								<p>Želite biti konstantno u toku sa našim novim proizvodima i tehnologijama? Unesite Vašu e-mail adresu i pretplatite se na naš newsletter.</p>
 			
-								<div class="alert alert-success hidden" id="newsletterSuccess">
-									<strong>Success!</strong> You've been added to our email list.
-								</div>
-			
-								<div class="alert alert-danger hidden" id="newsletterError"></div>
-			
-								<form id="newsletterForm">
+								<div class="alert alert-success" id="newsletterStatus"></div>
+								
+								<form id="newsletterForm" onsubmit="return false;">
 									<div class="input-group">
 										<input class="form-control" placeholder="Email Adresa" name="newsletterEmail" id="newsletterEmail" type="text" required>
 										<span class="input-group-btn">
-											<button class="btn btn-letter btn-default" type="submit">Pretplata</button>
+											<button class="btn btn-letter btn-default" type="submit" id="subscribe-btn">Pretplata</button>
 										</span>
 									</div>
 								</form>
+								
 							</div>
 						</div>
 						
@@ -934,7 +930,7 @@
 								<p>© 2016 AquaFeed. Sva prava pridržana.</p>
 							</div>
 							<div class="col-md-4">
-								<p>Vaša IP adresa: <strong id="user-ip" style="color:#fff;"></strong> , na <span id="browser-agent"></span>.</p>
+								<p>Vaša IP adresa: <strong style="color:#fff;"><%= userIP %></strong> , na <span id="browser-agent"></span>.</p>
 							</div>
 						</div>
 					</div>

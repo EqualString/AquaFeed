@@ -1,3 +1,19 @@
+/** Izračun centra rotacije **/
+//SMIL (SVG animacije) su depreciated u Chrome 45+, stoga se koristi css (Webkit) animacija s posebno postavljenim centrom rotacije
+//Transform-origin:center - radi u Chromu, ali ne i u FF
+	
+transformGearOrigin('.gear1');
+transformGearOrigin('.gear2');
+	
+function transformGearOrigin(gearClass){	
+	var gear = document.querySelector(gearClass),
+		gearValues = gear.getBBox(),
+		gearTransX = gearValues.x + gearValues.width/2,
+		gearTransY = gearValues.y + gearValues.height/2;
+		
+	gear.style.transformOrigin = gearTransX+'px '+ gearTransY+'px';
+}
+
 //Opcije Animacije za tekst
 var options = 
 	{ 	
@@ -26,18 +42,22 @@ function animInit() {
 	//Započni animaciju
 	word.style.opacity = '1'; //Fix da se prvo ne pokaže text prije nego SVG slova
 	instance.hideInstantly();
-	instance.show({callback : endPlayCallback}); //Callback na završnu fj-u (prikaz log-a)
+	instance.show({callback : endPlayCallback}); //Callback na završnu fj-u
 
 }
 
-$(".apps-small").click(function(){
-	$(this).toggleClass("open navicon-open");
+$('.apps-small').click(function(){
+	$(this).toggleClass('open navicon-open');
 });
 
 
 $(function(){
 	
+	//Prikaz SVG Loader-a
+	//Iz razloga da se prvo izvede transformOrigin elemenata animacije
 	
+	
+	$('.svg-loader').addClass('SVGfadeIn').css('opacity','1');
 	
 	/********************************
 	popover

@@ -34,7 +34,7 @@ app.set('views', __dirname + '/public');
 
 var sessionMiddleware = session({
 	cookieName: 'session',
-	secret: 'GotYaBlueFishTank?',  // Tajni string
+	secret: 'GotYaBlueFishTank?', // Tajni string
 	duration: 7 * 24 * 60 * 60 * 1000, // Tjedna sessija
 	cookie:{
 		httpOnly: false
@@ -47,9 +47,14 @@ app.use(bodyParser.urlencoded({ extended: true })); // support za encoded body
 
 /** Server rute **/
 app.get('/', function(req, res){
+
+	var userIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		 
 	res.render('index.html', {
-		username: req.session.username // Ovisi o cookie-u
+		username: req.session.username, // Ovisi o cookie-u
+		userIP: userIP
 	});
+	
 });
 
 app.get('/login', function(req, res){
@@ -139,9 +144,12 @@ app.get('/lost-password', function(req, res){
 
 app.post('/login-auth', db.auth); // Login 
 
+app.post('/subscribe', db.subsList); // Subscriber lista
+
 app.post('/session-username', function(req, res){ // Promjena korisničkog imena sessije bez /logout-a
 	req.session.username = req.body.newUsername;
 	res.send('1');
+	res.end();
 }); 
 
 app.post('/testUser', db.testUser); // Testiranje potencijalnog novog korisničkog imena
@@ -166,6 +174,7 @@ app.post('/api/worker', db.timeline, db.realTimeLog, function(req, res){
 	io.emit(connString_1, res.locals.flags);
 	io.emit(connString_2, res.locals.ardRet);
 	io.emit(connString_3, res.locals.log);
+	res.end();
 
 });
 
@@ -245,6 +254,7 @@ io.sockets.on("connection", function(socket) {
 	});
 	socket.on( 'newCred-update', function (data){
 		db.updateCredentials( data, socket.request.session.userID ); // Update novih podataka za prijavu (Novo ime&lozinka)
+		tools.sendNewCredentials( data ); // Slanje novih podataka na e-mail
 	});
 	socket.on( 'sendCurActMail', function (){
 		tools.sendActivationMail( socket.request.session.userData[2], socket.request.session.userID ); // Slanje aktivacijskog maila na trenutnu adresu
@@ -259,8 +269,3 @@ io.sockets.on("connection", function(socket) {
 	});
 
 });
-
-
-
-
-

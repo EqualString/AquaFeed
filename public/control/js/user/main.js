@@ -122,7 +122,7 @@ function save_new_user_info(){
 	
 	saveStatus.hide();
 	checkname();
-	checkpass (passNew);	
+	checkpass(passNew);	
 	
 	if ((err == false)&&(err2 == false)) { 
 		newInfo[0] = nameNew;

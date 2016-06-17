@@ -1,4 +1,3 @@
-//Loader :-)
 
 //Onemogućavanje scroll-a
 var $window = $(window);
@@ -77,7 +76,51 @@ $window.load(function() {
 		headerOffset: 100
     });
 	
-	$('#user-ip').text(myip); //Dohvaćanje IP adrese
+	//Subscribe
+	$("#subscribe-btn").click( function(){
+		var sub = $("#newsletterEmail").val();
+		var reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm; //RegEx
+		var alertStatus = $("#newsletterStatus");
+		if(sub != ""){
+		
+			if(!reg.test(sub)){ //Regex filter
+				alertStatus.html();
+				alertStatus.html("Unesena adresa nije ispravna.");
+				alertStatus.removeClass("alert-success").addClass("alert-danger").fadeIn('slow').show();
+			}
+			else{
+				var ajax = ajaxObj( "POST", "/subscribe" );
+				ajax.onreadystatechange = function() {
+					if(ajaxReturn(ajax) == true) {
+						if(ajax.responseText == "0"){ //Uspješan unos
+							alertStatus.html();
+							alertStatus.html("Uspješno ste dodani na našu mailing listu.");
+							alertStatus.removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn('slow').show();
+						}
+						if(ajax.responseText == "1"){ //Postojeći zapis
+							alertStatus.html();
+							alertStatus.html("Unesena adresa se već nalazi na našoj mailing listi.");
+							alertStatus.removeClass("alert-success").removeClass("alert-danger").addClass("alert-warning").fadeIn('slow').show();
+						}
+						if(ajax.responseText == "2"){ //Greška
+							alertStatus.html();
+							alertStatus.html("Nažalost došlo je do pogreške prilikom pokušaja prijave.");
+							alertStatus.removeClass("alert-success").removeClass("alert-warning").addClass("alert-danger").fadeIn('slow').show();
+						}
+					}
+				}
+				ajax.send("sub="+sub);
+			}
+			
+		}
+		
+	});
+	
+	//E-mail
+	$("#send-msg-email").click( function(){
+	
+	});
+	
 	var ua = detect.parse(navigator.userAgent);
 	$('#browser-agent').text(ua.browser.family);
 	

@@ -174,6 +174,9 @@ body.sticky-menu-active #top-logo{
 	border: 2px solid #00A2D3;
 }
 
+#newsletterStatus{
+	display:none;
+}
 /* Responsive */
 @media (max-width: 479px) {
 	body {

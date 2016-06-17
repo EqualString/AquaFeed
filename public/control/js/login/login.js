@@ -15,6 +15,7 @@ $("#login-btn").click( function(){
 	
 	var username = $("#username").val();
 	var passwd = $("#passwd").val();
+	var rememberMe = $("#rememberme").prop("checked");
 	
 	if ((username != "")&&(passwd != "")){
 		
@@ -73,7 +74,7 @@ $("#login-btn").click( function(){
 				}
 			}
 		}
-		ajax.send("username="+username+"&passwd="+passwd);
+		ajax.send("username="+username+"&passwd="+passwd+"&rememberme="+rememberMe);
 		
 		function captchaShow(){
 			loginStatus.hide(); 
