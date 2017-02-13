@@ -210,6 +210,12 @@ app.get('/404.html', function(req, res){
   res.redirect('/404');
 });
 
+//Download
+app.get('/installation-download', function(req, res){
+  var file = __dirname + '/downloads/AquaFeedDesktop.msi';
+  res.download(file); 
+});
+
 /** Konfiguracija servera **/
 
 // OpenShift(server_port & server_ip)
@@ -240,7 +246,7 @@ io.sockets.on("connection", function(socket) {
 	// Slanje na konekciji frontend-a
 	socket.emit( 'userID', socket.request.session.userID ); // Emitiranje ID-a
 	socket.emit( 'times', socket.request.session.times ); // Emitiranje vremena
-	socket.emit( 'log', socket.request.session.log ); // Emitiranje zapisnika
+	socket.emit( 'log', socket.request.session.cptLog ); // Emitiranje zapisnika
 	socket.emit( 'flags', socket.request.session.flags ); // Emitiranje flagova
 	socket.emit( 'ardRet', socket.request.session.ardRet ); // Emitiranje flagova od strane Arduina
 	socket.emit( 'userData', socket.request.session.userData ); // Emitiranje svih korisničkih podataka

@@ -57,6 +57,17 @@ $("#login-btn").click( function(){
 					}, 1750);
 					
 				}
+				if(ajax.responseText == "db-error"){ //Greška sa serverom
+					
+					setTimeout( function() {
+						loginStatus.hide(); 
+						loginStatus.removeClass("alert-info").addClass("alert-danger");
+						statusText.html();
+						statusText.html('<span>Greška sa bazom podataka.</span>');
+						loginStatus.fadeIn('slow').show();
+					}, 1750);
+					
+				}
 			}
 		}
 		ajax.send("username="+username+"&passwd="+passwd+"&rememberme="+rememberMe);

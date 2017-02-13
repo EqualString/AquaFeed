@@ -72,6 +72,20 @@ $("#login-btn").click( function(){
 					}, 2100);
 					
 				}
+				if(ajax.responseText == "db-error"){ //Greška sa serverom
+					
+					setTimeout( function() {
+						loginStatus.hide(); 
+						loginStatus.removeClass("alert-info").addClass("alert-danger");
+						statusText.html();
+						statusText.html('<span>Greška sa bazom podataka.</span>');
+						loginStatus.fadeIn('slow').show();
+						indicator.removeClass("la-animate");
+						login_counter ++;
+						if(login_counter == 3){ captchaShow(); }
+					}, 2100);
+					
+				}
 			}
 		}
 		ajax.send("username="+username+"&passwd="+passwd+"&rememberme="+rememberMe);

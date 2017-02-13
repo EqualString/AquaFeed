@@ -10,7 +10,8 @@
 	socket.on('log',function(data){
 		
 		if(data == null){ //Test sessije
-			window.location = '/login';
+			//window.location = '/login';
+			data = "sereš";
 		}
 		zapis = data;
 		create_log();
@@ -22,6 +23,7 @@
 			});
 		},1570); 
 	});
+	
 	/** Realtime komunikacija sa workerom putem REST POST-a koji obrađuje server **/
 	socket.on('userID',function(data){
 		

@@ -21,6 +21,10 @@ body.loader{
 	width:100vw;
 	height:150vh;
 	overflow:hidden;
+	/**background: #33B5E5 url(../img/backround_1.svg) no-repeat;
+	background-size: 2200px;
+	background-position: center top;
+	clear: both;**/
 }
 
 .loader-list {
